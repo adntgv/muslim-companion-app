@@ -10,7 +10,11 @@
     "appName": "{appName}",
     "home": "Home",
     "about": "About",
-    "donate": "Donate"
+    "donate": "Donate",
+    "locale": {
+      "en": "English",
+      "kk": "Kazakh"
+    }
   },
   "footer": {
     "aboutUs": "About Us",

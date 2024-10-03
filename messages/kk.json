@@ -10,7 +10,11 @@
     "appName": "[common.appName]",
     "home": "[common.home]",
     "about": "[common.about]",
-    "donate": "[common.donate]"
+    "donate": "[common.donate]",
+    "locale": {
+      "en": "[common.locale.en]",
+      "kk": "[common.locale.kk]"
+    }
   },
   "footer": {
     "aboutUs": "[footer.aboutUs]",
