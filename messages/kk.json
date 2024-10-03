@@ -1,0 +1,29 @@
+{
+  "home": {
+    "title": "[home.title]",
+    "description": "[home.description]",
+    "welcome": "[home.welcome]",
+    "welcomeDescription": "[home.welcomeDescription]",
+    "learnMore": "[home.learnMore]"
+  },
+  "common": {
+    "appName": "[common.appName]",
+    "home": "[common.home]",
+    "about": "[common.about]",
+    "donate": "[common.donate]"
+  },
+  "footer": {
+    "aboutUs": "[footer.aboutUs]",
+    "aboutDescription": "[footer.aboutDescription]",
+    "quickLinks": "[footer.quickLinks]",
+    "connect": "[footer.connect]",
+    "copyright": "[footer.copyright]"
+  },
+  "donation": {
+    "modalTitle": "[donation.modalTitle]",
+    "modalDescription": "[donation.modalDescription]",
+    "donationMethods": "[donation.donationMethods]",
+    "close": "[donation.close]",
+    "donateNow": "[donation.donateNow]"
+  }
+}

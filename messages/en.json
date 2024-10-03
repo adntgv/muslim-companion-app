@@ -1,0 +1,29 @@
+{
+  "home": {
+    "title": "Next.js Boilerplate",
+    "description": "A starter template for building scalable Next.js applications with internationalization and theming.",
+    "welcome": "Welcome to Your Next.js App",
+    "welcomeDescription": "This is a boilerplate template. Start building your application from here.",
+    "learnMore": "Learn More"
+  },
+  "common": {
+    "appName": "Next.js Boilerplate",
+    "home": "Home",
+    "about": "About",
+    "donate": "Donate"
+  },
+  "footer": {
+    "aboutUs": "About Us",
+    "aboutDescription": "A brief description of your application or company.",
+    "quickLinks": "Quick Links",
+    "connect": "Connect",
+    "copyright": "© 2024 Your Company. All rights reserved."
+  },
+  "donation": {
+    "modalTitle": "Support Us",
+    "modalDescription": "Your donation helps us continue our mission.",
+    "donationMethods": "Donation Methods",
+    "close": "Close",
+    "donateNow": "Donate Now"
+  }
+}
