@@ -11,7 +11,7 @@ const Footer = () => {
       <div className="container mx-auto py-8 px-4">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           <div>
-            <h3 className="text-lg font-semibold mb-4">{t('aboutIqra')}</h3>
+            <h3 className="text-lg font-semibold mb-4">{t('aboutUs')}</h3>
             <p className="text-muted-foreground">
               {t('aboutDescription')}
             </p>
@@ -20,9 +20,7 @@ const Footer = () => {
             <h3 className="text-lg font-semibold mb-4">{t('quickLinks')}</h3>
             <ul className="space-y-2">
               <li><Link href="/" className="text-muted-foreground hover:text-primary">{common('home')}</Link></li>
-              <li><Link href="/learn" className="text-muted-foreground hover:text-primary">{common('learn')}</Link></li>
-              {/* <li><Link href="/about" className="text-muted-foreground hover:text-primary">{common('about')}</Link></li>
-              <li><Link href="/contact" className="text-muted-foreground hover:text-primary">{common('contact')}</Link></li> */}
+              <li><Link href="/about" className="text-muted-foreground hover:text-primary">{common('about')}</Link></li>
             </ul>
           </div>
           <div>

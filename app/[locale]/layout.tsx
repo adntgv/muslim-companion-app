@@ -6,8 +6,8 @@ import { NextIntlClientProvider } from "next-intl";
 import { getMessages } from "next-intl/server";
 
 export const metadata: Metadata = {
-  title: "Iqra App",
-  description: "Learn Arabic and understand the Quran",
+  title: "Next.js Boilerplate",
+  description: "A starter template for Next.js applications",
   manifest: "/manifest.json",
   themeColor: "#000000",
 };

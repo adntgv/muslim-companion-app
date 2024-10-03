@@ -1,7 +1,7 @@
 {
-  "name": "Iqra App",
-  "short_name": "Iqra",
-  "description": "Learn Arabic and understand the Quran",
+  "name": "Next.js Boilerplate",
+  "short_name": "Boilerplate",
+  "description": "A starter template for Next.js applications",
   "start_url": "/",
   "display": "standalone",
   "background_color": "#F5E6D3",

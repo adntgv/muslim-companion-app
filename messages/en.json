@@ -25,5 +25,18 @@
     "donationMethods": "Donation Methods",
     "close": "Close",
     "donateNow": "Donate Now"
+  },
+  "about": {
+    "title": "About Us",
+    "description": "This is a boilerplate Next.js application with internationalization and theming support."
+  },
+  "notFound": {
+    "title": "404 - Page Not Found",
+    "description": "The page you are looking for doesn't exist or has been moved.",
+    "backHome": "Go back home"
+  },
+  "offline": {
+    "title": "You are offline",
+    "description": "Please check your internet connection and try again."
   }
 }

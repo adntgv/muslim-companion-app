@@ -25,5 +25,18 @@
     "donationMethods": "[donation.donationMethods]",
     "close": "[donation.close]",
     "donateNow": "[donation.donateNow]"
+  },
+  "about": {
+    "title": "[about.title]",
+    "description": "[about.description]"
+  },
+  "notFound": {
+    "title": "[notFound.title]",
+    "description": "[notFound.description]",
+    "backHome": "[notFound.backHome]"
+  },
+  "offline": {
+    "title": "[offline.title]",
+    "description": "[offline.description]"
   }
 }
