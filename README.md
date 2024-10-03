@@ -648,3 +648,300 @@ The architecture outlined above provides a scalable and maintainable foundation 
 - **Create Learning Content** for Levels 1-3, ensuring accuracy and engagement.
 - **Test Each Component Thoroughly** before moving to the next.
 - **Deploy the MVP** to Firebase Hosting and gather user feedback.
+
+## Development Roadmap
+
+To guide the development process and ensure timely delivery of the Minimum Viable Product (MVP), the following roadmap outlines the key phases and tasks to be completed. This roadmap is designed for a solo developer to manage the project efficiently while aligning with the app's vision.
+
+### **Phase 1: Foundations (Weeks 1-2)**
+
+**Goals:**
+
+- Set up the development environment.
+- Implement user authentication and profile setup.
+- Develop the initial assessment feature.
+
+**Tasks:**
+
+1. **Project Setup**
+
+   - Initialize a Git repository for version control.
+   - Set up the project structure using Create React App.
+   - Install necessary dependencies:
+     - React.js
+     - React Router
+     - Firebase SDK
+     - UI Library (Material-UI or Ant Design)
+   - Configure ESLint and Prettier for code consistency.
+
+2. **Firebase Configuration**
+
+   - Create a new Firebase project.
+   - Set up Firebase Authentication for email/password login.
+   - Initialize Firestore for database needs.
+   - Configure environment variables for Firebase credentials.
+
+3. **User Authentication**
+
+   - Implement sign-up and login forms.
+   - Use Firebase Authentication SDK for user management.
+   - Create authentication context to manage user state globally.
+   - Protect private routes using a higher-order component (HOC).
+
+4. **Profile Setup**
+
+   - Develop a profile page for users to input basic information (name, preferences).
+   - Store user profiles in Firestore under a `users` collection.
+   - Allow users to update their profile information.
+
+5. **Initial Assessment**
+
+   - Design an assessment questionnaire to gauge the user's current knowledge and practice level.
+   - Implement logic to calculate the user's starting level based on responses.
+   - Store assessment results and assigned level in the user's Firestore document.
+
+### **Phase 2: Level-Based Roadmap and Learning Modules (Weeks 3-5)**
+
+**Goals:**
+
+- Develop the roadmap interface with Levels 1-3.
+- Create learning modules for each level.
+- Implement module navigation and completion tracking.
+
+**Tasks:**
+
+1. **Roadmap Interface**
+
+   - Design the roadmap UI displaying Levels 1-3 with clear visual indicators.
+   - Implement navigation between levels and modules.
+   - Highlight the user's current level and progress status.
+   - Ensure responsiveness for mobile and desktop views.
+
+2. **Learning Module Template**
+
+   - Create a reusable component for displaying module content, supporting text, images, and media.
+   - Include navigation controls within modules (next, previous).
+   - Implement a progress bar within modules to show completion percentage.
+
+3. **Content Creation**
+
+   - **Level 1: Shahada**
+     - Module 1: Meaning of Shahada
+     - Module 2: Conditions of Shahada
+     - Module 3: Importance in Daily Life
+   - **Level 2: Pillars of Islam and Iman**
+     - Module 1: Overview of the Five Pillars
+     - Module 2: Detailed Study of Each Pillar
+     - Module 3: Articles of Faith (Iman)
+   - **Level 3: Introduction to Salah**
+     - Module 1: Significance of Salah
+     - Module 2: How to Perform Salah
+     - Module 3: Common Mistakes and Tips
+   - Ensure all content is accurate, engaging, and includes interactive elements like quizzes.
+
+4. **Module Completion Tracking**
+
+   - Implement functionality to mark modules as completed.
+   - Update user progress in Firestore upon module completion.
+   - Reflect completion status and unlock subsequent modules.
+   - Provide feedback to users upon module completion (e.g., congratulations message).
+
+### **Phase 3: Progress Tracking and Gamification (Weeks 6-7)**
+
+**Goals:**
+
+- Implement a dashboard to display user progress.
+- Add gamification elements like experience points (XP) and badges.
+
+**Tasks:**
+
+1. **Dashboard Development**
+
+   - Design the dashboard UI showing:
+     - Overall progress and current level.
+     - Next recommended module or activity.
+     - Summary of achievements (badges earned, XP accumulated).
+   - Ensure the dashboard updates in real-time as the user progresses.
+
+2. **Experience Points System**
+
+   - Define a point system for module completion and other activities.
+   - Update the user's XP in Firestore upon completing modules and assessments.
+   - Display the user's XP and progress towards the next level on the dashboard.
+
+3. **Badges and Achievements**
+
+   - Design badges for key milestones (e.g., completing a level, daily streaks).
+   - Implement logic to award badges based on user actions.
+   - Store earned badges in the user's Firestore document.
+   - Display earned badges on the user's profile and dashboard.
+
+### **Phase 4: Suggestions and Improvements (Week 8)**
+
+**Goals:**
+
+- Provide personalized suggestions for next steps.
+- Enhance user engagement with recommendations and resources.
+
+**Tasks:**
+
+1. **Recommendation Engine**
+
+   - Develop logic to suggest the next module or practice based on the user's current progress and preferences.
+   - Use data from the user's profile and progress to personalize suggestions.
+   - Display recommendations prominently on the dashboard.
+
+2. **Resource Linking**
+
+   - Link to additional resources within modules, such as articles, videos, or external websites.
+   - Provide a "Further Reading" or "Next Steps" section at the end of modules.
+
+3. **Notifications**
+
+   - Implement in-app notifications for:
+     - New modules or levels unlocked.
+     - Milestone achievements (e.g., leveling up, earning badges).
+     - Reminders to continue learning or revisit content.
+   - Ensure notifications are relevant and not intrusive.
+
+### **Phase 5: Testing and Refinement (Weeks 9-10)**
+
+**Goals:**
+
+- Ensure the app is stable, user-friendly, and meets quality standards.
+- Incorporate user feedback to improve the app.
+
+**Tasks:**
+
+1. **Functional Testing**
+
+   - Test all features and user flows thoroughly.
+   - Verify data integrity and security measures.
+   - Ensure compatibility across different browsers and devices.
+
+2. **User Feedback**
+
+   - Conduct beta testing with a small group of users.
+   - Collect feedback on:
+     - Usability and navigation
+     - Content clarity and engagement
+     - Overall user experience
+   - Use surveys or direct communication to gather insights.
+
+3. **Refinements**
+
+   - Prioritize and address issues identified during testing.
+   - Implement improvements to the UI/UX based on user feedback.
+   - Optimize performance, including load times and responsiveness.
+
+### **Future Enhancements (Post-MVP)**
+
+- **Content Expansion**
+  - Develop additional levels covering advanced topics such as Zakat, Fasting, Hajj, and more.
+  - Introduce modules on personal development, ethics, and character building.
+- **Advanced Gamification**
+  - Introduce daily challenges, streak tracking, and leaderboards.
+  - Develop more complex achievements and rewards.
+- **Social Features**
+  - Enable users to share progress and achievements with others.
+  - Implement community forums or discussion boards for peer interaction.
+- **Mobile Application**
+  - Develop native mobile apps for iOS and Android using React Native for broader accessibility.
+- **Accessibility and Localization**
+  - Add support for multiple languages to reach a wider audience.
+  - Ensure the app meets accessibility standards (e.g., WCAG) for users with disabilities.
+- **Integration with Other Services**
+  - Integrate with calendar apps for reminders.
+  - Incorporate notifications via email or push notifications.
+
+## Task Breakdown Checklist
+
+### **Phase 1: Foundations**
+
+- [ ] **Project Setup**
+  - [ ] Initialize Git repository
+  - [ ] Set up project structure with Create React App
+  - [ ] Install dependencies (React, Firebase, UI library)
+  - [ ] Configure ESLint and Prettier
+- [ ] **Firebase Configuration**
+  - [ ] Create Firebase project
+  - [ ] Set up Authentication and Firestore
+  - [ ] Configure environment variables
+- [ ] **User Authentication**
+  - [ ] Implement sign-up and login forms
+  - [ ] Set up authentication context
+  - [ ] Protect private routes
+- [ ] **Profile Setup**
+  - [ ] Develop profile page
+  - [ ] Implement profile data storage in Firestore
+- [ ] **Initial Assessment**
+  - [ ] Design assessment questionnaire
+  - [ ] Implement assessment logic
+  - [ ] Store results and level assignment
+
+### **Phase 2: Roadmap and Learning Modules**
+
+- [ ] **Roadmap Interface**
+  - [ ] Design UI for levels and progression
+  - [ ] Implement navigation between levels/modules
+  - [ ] Highlight current level and progress
+- [ ] **Learning Module Template**
+  - [ ] Create reusable module component
+  - [ ] Support various content types
+- [ ] **Content Creation**
+  - [ ] Write content for Level 1 modules
+  - [ ] Write content for Level 2 modules
+  - [ ] Write content for Level 3 modules
+  - [ ] Include quizzes and interactive elements
+- [ ] **Module Completion Tracking**
+  - [ ] Implement completion functionality
+  - [ ] Update progress in Firestore
+  - [ ] Reflect progress in UI
+
+### **Phase 3: Progress Tracking and Gamification**
+
+- [ ] **Dashboard Development**
+  - [ ] Design dashboard UI
+  - [ ] Display progress, level, and suggestions
+- [ ] **Experience Points System**
+  - [ ] Define XP allocation logic
+  - [ ] Update XP upon module completion
+  - [ ] Display XP progress
+- [ ] **Badges and Achievements**
+  - [ ] Design badges for milestones
+  - [ ] Implement badge awarding logic
+  - [ ] Store and display earned badges
+
+### **Phase 4: Suggestions and Notifications**
+
+- [ ] **Recommendation Engine**
+  - [ ] Develop logic for personalized suggestions
+  - [ ] Implement display of recommendations
+- [ ] **Resource Linking**
+  - [ ] Identify and link additional resources
+  - [ ] Incorporate "Further Reading" sections
+- [ ] **Notifications**
+  - [ ] Implement in-app notification system
+  - [ ] Configure notifications for key events
+
+### **Phase 5: Testing and Refinement**
+
+- [ ] **Functional Testing**
+  - [ ] Test all features and flows
+  - [ ] Verify data security and integrity
+  - [ ] Ensure cross-browser/device compatibility
+- [ ] **User Feedback**
+  - [ ] Recruit beta testers
+  - [ ] Collect and analyze feedback
+- [ ] **Refinements**
+  - [ ] Prioritize issues and improvements
+  - [ ] Implement UI/UX enhancements
+  - [ ] Optimize app performance
+
+## Timeline Overview
+
+- **Weeks 1-2**: Phase 1 - Foundations
+- **Weeks 3-5**: Phase 2 - Roadmap and Learning Modules
+- **Weeks 6-7**: Phase 3 - Progress Tracking and Gamification
+- **Week 8**: Phase 4 - Suggestions and Improvements
+- **Weeks 9-10**: Phase 5 - Testing and Refinement
