@@ -7,7 +7,7 @@
     "learnMore": "Learn More"
   },
   "common": {
-    "appName": "Next.js Boilerplate",
+    "appName": "{appName}",
     "home": "Home",
     "about": "About",
     "donate": "Donate"

@@ -1,6 +1,7 @@
 import React from 'react';
 import {Link} from '@/i18n/routing';
 import { useTranslations } from 'next-intl';
+import { config } from '@/lib/config';
 
 const Footer = () => {
   const t = useTranslations('footer');
@@ -26,8 +27,7 @@ const Footer = () => {
           <div>
             <h3 className="text-lg font-semibold mb-4">{t('connect')}</h3>
             <ul className="space-y-2">
-              <li><a href="https://t.me/iqra_app" className="text-muted-foreground hover:text-primary">Telegram</a></li>
-            </ul>
+            <li><a href={config.socialLinks.telegram} className="text-muted-foreground hover:text-primary">Telegram</a></li>            </ul>
           </div>
         </div>
         <div className="mt-8 text-center text-muted-foreground">

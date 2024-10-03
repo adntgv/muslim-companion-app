@@ -4,10 +4,11 @@ import { ThemeProvider } from "@/components/ThemeProvider";
 import Layout from "@/components/Layout";
 import { NextIntlClientProvider } from "next-intl";
 import { getMessages } from "next-intl/server";
+import { config } from '@/lib/config';
 
 export const metadata: Metadata = {
-  title: "Next.js Boilerplate",
-  description: "A starter template for Next.js applications",
+  title: config.app.name,
+  description: config.app.description,
   manifest: "/manifest.json",
   themeColor: "#000000",
 };
