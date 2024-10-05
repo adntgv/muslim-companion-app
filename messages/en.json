@@ -13,7 +13,8 @@
     "donate": "Donate",
     "locale": {
       "en": "English",
-      "kk": "Kazakh"
+      "kk": "Kazakh",
+      "ru": "Russian"
     }
   },
   "footer": {

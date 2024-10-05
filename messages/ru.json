@@ -13,7 +13,8 @@
     "donate": "[common.donate]",
     "locale": {
       "en": "[common.locale.en]",
-      "kk": "[common.locale.kk]"
+      "kk": "[common.locale.kk]",
+      "ru": "[common.locale.ru]"
     }
   },
   "footer": {

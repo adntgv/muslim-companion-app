@@ -5,7 +5,6 @@ import Layout from "@/components/Layout";
 import { NextIntlClientProvider } from "next-intl";
 import { getMessages } from "next-intl/server";
 import { config } from '@/lib/config';
-import { AuthProvider } from '@/components/AuthContext';
 
 export const metadata: Metadata = {
   title: config.app.name,
@@ -28,9 +27,7 @@ export default async function RootLayout({
       <body>
         <NextIntlClientProvider messages={messages}>
           <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
-            <AuthProvider>
               <Layout>{children}</Layout>
-            </AuthProvider>
           </ThemeProvider>
         </NextIntlClientProvider>
       </body>
