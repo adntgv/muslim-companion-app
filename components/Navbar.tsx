@@ -7,26 +7,41 @@ import { MenuIcon, XIcon } from 'lucide-react';
 import dynamic from 'next/dynamic';
 import { useTranslations } from 'next-intl';
 import LocaleSwitcher from './LocaleSwitcher';
+import { Session } from '@supabase/supabase-js';
+import { supabase } from '@/lib/supabase';
 
 const ThemeToggle = dynamic(() => import('./themeToggle'), { ssr: false });
 
-const Navbar = () => {
+const Navbar = ({ session }: { session: Session | null }) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const t = useTranslations('common');
 
   const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
 
+  const handleLogout = async () => {
+    await supabase.auth.signOut();
+  };
+
+  const appName = "Next.js Boilerplate"
+
   return (
     <nav className="border-b bg-background sticky top-0 z-10 shadow-sm">
       <div className="container mx-auto px-4">
         <div className="flex justify-between items-center h-16">
-          <Link href="/" className="text-2xl font-bold text-primary">{t('appName')}</Link>
+          <Link href="/" className="text-2xl font-bold text-primary">{appName}</Link>
           <div className="hidden md:flex items-center space-x-4">
             <Button variant="ghost" asChild className="text-foreground hover:text-primary">
               <Link href="/">{t('home')}</Link>
             </Button>
             <LocaleSwitcher />
             <ThemeToggle />
+            {session ? (
+              <Button onClick={handleLogout}>Logout</Button>
+            ) : (
+              <Button asChild>
+                <Link href="/login">Login</Link>
+              </Button>
+            )}
           </div>
 
           <div className="md:hidden">
