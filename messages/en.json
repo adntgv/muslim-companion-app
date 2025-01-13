@@ -1,13 +1,34 @@
 {
   "home": {
-    "title": "Next.js Boilerplate",
-    "description": "A starter template for building scalable Next.js applications with internationalization and theming.",
-    "welcome": "Welcome to Your Next.js App",
-    "welcomeDescription": "This is a boilerplate template. Start building your application from here.",
-    "learnMore": "Learn More"
+    "title": "Islamic Daily Companion",
+    "description": "Your personal companion for daily Islamic practices, prayer tracking, and spiritual growth",
+    "getStarted": "Get Started",
+    "signIn": "Sign In",
+    "featuresTitle": "Features",
+    "features": {
+      "prayers": {
+        "title": "Prayer Tracking",
+        "description": "Track your daily prayers, get accurate prayer times, and maintain your prayer streaks"
+      },
+      "quran": {
+        "title": "Quran Reading",
+        "description": "Log your daily Quran readings, track progress, and maintain your reading position"
+      },
+      "dhikr": {
+        "title": "Daily Adhkar",
+        "description": "Keep track of your morning and evening adhkar with easy-to-use checklists"
+      },
+      "learn": {
+        "title": "Islamic Learning",
+        "description": "Grow in your knowledge with structured learning paths and progress tracking"
+      }
+    },
+    "startJourney": "Start Your Journey Today",
+    "startJourneyDescription": "Join thousands of Muslims enhancing their daily Islamic practices with our digital companion",
+    "joinNow": "Join Now"
   },
   "common": {
-    "appName": "{appName}",
+    "appName": "Islamic Daily Companion",
     "home": "Home",
     "about": "About",
     "donate": "Donate",
@@ -43,5 +64,18 @@
   "offline": {
     "title": "You are offline",
     "description": "Please check your internet connection and try again."
+  },
+  "Auth": {
+    "login": "Login",
+    "loginDescription": "Welcome back! Please enter your details",
+    "email": "Email",
+    "password": "Password",
+    "rememberMe": "Remember me",
+    "signIn": "Sign in",
+    "signingIn": "Signing in...",
+    "orContinueWith": "Or continue with",
+    "forgotPassword": "Forgot password?",
+    "noAccount": "Don't have an account?",
+    "createAccount": "Create an account"
   }
 }

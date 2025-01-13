@@ -1,28 +1,28 @@
 'use client';
 
 import React, { useState } from 'react';
-import { Link } from '@/i18n/routing';
+import { Link, useRouter } from '@/i18n/routing';
 import { Button } from "@/components/ui/button";
 import { MenuIcon, XIcon } from 'lucide-react';
 import dynamic from 'next/dynamic';
 import { useTranslations } from 'next-intl';
 import LocaleSwitcher from './LocaleSwitcher';
-import { Session } from '@supabase/supabase-js';
-import { supabase } from '@/lib/supabase';
 
 const ThemeToggle = dynamic(() => import('./themeToggle'), { ssr: false });
 
-const Navbar = ({ session }: { session: Session | null }) => {
+const Navbar = ({ isAuthenticated }: { isAuthenticated?: boolean }) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const t = useTranslations('common');
+  const router = useRouter();
 
   const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
 
   const handleLogout = async () => {
-    await supabase.auth.signOut();
+    // TODO: Implement logout logic
+    router.push('/login');
   };
 
-  const appName = "Next.js Boilerplate"
+  const appName = "Muslim Companion"
 
   return (
     <nav className="border-b bg-background sticky top-0 z-10 shadow-sm">
@@ -35,7 +35,7 @@ const Navbar = ({ session }: { session: Session | null }) => {
             </Button>
             <LocaleSwitcher />
             <ThemeToggle />
-            {session ? (
+            {isAuthenticated ? (
               <Button onClick={handleLogout}>Logout</Button>
             ) : (
               <Button asChild>
@@ -59,6 +59,13 @@ const Navbar = ({ session }: { session: Session | null }) => {
               </Button>
               <LocaleSwitcher />
               <ThemeToggle />
+              {isAuthenticated ? (
+                <Button onClick={handleLogout}>Logout</Button>
+              ) : (
+                <Button asChild>
+                  <Link href="/login">Login</Link>
+                </Button>
+              )}
             </div>
           </div>
         )}

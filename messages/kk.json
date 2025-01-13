@@ -1,47 +1,84 @@
 {
   "home": {
-    "title": "[home.title]",
-    "description": "[home.description]",
+    "title": "Исламдық Күнделікті Серік",
+    "description": "Күнделікті ислами амалдарыңыз, намаз уақытын бақылау және рухани өсу үшін жеке көмекшіңіз",
     "welcome": "[home.welcome]",
     "welcomeDescription": "[home.welcomeDescription]",
-    "learnMore": "[home.learnMore]"
+    "learnMore": "[home.learnMore]",
+    "getStarted": "Бастау",
+    "signIn": "Кіру",
+    "featuresTitle": "Мүмкіндіктер",
+    "features": {
+      "prayers": {
+        "title": "Намаз Бақылау",
+        "description": "Күнделікті намаздарыңызды бақылаңыз, дәл намаз уақытын алыңыз және үздіксіздікті сақтаңыз"
+      },
+      "quran": {
+        "title": "Құран Оқу",
+        "description": "Күнделікті Құран оқуыңызды жазыңыз, прогресіңізді бақылаңыз және оқу орныңызды сақтаңыз"
+      },
+      "dhikr": {
+        "title": "Күнделікті Зікірлер",
+        "description": "Таңертеңгі және кешкі зікірлеріңізді ыңғайлы тізімдер арқылы бақылаңыз"
+      },
+      "learn": {
+        "title": "Исламды Үйрену",
+        "description": "Құрылымдалған оқу жолдары арқылы біліміңізді дамытыңыз"
+      }
+    },
+    "startJourney": "Жолыңызды Бүгін Бастаңыз",
+    "startJourneyDescription": "Біздің цифрлық көмекшімізбен күнделікті ислами амалдарын жақсартып жатқан мыңдаған мұсылманға қосылыңыз",
+    "joinNow": "Қазір Қосылу"
   },
   "common": {
-    "appName": "[common.appName]",
-    "home": "[common.home]",
-    "about": "[common.about]",
-    "donate": "[common.donate]",
+    "appName": "Исламдық Күнделікті Серік",
+    "home": "Басты бет",
+    "about": "Біз туралы",
+    "donate": "Қолдау",
     "locale": {
-      "en": "[common.locale.en]",
-      "kk": "[common.locale.kk]",
-      "ru": "[common.locale.ru]"
+      "en": "Ағылшынша",
+      "kk": "Қазақша",
+      "ru": "Орысша"
     }
   },
   "footer": {
-    "aboutUs": "[footer.aboutUs]",
-    "aboutDescription": "[footer.aboutDescription]",
-    "quickLinks": "[footer.quickLinks]",
-    "connect": "[footer.connect]",
-    "copyright": "[footer.copyright]"
+    "aboutUs": "Біз туралы",
+    "aboutDescription": "Күнделікті ислами амалдарыңыздағы сенімді серігіңіз",
+    "quickLinks": "Жылдам сілтемелер",
+    "connect": "Байланысу",
+    "copyright": "© 2024 Islamic Daily Companion. Барлық құқықтар қорғалған."
   },
   "donation": {
-    "modalTitle": "[donation.modalTitle]",
-    "modalDescription": "[donation.modalDescription]",
-    "donationMethods": "[donation.donationMethods]",
-    "close": "[donation.close]",
-    "donateNow": "[donation.donateNow]"
+    "modalTitle": "Бізді қолдаңыз",
+    "modalDescription": "Сіздің қайырымдылығыңыз біздің миссиямызды жалғастыруға көмектеседі",
+    "donationMethods": "Қайырымдылық жасау әдістері",
+    "close": "Жабу",
+    "donateNow": "Қазір қолдау"
   },
   "about": {
-    "title": "[about.title]",
-    "description": "[about.description]"
+    "title": "Біз туралы",
+    "description": "Біз мұсылмандарға күнделікті ислами амалдарын сақтауға және жақсартуға көмектесеміз"
   },
   "notFound": {
-    "title": "[notFound.title]",
-    "description": "[notFound.description]",
-    "backHome": "[notFound.backHome]"
+    "title": "404 - Бет табылмады",
+    "description": "Сіз іздеп жатқан бет жоқ немесе жылжытылған",
+    "backHome": "Басты бетке оралу"
   },
   "offline": {
-    "title": "[offline.title]",
-    "description": "[offline.description]"
+    "title": "Сіз желіде емессіз",
+    "description": "Интернет байланысыңызды тексеріп, қайта көріңіз"
+  },
+  "Auth": {
+    "login": "Кіру",
+    "loginDescription": "Қайта келгеніңізге қуаныштымыз! Деректеріңізді енгізіңіз",
+    "email": "Электрондық пошта",
+    "password": "Құпия сөз",
+    "rememberMe": "Мені есте сақтау",
+    "signIn": "Кіру",
+    "signingIn": "Кіру...",
+    "orContinueWith": "Немесе жалғастыру",
+    "forgotPassword": "Құпия сөзді ұмыттыңыз ба?",
+    "noAccount": "Аккаунтыңыз жоқ па?",
+    "createAccount": "Тіркелу"
   }
 }

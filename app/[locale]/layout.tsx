@@ -5,8 +5,7 @@ import Layout from "@/components/Layout";
 import { NextIntlClientProvider } from "next-intl";
 import { getMessages } from "next-intl/server";
 import { config } from '@/lib/config';
-import { createServerComponentClient } from '@supabase/auth-helpers-nextjs';
-import { cookies } from 'next/headers';
+import { Toaster } from 'sonner';
 
 export const metadata: Metadata = {
   title: config.app.name,
@@ -23,17 +22,14 @@ export default async function RootLayout({
   params: { locale: string };
 }) {
   const messages = await getMessages();
-  const supabase = createServerComponentClient({ cookies });
-  const {
-    data: { session },
-  } = await supabase.auth.getSession();
 
   return (
     <html lang={locale} suppressHydrationWarning>
       <body>
         <NextIntlClientProvider messages={messages}>
           <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
-            <Layout session={session}>{children}</Layout>
+            <Layout>{children}</Layout>
+            <Toaster richColors position="top-right" />
           </ThemeProvider>
         </NextIntlClientProvider>
       </body>
