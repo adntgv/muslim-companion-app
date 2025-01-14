@@ -16,6 +16,9 @@ const handleError = (error: any) => {
     
     // Map Appwrite errors to user-friendly messages
     if (error.code === 401) {
+        if (error.type === 'general_unauthorized_scope') {
+            throw new Error('Please log in to continue.');
+        }
         throw new Error('Session expired. Please login again.');
     } else if (error.code === 429) {
         throw new Error('Too many attempts. Please try again later.');
@@ -25,6 +28,21 @@ const handleError = (error: any) => {
         throw new Error('Invalid email or password.');
     } else {
         throw new Error(error.message || 'An unexpected error occurred');
+    }
+};
+
+// Get current session with automatic refresh
+export const getCurrentSession = async () => {
+    try {
+        const session = await account.get();
+        return session;
+    } catch (error: any) {
+        if (error.code === 401) {
+            // Session is invalid or expired
+            return null;
+        }
+        handleError(error);
+        return null;
     }
 };
 
@@ -67,17 +85,6 @@ export const loginWithGoogle = async () => {
         );
     } catch (error) {
         handleError(error);
-    }
-};
-
-// Get current session with automatic refresh
-export const getCurrentSession = async () => {
-    try {
-        const session = await account.get();
-        return session;
-    } catch (error) {
-        handleError(error);
-        return null;
     }
 };
 
