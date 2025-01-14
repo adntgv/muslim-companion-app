@@ -84,7 +84,8 @@
     "orContinueWith": "Or continue with",
     "forgotPassword": "Forgot password?",
     "noAccount": "Don't have an account?",
-    "createAccount": "Create account"
+    "createAccount": "Create account",
+    "loginSuccess": "Successfully logged in"
   },
   "profile": {
     "title": "Profile Settings",

@@ -84,7 +84,8 @@
     "registerDescription": "Создайте аккаунт, чтобы начать",
     "confirmPassword": "Подтвердите пароль",
     "fullName": "Полное имя",
-    "register": "Регистрация"
+    "register": "Регистрация",
+    "loginSuccess": "Вход выполнен успешно"
   },
   "dashboard": {
     "home": "Главная",
