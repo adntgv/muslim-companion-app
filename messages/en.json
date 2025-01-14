@@ -27,6 +27,31 @@
     "startJourneyDescription": "Join thousands of Muslims enhancing their daily Islamic practices with our digital companion",
     "joinNow": "Join Now"
   },
+  "dashboard": {
+    "greeting": "As-salaam-alaikum",
+    "journeyContinues": "Your spiritual journey continues",
+    "streak": "Streak",
+    "level": "Level",
+    "points": "Points",
+    "days": "days",
+    "todayJourney": "Today's Journey",
+    "prayersCompleted": "{completed} of {total} prayers completed",
+    "prayers": {
+      "fajr": "Fajr",
+      "dhuhr": "Dhuhr",
+      "asr": "Asr",
+      "maghrib": "Maghrib",
+      "isha": "Isha"
+    },
+    "dhikrChallenge": "7 Days of Dhikr",
+    "participantsCount": "{count} people participating",
+    "challengeProgress": "Day {current} of {total}",
+    "complete": "Complete",
+    "quranGoals": "Quran Goals",
+    "pagesProgress": "{current}/{total} pages today",
+    "dhikr": "Dhikr",
+    "dhikrProgress": "{current}/{total} today"
+  },
   "common": {
     "appName": "Islamic Daily Companion",
     "home": "Home",
