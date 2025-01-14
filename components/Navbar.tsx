@@ -33,6 +33,10 @@ const Navbar = () => {
       await checkSession(); // Update auth state
       toast.success('Successfully logged out');
       router.push('/login');
+      // Reload the page after a short delay to ensure the router has time to push
+      setTimeout(() => {
+        window.location.reload();
+      }, 100);
     } catch (error: any) {
       toast.error(error.message);
     }
