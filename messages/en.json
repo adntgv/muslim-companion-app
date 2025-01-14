@@ -68,14 +68,38 @@
   "Auth": {
     "login": "Login",
     "loginDescription": "Welcome back! Please enter your details",
+    "registerDescription": "Create an account to get started",
     "email": "Email",
     "password": "Password",
+    "confirmPassword": "Confirm Password",
+    "fullName": "Full Name",
     "rememberMe": "Remember me",
     "signIn": "Sign in",
     "signingIn": "Signing in...",
+    "register": "Register",
+    "registering": "Registering...",
     "orContinueWith": "Or continue with",
     "forgotPassword": "Forgot password?",
     "noAccount": "Don't have an account?",
-    "createAccount": "Create an account"
+    "haveAccount": "Already have an account?",
+    "createAccount": "Create an account",
+    "acceptTerms": "I accept the terms and conditions",
+    "termsAndConditions": "Terms and Conditions",
+    "passwordMismatch": "Passwords do not match",
+    "acceptTermsError": "Please accept the terms and conditions",
+    "registrationSuccess": "Account created successfully",
+    "loginSuccess": "Logged in successfully"
+  },
+  "profile": {
+    "title": "Profile Settings",
+    "description": "Update your profile information",
+    "name": "Name",
+    "email": "Email",
+    "emailHelp": "Email cannot be changed",
+    "saveChanges": "Save Changes",
+    "saving": "Saving...",
+    "updateSuccess": "Profile updated successfully",
+    "updateError": "Failed to update profile",
+    "loadError": "Failed to load profile"
   }
 }

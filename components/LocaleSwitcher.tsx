@@ -10,6 +10,7 @@ export default function LocaleSwitcher() {
   const locale = useLocale();
   const router = useRouter();
   const pathname = usePathname();
+
   const switchLocale = (newLocale: "kk" | "ru" | "en") => {
     router.replace(pathname, { locale: newLocale });
   };
@@ -19,7 +20,7 @@ export default function LocaleSwitcher() {
       {routing.locales.map((l) => (
         <Button
           key={l}
-          onClick={() => switchLocale(l)}
+          onClick={() => switchLocale(l as "kk" | "ru" | "en")}
           variant={l === locale ? 'default' : 'outline'}
           size="sm"
           className={`transition-all duration-300 ${l === locale ? 'ring-2 ring-primary' : 'hover:ring-2 hover:ring-primary/50'}`}

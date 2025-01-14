@@ -965,7 +965,7 @@ To guide the development process and ensure timely delivery of the Minimum Viabl
         Charity
       Yearly
         Ramadan
-        Zakat
+      Zakat
         Eid Prayers
     Knowledge Acquisition
       Quran Understanding

@@ -11,10 +11,10 @@ interface LayoutProps {
 const Layout: React.FC<LayoutProps> = ({ children, isAuthenticated }) => {
   return (
     <div className="flex flex-col min-h-screen">
-      <Navbar isAuthenticated={isAuthenticated} />
+      <Navbar />
       <main className="flex-grow">{children}</main>
       <Analytics />
-      <Footer />
+      {/* <Footer /> */}
     </div>
   );
 };

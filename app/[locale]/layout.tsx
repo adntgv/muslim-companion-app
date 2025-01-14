@@ -1,44 +1,29 @@
-import "../globals.css";
-import { Metadata } from "next";
-import { ThemeProvider } from "@/components/ThemeProvider";
-import Layout from "@/components/Layout";
-import { NextIntlClientProvider } from "next-intl";
-import { getMessages } from "next-intl/server";
-import { config } from '@/lib/config';
-import { Toaster } from 'sonner';
-import { cookies } from 'next/headers';
+import { getMessages } from 'next-intl/server';
+import ClientLayout from '../../components/ClientLayout';
+import '../globals.css';
 
-function checkIsAuthenticated() {
-  const cookieStore = cookies();
-  return cookieStore.has('isAuthenticated');
+export async function generateMetadata({ params: { locale } }: { params: { locale: string } }) {
+  return {
+    title: 'Muslim Companion',
+    description: 'Your personal companion for daily Islamic practices',
+  };
 }
 
-export const metadata: Metadata = {
-  title: config.app.name,
-  description: config.app.description,
-  manifest: "/manifest.json",
-  themeColor: "#000000",
-};
-
-export default async function RootLayout({
+export default async function LocaleLayout({
   children,
-  params: { locale },
+  params: { locale }
 }: {
   children: React.ReactNode;
   params: { locale: string };
 }) {
-  const messages = await getMessages();
-  const isAuthenticated = checkIsAuthenticated();
+  const messages = await getMessages({ locale });
 
   return (
     <html lang={locale} suppressHydrationWarning>
       <body>
-        <NextIntlClientProvider messages={messages}>
-          <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
-            <Layout isAuthenticated={isAuthenticated}>{children}</Layout>
-            <Toaster richColors position="top-right" />
-          </ThemeProvider>
-        </NextIntlClientProvider>
+        <ClientLayout messages={messages} locale={locale}>
+          {children}
+        </ClientLayout>
       </body>
     </html>
   );

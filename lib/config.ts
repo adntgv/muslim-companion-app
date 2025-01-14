@@ -1,3 +1,6 @@
+const isProd = process.env.NODE_ENV === 'production';
+const appUrl = isProd ? process.env.NEXT_PUBLIC_APP_URL : 'http://localhost:3000';
+
 export const config = {
     socialLinks: {
         telegram: 'https://t.me/iqra_app',
@@ -5,8 +8,19 @@ export const config = {
         github: 'https://github.com/your_github',
       },
       app: {
-        name: 'Next.js Boilerplate',
-        description: 'A starter template for Next.js applications',
+        name: 'Muslim Companion',
+        description: 'Your personal companion for daily Islamic practices',
+        url: appUrl,
       },
+      auth: {
+        successRedirect: `${appUrl}/dashboard`,
+        failureRedirect: `${appUrl}/login`,
+        sessionExpiry: 7 * 24 * 60 * 60 * 1000, // 7 days in milliseconds
+        refreshInterval: 60 * 60 * 1000, // 1 hour in milliseconds
+      },
+      appwrite: {
+        endpoint: process.env.NEXT_PUBLIC_APPWRITE_ENDPOINT || 'http://appwrite.adntgv.com/v1',
+        projectId: process.env.NEXT_PUBLIC_APPWRITE_PROJECT_ID || '67852f14003b2e275a82',
+      }
     // Add other configuration items here
   };

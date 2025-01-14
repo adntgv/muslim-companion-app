@@ -1,24 +1,23 @@
 'use client';
 
 import { useState } from 'react';
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Checkbox } from '@/components/ui/checkbox';
-import { useTranslations } from 'next-intl';
-import Link from 'next/link';
-import { FcGoogle } from 'react-icons/fc';
-import { FaApple } from 'react-icons/fa';
 import { useRouter } from '@/i18n/routing';
+import { useTranslations } from 'next-intl';
 import { toast } from 'sonner';
-import Cookies from 'js-cookie';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
+import { FcGoogle } from 'react-icons/fc';
+import { loginWithGoogle, loginWithEmail } from '@/lib/appwrite';
+import { Loader2 } from 'lucide-react';
+import { useAuth } from '@/contexts/auth-context';
 
 export default function LoginPage() {
   const t = useTranslations('Auth');
   const router = useRouter();
+  const { checkSession } = useAuth();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [rememberMe, setRememberMe] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -26,44 +25,35 @@ export default function LoginPage() {
     setIsLoading(true);
     
     try {
-      // TODO: Implement actual login logic
-      toast.error('Regular login not implemented yet. Please use the mock login button.');
-    } catch (error) {
-      toast.error('An error occurred during login');
+      await loginWithEmail(email, password);
+      await checkSession();
+      toast.success(t('loginSuccess'));
+      router.push('/dashboard');
+    } catch (error: any) {
+      toast.error(error.message);
     } finally {
       setIsLoading(false);
     }
   };
 
-  const handleMockLogin = async () => {
-    setIsLoading(true);
-    // Simulate API call
-    await new Promise(resolve => setTimeout(resolve, 1000));
-    
-    // Mock user data
-    const mockUser = {
-      id: '1',
-      name: 'Demo User',
-      email: 'demo@example.com',
-      preferences: {
-        theme: 'light',
-        language: 'en',
-      }
-    };
-
-    // Store mock user data in cookie
-    Cookies.set('user', JSON.stringify(mockUser));
-    Cookies.set('isAuthenticated', 'true');
-    
-    toast.success('Successfully logged in as Demo User');
-    router.push('/dashboard');
+  const handleGoogleLogin = async () => {
+    try {
+      setIsLoading(true);
+      await loginWithGoogle();
+      await checkSession();
+      // Note: No need to handle redirect here as Appwrite will handle it
+    } catch (error: any) {
+      toast.error(error.message);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-background p-4">
       <Card className="w-full max-w-md">
         <CardHeader>
-          <CardTitle>{t('login')}</CardTitle>
+          <CardTitle>{t('signIn')}</CardTitle>
           <CardDescription>{t('loginDescription')}</CardDescription>
         </CardHeader>
         <CardContent>
@@ -75,6 +65,7 @@ export default function LoginPage() {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 required
+                disabled={isLoading}
               />
               <Input
                 type="password"
@@ -82,35 +73,25 @@ export default function LoginPage() {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 required
+                disabled={isLoading}
               />
             </div>
-            
-            <div className="flex items-center space-x-2">
-              <Checkbox
-                id="remember"
-                checked={rememberMe}
-                onCheckedChange={(checked) => setRememberMe(checked as boolean)}
-              />
-              <label htmlFor="remember" className="text-sm text-muted-foreground cursor-pointer">
-                {t('rememberMe')}
-              </label>
-            </div>
-
-            <Button type="submit" className="w-full" disabled={isLoading}>
-              {isLoading ? t('signingIn') : t('signIn')}
-            </Button>
-
             <Button 
-              type="button" 
-              variant="secondary" 
+              type="submit" 
               className="w-full" 
-              onClick={handleMockLogin}
               disabled={isLoading}
             >
-              {isLoading ? 'Loading...' : 'Demo Login (Mock)'}
+              {isLoading ? (
+                <>
+                  <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                  {t('signingIn')}
+                </>
+              ) : (
+                t('signIn')
+              )}
             </Button>
 
-            <div className="relative">
+            <div className="relative my-4">
               <div className="absolute inset-0 flex items-center">
                 <span className="w-full border-t" />
               </div>
@@ -121,29 +102,29 @@ export default function LoginPage() {
               </div>
             </div>
 
-            <div className="grid grid-cols-2 gap-4">
-              <Button variant="outline" type="button" className="w-full" disabled={isLoading}>
-                <FcGoogle className="mr-2 h-4 w-4" />
-                Google
-              </Button>
-              <Button variant="outline" type="button" className="w-full" disabled={isLoading}>
-                <FaApple className="mr-2 h-4 w-4" />
-                Apple
+            <Button
+              type="button"
+              variant="outline"
+              className="w-full"
+              onClick={handleGoogleLogin}
+              disabled={isLoading}
+            >
+              <FcGoogle className="mr-2 h-4 w-4" />
+              Google
+            </Button>
+
+            <div className="text-center text-sm">
+              <span className="text-muted-foreground">{t('noAccount')}</span>{' '}
+              <Button
+                variant="link"
+                className="p-0"
+                onClick={() => router.push('/register')}
+              >
+                {t('createAccount')}
               </Button>
             </div>
           </form>
         </CardContent>
-        <CardFooter className="flex flex-col space-y-2">
-          <Link href="/forgot-password" className="text-sm text-primary hover:underline">
-            {t('forgotPassword')}
-          </Link>
-          <div className="text-sm text-muted-foreground">
-            {t('noAccount')}{' '}
-            <Link href="/register" className="text-primary hover:underline">
-              {t('createAccount')}
-            </Link>
-          </div>
-        </CardFooter>
       </Card>
     </div>
   );

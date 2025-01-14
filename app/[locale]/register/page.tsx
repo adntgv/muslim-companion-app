@@ -1,29 +1,68 @@
 'use client';
 
 import { useState } from 'react';
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { Checkbox } from '@/components/ui/checkbox';
 import { useTranslations } from 'next-intl';
-import Link from 'next/link';
-import { timezones } from '@/lib/constants';
+import { useRouter } from '@/i18n/routing';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
+import { Checkbox } from "@/components/ui/checkbox";
+import { toast } from 'sonner';
+import { FcGoogle } from 'react-icons/fc';
+import { loginWithGoogle, createAccount } from '@/lib/appwrite';
+import { Loader2 } from 'lucide-react';
+import { useAuth } from '@/contexts/auth-context';
 
 export default function RegisterPage() {
   const t = useTranslations('Auth');
+  const router = useRouter();
+  const { checkSession } = useAuth();
+  const [isLoading, setIsLoading] = useState(false);
   const [formData, setFormData] = useState({
     email: '',
     password: '',
     confirmPassword: '',
     name: '',
-    timezone: '',
     acceptTerms: false,
   });
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    // TODO: Implement registration logic
+    
+    if (formData.password !== formData.confirmPassword) {
+      toast.error(t('passwordMismatch'));
+      return;
+    }
+
+    if (!formData.acceptTerms) {
+      toast.error(t('acceptTermsError'));
+      return;
+    }
+
+    setIsLoading(true);
+    try {
+      await createAccount(formData.email, formData.password, formData.name);
+      await checkSession();
+      toast.success(t('registrationSuccess'));
+      router.push('/dashboard');
+    } catch (error: any) {
+      toast.error(error.message);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const handleGoogleLogin = async () => {
+    try {
+      setIsLoading(true);
+      await loginWithGoogle();
+      await checkSession();
+      // Note: No need to handle redirect here as Appwrite will handle it
+    } catch (error: any) {
+      toast.error(error.message);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -47,6 +86,7 @@ export default function RegisterPage() {
                 value={formData.name}
                 onChange={handleInputChange}
                 required
+                disabled={isLoading}
               />
               <Input
                 name="email"
@@ -55,6 +95,7 @@ export default function RegisterPage() {
                 value={formData.email}
                 onChange={handleInputChange}
                 required
+                disabled={isLoading}
               />
               <Input
                 name="password"
@@ -63,6 +104,7 @@ export default function RegisterPage() {
                 value={formData.password}
                 onChange={handleInputChange}
                 required
+                disabled={isLoading}
               />
               <Input
                 name="confirmPassword"
@@ -71,23 +113,8 @@ export default function RegisterPage() {
                 value={formData.confirmPassword}
                 onChange={handleInputChange}
                 required
+                disabled={isLoading}
               />
-              
-              <Select
-                value={formData.timezone}
-                onValueChange={(value: string) => setFormData((prev) => ({ ...prev, timezone: value }))}
-              >
-                <SelectTrigger>
-                  <SelectValue placeholder={t('selectTimezone')} />
-                </SelectTrigger>
-                <SelectContent>
-                  {timezones.map((timezone) => (
-                    <SelectItem key={timezone.value} value={timezone.value}>
-                      {timezone.label}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
             </div>
 
             <div className="flex items-center space-x-2">
@@ -95,30 +122,64 @@ export default function RegisterPage() {
                 id="terms"
                 checked={formData.acceptTerms}
                 onCheckedChange={(checked) => 
-                  setFormData((prev) => ({ ...prev, acceptTerms: checked as boolean }))
+                  setFormData(prev => ({ ...prev, acceptTerms: checked as boolean }))
                 }
+                disabled={isLoading}
               />
               <label htmlFor="terms" className="text-sm text-muted-foreground">
-                {t('acceptTerms')}{' '}
-                <Link href="/terms" className="text-primary hover:underline">
-                  {t('termsAndConditions')}
-                </Link>
+                {t('acceptTerms')}
               </label>
             </div>
 
-            <Button type="submit" className="w-full" disabled={!formData.acceptTerms}>
-              {t('createAccount')}
+            <Button 
+              type="submit" 
+              className="w-full"
+              disabled={isLoading || !formData.acceptTerms}
+            >
+              {isLoading ? (
+                <>
+                  <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                  {t('registering')}
+                </>
+              ) : (
+                t('register')
+              )}
             </Button>
+
+            <div className="relative my-4">
+              <div className="absolute inset-0 flex items-center">
+                <span className="w-full border-t" />
+              </div>
+              <div className="relative flex justify-center text-xs uppercase">
+                <span className="bg-background px-2 text-muted-foreground">
+                  {t('orContinueWith')}
+                </span>
+              </div>
+            </div>
+
+            <Button
+              type="button"
+              variant="outline"
+              className="w-full"
+              onClick={handleGoogleLogin}
+              disabled={isLoading}
+            >
+              <FcGoogle className="mr-2 h-4 w-4" />
+              Google
+            </Button>
+
+            <div className="text-center text-sm">
+              <span className="text-muted-foreground">{t('haveAccount')}</span>{' '}
+              <Button
+                variant="link"
+                className="p-0"
+                onClick={() => router.push('/login')}
+              >
+                {t('signIn')}
+              </Button>
+            </div>
           </form>
         </CardContent>
-        <CardFooter>
-          <div className="text-sm text-muted-foreground">
-            {t('alreadyHaveAccount')}{' '}
-            <Link href="/login" className="text-primary hover:underline">
-              {t('signIn')}
-            </Link>
-          </div>
-        </CardFooter>
       </Card>
     </div>
   );

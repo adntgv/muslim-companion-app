@@ -3,26 +3,64 @@
 import React, { useState } from 'react';
 import { Link, useRouter } from '@/i18n/routing';
 import { Button } from "@/components/ui/button";
-import { MenuIcon, XIcon } from 'lucide-react';
+import { MenuIcon, XIcon, User } from 'lucide-react';
 import dynamic from 'next/dynamic';
 import { useTranslations } from 'next-intl';
 import LocaleSwitcher from './LocaleSwitcher';
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import { logout } from '@/lib/appwrite';
+import { useAuth } from '@/contexts/auth-context';
+import { toast } from 'sonner';
 
 const ThemeToggle = dynamic(() => import('./themeToggle'), { ssr: false });
 
-const Navbar = ({ isAuthenticated }: { isAuthenticated?: boolean }) => {
+const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const t = useTranslations('common');
   const router = useRouter();
+  const { user, isLoading, checkSession } = useAuth();
 
   const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
 
   const handleLogout = async () => {
-    // TODO: Implement logout logic
-    router.push('/login');
+    try {
+      await logout();
+      await checkSession(); // Update auth state
+      toast.success('Successfully logged out');
+      router.push('/login');
+    } catch (error: any) {
+      toast.error(error.message);
+    }
   };
 
   const appName = "Muslim Companion"
+
+  const UserMenu = () => (
+    <DropdownMenu>
+      <DropdownMenuTrigger asChild>
+        <Button variant="ghost" className="flex items-center space-x-2">
+          <User className="h-5 w-5" />
+          <span>{user?.name || 'User'}</span>
+        </Button>
+      </DropdownMenuTrigger>
+      <DropdownMenuContent align="end">
+        <DropdownMenuItem asChild>
+          <Link href="/dashboard">Dashboard</Link>
+        </DropdownMenuItem>
+        <DropdownMenuItem asChild>
+          <Link href="/profile">Profile</Link>
+        </DropdownMenuItem>
+        <DropdownMenuItem onClick={handleLogout}>
+          Logout
+        </DropdownMenuItem>
+      </DropdownMenuContent>
+    </DropdownMenu>
+  );
 
   return (
     <nav className="border-b bg-background sticky top-0 z-10 shadow-sm">
@@ -35,13 +73,13 @@ const Navbar = ({ isAuthenticated }: { isAuthenticated?: boolean }) => {
             </Button>
             <LocaleSwitcher />
             <ThemeToggle />
-            {isAuthenticated ? (
-              <Button onClick={handleLogout}>Logout</Button>
+            {!isLoading && (user ? (
+              <UserMenu />
             ) : (
               <Button asChild>
                 <Link href="/login">Login</Link>
               </Button>
-            )}
+            ))}
           </div>
 
           <div className="md:hidden">
@@ -59,13 +97,21 @@ const Navbar = ({ isAuthenticated }: { isAuthenticated?: boolean }) => {
               </Button>
               <LocaleSwitcher />
               <ThemeToggle />
-              {isAuthenticated ? (
-                <Button onClick={handleLogout}>Logout</Button>
+              {!isLoading && (user ? (
+                <>
+                  <Button variant="ghost" asChild onClick={toggleMenu}>
+                    <Link href="/dashboard">Dashboard</Link>
+                  </Button>
+                  <Button variant="ghost" asChild onClick={toggleMenu}>
+                    <Link href="/profile">Profile</Link>
+                  </Button>
+                  <Button onClick={handleLogout}>Logout</Button>
+                </>
               ) : (
                 <Button asChild>
                   <Link href="/login">Login</Link>
                 </Button>
-              )}
+              ))}
             </div>
           </div>
         )}
