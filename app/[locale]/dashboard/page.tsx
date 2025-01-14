@@ -1,12 +1,13 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useTranslations } from 'next-intl';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { 
   CheckCircle, X, Moon, AlertCircle, Home, Book, 
   Clock, Users, Sun, Star, Award, Heart, TrendingUp,
-  Trophy 
+  Trophy, GraduationCap, BookOpen, ScrollText, Lock,
+  LucideIcon
 } from 'lucide-react';
 import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card';
 import { Alert, AlertDescription } from '@/components/ui/alert';
@@ -46,7 +47,12 @@ const translations: Translations = {
   }
 };
 
-const GradientCard = ({ children, gradient = "from-blue-500 to-purple-600" }) => (
+interface GradientCardProps {
+  children: React.ReactNode;
+  gradient?: string;
+}
+
+const GradientCard = ({ children, gradient = "from-blue-500 to-purple-600" }: GradientCardProps) => (
   <div className={`rounded-xl overflow-hidden mb-4 bg-gradient-to-r ${gradient} shadow-lg dark:shadow-none`}>
     <div className="px-6 py-5 text-white">
       {children}
@@ -54,7 +60,11 @@ const GradientCard = ({ children, gradient = "from-blue-500 to-purple-600" }) =>
   </div>
 );
 
-const ProgressRing = ({ progress }) => (
+interface ProgressRingProps {
+  progress: number;
+}
+
+const ProgressRing = ({ progress }: ProgressRingProps) => (
   <div className="relative w-16 h-16">
     <svg className="w-full h-full" viewBox="0 0 36 36">
       <path
@@ -276,54 +286,237 @@ const CommunityTab = () => (
   </div>
 );
 
+const GrowthPathTab = () => {
+  return (
+    <div className="p-4 space-y-4 bg-background">
+      <div className="mb-6">
+        <h1 className="text-2xl font-bold mb-2">Growth Paths</h1>
+        <p className="text-muted-foreground">Progress through levels of Islamic practices</p>
+      </div>
+
+      <PathCategory title="Daily Prayers" icon={Clock} gradient="from-green-500/90 to-teal-600/90 dark:from-green-600 dark:to-teal-700">
+        <ProgressPath
+          title="5 Daily Prayers"
+          description="Master the mandatory prayers (Fard)"
+          level={1}
+          completed={true}
+        />
+        <ProgressPath
+          title="Sunnah Prayers"
+          description="Add regular Sunnah prayers before/after Fard"
+          level={2}
+          prerequisites={['Complete 5 daily prayers consistently for 30 days']}
+        />
+        <ProgressPath
+          title="Nafl Prayers"
+          description="Incorporate voluntary prayers like Tahajjud"
+          level={3}
+          prerequisites={['Master Sunnah prayers', '40 days consistency']}
+          locked={true}
+        />
+      </PathCategory>
+
+      <PathCategory title="Quran Journey" icon={BookOpen} gradient="from-blue-600/90 to-indigo-600/90 dark:from-blue-700 dark:to-indigo-700">
+        <ProgressPath
+          title="Arabic Alphabet"
+          description="Learn to read Arabic letters and basic combinations"
+          level={1}
+          completed={true}
+        />
+        <ProgressPath
+          title="Tajweed Rules"
+          description="Learn proper pronunciation and reading rules"
+          level={2}
+          prerequisites={['Complete Arabic Alphabet']}
+        />
+        <ProgressPath
+          title="Quran Translation"
+          description="Understand the meaning of what you read"
+          level={3}
+          prerequisites={['Master Tajweed Rules', 'Basic Arabic Vocabulary']}
+          locked={true}
+        />
+      </PathCategory>
+
+      <PathCategory title="Daily Dhikr" icon={Heart} gradient="from-red-500/90 to-pink-600/90 dark:from-red-600 dark:to-pink-700">
+        <ProgressPath
+          title="Morning & Evening Adhkar"
+          description="Essential daily remembrance"
+          level={1}
+        />
+        <ProgressPath
+          title="Post-Prayer Adhkar"
+          description="Dhikr and duas after each prayer"
+          level={2}
+          prerequisites={['Consistent Morning & Evening Adhkar for 21 days']}
+        />
+        <ProgressPath
+          title="Advanced Dhikr"
+          description="Additional voluntary remembrance throughout the day"
+          level={3}
+          prerequisites={['Master Post-Prayer Adhkar', '30 days consistency']}
+          locked={true}
+        />
+      </PathCategory>
+
+      <PathCategory title="Islamic Knowledge" icon={GraduationCap} gradient="from-purple-500/90 to-violet-600/90 dark:from-purple-600 dark:to-violet-700">
+        <ProgressPath
+          title="Basic Aqeedah"
+          description="Fundamentals of Islamic belief"
+          level={1}
+        />
+        <ProgressPath
+          title="Fiqh of Worship"
+          description="Rules of prayer, fasting, and purification"
+          level={2}
+          prerequisites={['Complete Basic Aqeedah']}
+        />
+        <ProgressPath
+          title="Advanced Studies"
+          description="Deep dive into Islamic sciences"
+          level={3}
+          prerequisites={['Master Fiqh of Worship', 'Complete Quran Translation basics']}
+          locked={true}
+        />
+      </PathCategory>
+
+      <PathCategory title="Character Development" icon={ScrollText} gradient="from-orange-500/90 to-amber-600/90 dark:from-orange-600 dark:to-amber-700">
+        <ProgressPath
+          title="Basic Manners"
+          description="Essential Islamic etiquette and behavior"
+          level={1}
+        />
+        <ProgressPath
+          title="Family Relations"
+          description="Rights and responsibilities towards family"
+          level={2}
+          prerequisites={['Practice Basic Manners consistently']}
+        />
+        <ProgressPath
+          title="Community Leadership"
+          description="Contributing to and leading the community"
+          level={3}
+          prerequisites={['Master Family Relations', 'Active community participation']}
+          locked={true}
+        />
+      </PathCategory>
+    </div>
+  );
+};
+
+interface PathCategoryProps {
+  title: string;
+  icon: LucideIcon;
+  children: React.ReactNode;
+  gradient?: string;
+}
+
+const PathCategory = ({ title, icon: Icon, children, gradient = "from-blue-500 to-purple-600" }: PathCategoryProps) => (
+  <div className="mb-8">
+    <div className={`rounded-xl p-4 bg-gradient-to-r ${gradient} text-white mb-4 flex items-center shadow-md`}>
+      <Icon size={24} className="mr-3" />
+      <h2 className="text-xl font-bold">{title}</h2>
+    </div>
+    <div className="space-y-3">
+      {children}
+    </div>
+  </div>
+);
+
+interface ProgressPathProps {
+  title: string;
+  description: string;
+  level?: number;
+  prerequisites?: string[];
+  completed?: boolean;
+  locked?: boolean;
+}
+
+const ProgressPath = ({ title, description, level, prerequisites = [], completed = false, locked = false }: ProgressPathProps) => {
+  const [isExpanded, setIsExpanded] = useState(false);
+
+  return (
+    <Card className={`${locked ? 'opacity-75' : ''} bg-card hover:bg-accent/50 transition-colors`}>
+      <CardContent className="p-4">
+        <div className="flex items-start justify-between">
+          <div className="flex-1">
+            <div className="flex items-center">
+              {locked && <Lock size={16} className="text-muted-foreground mr-2" />}
+              {!locked && completed && <CheckCircle size={16} className="text-green-500 dark:text-green-400 mr-2" />}
+              {!locked && !completed && <AlertCircle size={16} className="text-orange-500 dark:text-orange-400 mr-2" />}
+              <h3 className="font-semibold">{title}</h3>
+            </div>
+            <p className="text-sm text-muted-foreground mt-1">{description}</p>
+            {level && <span className="text-xs text-purple-600 dark:text-purple-400 font-medium mt-2 block">Level {level}</span>}
+          </div>
+          <button 
+            onClick={() => setIsExpanded(!isExpanded)}
+            className="ml-4 p-2 hover:bg-accent rounded-full transition-colors"
+          >
+            {isExpanded ? '-' : '+'}
+          </button>
+        </div>
+        
+        {isExpanded && prerequisites.length > 0 && (
+          <div className="mt-4 pt-4 border-t border-border">
+            <p className="text-sm font-medium mb-2">Prerequisites:</p>
+            <ul className="text-sm text-muted-foreground space-y-1">
+              {prerequisites.map((prereq, index) => (
+                <li key={index} className="flex items-center">
+                  <Star size={12} className="mr-2 text-yellow-500 dark:text-yellow-400" />
+                  {prereq}
+                </li>
+              ))}
+            </ul>
+          </div>
+        )}
+      </CardContent>
+    </Card>
+  );
+};
+
 export default function DashboardPage() {
   const t = useTranslations('dashboard');
   const [userName, setUserName] = useState<string>('');
 
+  useEffect(() => {
+    const fetchUserName = async () => {
+      const name = await getUserName();
+      setUserName(name);
+    };
+    fetchUserName();
+  }, []);
+
   return (
-    <Tabs defaultValue="home" className="w-full">
-      <TabsList className="grid w-full grid-cols-5 mb-4">
-        <TabsTrigger value="home">
-          <Home className="h-4 w-4 mr-2" />
-          {t('home')}
-        </TabsTrigger>
-        <TabsTrigger value="prayers">
-          <Clock className="h-4 w-4 mr-2" />
-          {t('prayers')}
-        </TabsTrigger>
-        <TabsTrigger value="quran">
-          <Book className="h-4 w-4 mr-2" />
-          {t('quran')}
-        </TabsTrigger>
-        <TabsTrigger value="community">
-          <Users className="h-4 w-4 mr-2" />
-          {t('community')}
-        </TabsTrigger>
-        <TabsTrigger value="leaderboard">
-          <Trophy className="h-4 w-4 mr-2" />
-          {t('leaderboard')}
-        </TabsTrigger>
-      </TabsList>
+    <div className="container mx-auto">
+      <Tabs defaultValue="home" className="w-full">
+        <TabsList className="grid w-full grid-cols-3 mb-4">
+          <TabsTrigger value="home">
+            <Home className="h-4 w-4 mr-2" />
+            {t('home')}
+          </TabsTrigger>
+          <TabsTrigger value="growth">
+            <TrendingUp className="h-4 w-4 mr-2" />
+            {t('growth')}
+          </TabsTrigger>
+          <TabsTrigger value="leaderboard">
+            <Trophy className="h-4 w-4 mr-2" />
+            {t('leaderboard')}
+          </TabsTrigger>
+        </TabsList>
 
-      <TabsContent value="home">
-        <HomeTab userName={userName} />
-      </TabsContent>
+        <TabsContent value="home">
+          <HomeTab userName={userName} />
+        </TabsContent>
 
-      <TabsContent value="prayers">
-        <PrayerTab />
-      </TabsContent>
+        <TabsContent value="growth">
+          <GrowthPathTab />
+        </TabsContent>
 
-      <TabsContent value="quran">
-        <QuranTab />
-      </TabsContent>
-
-      <TabsContent value="community">
-        <CommunityTab />
-      </TabsContent>
-
-      <TabsContent value="leaderboard">
-        <AnonymousLeaderboard />
-      </TabsContent>
-    </Tabs>
+        <TabsContent value="leaderboard">
+          <AnonymousLeaderboard />
+        </TabsContent>
+      </Tabs>
+    </div>
   );
 } 
