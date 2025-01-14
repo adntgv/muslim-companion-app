@@ -42,7 +42,7 @@ const Navbar = () => {
     }
   };
 
-  const appName = "Muslim Companion"
+  const appName = "Falah"
 
   const UserMenu = () => (
     <DropdownMenu>

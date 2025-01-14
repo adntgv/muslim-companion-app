@@ -130,7 +130,7 @@ const HomeTab = ({ userName = 'Amir' }: HomeTabProps) => {
           </div>
           <ProgressRing progress={80} />
         </div>
-        <div className="flex justify-between mt-6">
+        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-2 mt-6">
           <div className="flex items-center bg-white/10 rounded-lg px-3 py-2">
             <Sun size={20} className="mr-2" />
             <span>{t('prayers.fajr')}</span>
@@ -144,6 +144,14 @@ const HomeTab = ({ userName = 'Amir' }: HomeTabProps) => {
           <div className="flex items-center bg-white/20 rounded-lg px-3 py-2">
             <Moon size={20} className="mr-2" />
             <span>{t('prayers.asr')}</span>
+          </div>
+          <div className="flex items-center bg-white/20 rounded-lg px-3 py-2">
+            <Moon size={20} className="mr-2" />
+            <span>{t('prayers.maghrib')}</span>
+          </div>
+          <div className="flex items-center bg-white/20 rounded-lg px-3 py-2">
+            <Moon size={20} className="mr-2" />
+            <span>{t('prayers.isha')}</span>
           </div>
         </div>
       </GradientCard>

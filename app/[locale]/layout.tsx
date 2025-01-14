@@ -4,7 +4,7 @@ import '../globals.css';
 
 export async function generateMetadata({ params: { locale } }: { params: { locale: string } }) {
   return {
-    title: 'Muslim Companion',
+    title: 'Falah',
     description: 'Your personal companion for daily Islamic practices',
   };
 }

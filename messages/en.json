@@ -43,6 +43,7 @@
       "maghrib": "Maghrib",
       "isha": "Isha"
     },
+    "growth": "Growth",
     "dhikrChallenge": "7 Days of Dhikr",
     "participantsCount": "{count} people participating",
     "challengeProgress": "Day {current} of {total}",
@@ -52,7 +53,6 @@
     "dhikr": "Dhikr",
     "dhikrProgress": "{current}/{total} today",
     "home": "Home",
-    "prayers": "Prayers",
     "quran": "Quran",
     "community": "Community",
     "leaderboard": "Leaderboard"

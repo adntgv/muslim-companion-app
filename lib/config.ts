@@ -8,7 +8,7 @@ export const config = {
         github: 'https://github.com/your_github',
       },
       app: {
-        name: 'Muslim Companion',
+        name: 'Falah',
         description: 'Your personal companion for daily Islamic practices',
         url: appUrl,
       },

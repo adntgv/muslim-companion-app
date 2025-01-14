@@ -2,9 +2,9 @@
   "home": {
     "title": "Исламский Ежедневный Спутник",
     "description": "Ваш личный помощник для ежедневных исламских практик, отслеживания молитв и духовного роста",
-    "welcome": "[home.welcome]",
-    "welcomeDescription": "[home.welcomeDescription]",
-    "learnMore": "[home.learnMore]",
+    "welcome": "Добро пожаловать",
+    "welcomeDescription": "Начните свой духовный путь с нами",
+    "learnMore": "Узнать больше",
     "getStarted": "Начать",
     "signIn": "Войти",
     "featuresTitle": "Возможности",
@@ -79,13 +79,53 @@
     "orContinueWith": "Или продолжить с помощью",
     "forgotPassword": "Забыли пароль?",
     "noAccount": "Нет аккаунта?",
-    "createAccount": "Создать аккаунт"
+    "createAccount": "Создать аккаунт",
+    "registerDescription": "Создайте аккаунт, чтобы начать",
+    "confirmPassword": "Подтвердите пароль",
+    "fullName": "Полное имя",
+    "register": "Регистрация"
   },
   "dashboard": {
     "home": "Главная",
     "prayers": "Намаз",
     "quran": "Коран",
     "community": "Сообщество",
-    "leaderboard": "Рейтинг"
+    "leaderboard": "Рейтинг",
+    "greeting": "Ас-саляму алейкум",
+    "journeyContinues": "Ваш духовный путь продолжается",
+    "streak": "Серия",
+    "level": "Уровень",
+    "points": "Очки",
+    "days": "дней",
+    "todayJourney": "Сегодняшний путь",
+    "prayersCompleted": "{completed} из {total} молитв выполнено",
+    "dhikrChallenge": "7 дней Зикра",
+    "participantsCount": "Участвует {count} человек",
+    "challengeProgress": "День {current} из {total}",
+    "complete": "Завершено",
+    "quranGoals": "Цели по Корану",
+    "pagesProgress": "{current}/{total} страниц сегодня",
+    "dhikr": "Зикр",
+    "dhikrProgress": "{current}/{total} сегодня",
+    "growth": "Рост",
+    "prayers": {
+      "fajr": "Фаджр",
+      "dhuhr": "Зухр",
+      "asr": "Аср",
+      "maghrib": "Магриб",
+      "isha": "Иша"
+    }
+  },
+  "profile": {
+    "title": "Настройки профиля",
+    "description": "Обновите информацию вашего профиля",
+    "name": "Имя",
+    "email": "Электронная почта",
+    "emailHelp": "Email нельзя изменить",
+    "saveChanges": "Сохранить изменения",
+    "saving": "Сохранение...",
+    "updateSuccess": "Профиль успешно обновлен",
+    "updateError": "Не удалось обновить профиль",
+    "loadError": "Не удалось загрузить профиль"
   }
 }

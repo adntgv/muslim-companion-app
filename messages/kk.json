@@ -2,9 +2,9 @@
   "home": {
     "title": "Исламдық Күнделікті Серік",
     "description": "Күнделікті ислами амалдарыңыз, намаз уақытын бақылау және рухани өсу үшін жеке көмекшіңіз",
-    "welcome": "[home.welcome]",
-    "welcomeDescription": "[home.welcomeDescription]",
-    "learnMore": "[home.learnMore]",
+    "welcome": "Қош келдіңіз",
+    "welcomeDescription": "Рухани жолыңызды бізбен бастаңыз",
+    "learnMore": "Көбірек білу",
     "getStarted": "Бастау",
     "signIn": "Кіру",
     "featuresTitle": "Мүмкіндіктер",
@@ -79,13 +79,53 @@
     "orContinueWith": "Немесе жалғастыру",
     "forgotPassword": "Құпия сөзді ұмыттыңыз ба?",
     "noAccount": "Аккаунтыңыз жоқ па?",
-    "createAccount": "Тіркелу"
+    "createAccount": "Тіркелу",
+    "registerDescription": "Бастау үшін тіркеліңіз",
+    "confirmPassword": "Құпия сөзді растау",
+    "fullName": "Толық аты-жөні",
+    "register": "Тіркелу"
   },
   "dashboard": {
     "home": "Басты бет",
     "prayers": "Намаз",
     "quran": "Құран",
     "community": "Қауымдастық",
-    "leaderboard": "Рейтинг"
+    "leaderboard": "Рейтинг",
+    "greeting": "Ассаламу алейкум",
+    "journeyContinues": "Сіздің рухани жолыңыз жалғасуда",
+    "streak": "Жалғастық",
+    "level": "Деңгей",
+    "points": "Ұпай",
+    "days": "күн",
+    "todayJourney": "Бүгінгі жол",
+    "prayersCompleted": "{completed} намаз {total} намаздан орындалды",
+    "dhikrChallenge": "7 күндік Зікір",
+    "participantsCount": "{count} адам қатысуда",
+    "challengeProgress": "{total} күннің {current} күні",
+    "complete": "Аяқталды",
+    "quranGoals": "Құран мақсаттары",
+    "pagesProgress": "Бүгін {current}/{total} бет",
+    "dhikr": "Зікір",
+    "dhikrProgress": "Бүгін {current}/{total}",
+    "growth": "Өсу",
+    "prayers": {
+      "fajr": "Таң",
+      "dhuhr": "Бесін",
+      "asr": "Екінті",
+      "maghrib": "Ақшам",
+      "isha": "Құптан"
+    }
+  },
+  "profile": {
+    "title": "Профиль баптаулары",
+    "description": "Профиль ақпаратыңызды жаңартыңыз",
+    "name": "Аты-жөні",
+    "email": "Электрондық пошта",
+    "emailHelp": "Электрондық поштаны өзгерту мүмкін емес",
+    "saveChanges": "Өзгерістерді сақтау",
+    "saving": "Сақталуда...",
+    "updateSuccess": "Профиль сәтті жаңартылды",
+    "updateError": "Профильді жаңарту сәтсіз аяқталды",
+    "loadError": "Профильді жүктеу сәтсіз аяқталды"
   }
 }

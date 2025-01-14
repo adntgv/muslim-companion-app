@@ -1,4 +1,4 @@
-# Growth-Oriented Muslim Companion App
+# Growth-Oriented Falah App
 
 ## Overview
 
