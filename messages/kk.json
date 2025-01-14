@@ -86,8 +86,7 @@
     "register": "Тіркелу"
   },
   "dashboard": {
-    "home": "Басты бет",
-    "prayers": "Намаз",
+      "home": "Басты бет",
     "quran": "Құран",
     "community": "Қауымдастық",
     "leaderboard": "Рейтинг",

@@ -33,8 +33,8 @@ export default function ProfilePage() {
       const session = await getCurrentSession();
       if (session) {
         setProfile({
-          name: session.name,
-          email: session.email,
+          name: session.data?.name || '',
+          email: session.data?.email || '',
         });
       }
     } catch (error) {
