@@ -11,6 +11,7 @@ import { FcGoogle } from 'react-icons/fc';
 import { FaApple } from 'react-icons/fa';
 import { useRouter } from '@/i18n/routing';
 import { toast } from 'sonner';
+import Cookies from 'js-cookie';
 
 export default function LoginPage() {
   const t = useTranslations('Auth');
@@ -50,9 +51,9 @@ export default function LoginPage() {
       }
     };
 
-    // Store mock user data in localStorage
-    localStorage.setItem('user', JSON.stringify(mockUser));
-    localStorage.setItem('isAuthenticated', 'true');
+    // Store mock user data in cookie
+    Cookies.set('user', JSON.stringify(mockUser));
+    Cookies.set('isAuthenticated', 'true');
     
     toast.success('Successfully logged in as Demo User');
     router.push('/dashboard');

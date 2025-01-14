@@ -6,6 +6,12 @@ import { NextIntlClientProvider } from "next-intl";
 import { getMessages } from "next-intl/server";
 import { config } from '@/lib/config';
 import { Toaster } from 'sonner';
+import { cookies } from 'next/headers';
+
+function checkIsAuthenticated() {
+  const cookieStore = cookies();
+  return cookieStore.has('isAuthenticated');
+}
 
 export const metadata: Metadata = {
   title: config.app.name,
@@ -22,13 +28,14 @@ export default async function RootLayout({
   params: { locale: string };
 }) {
   const messages = await getMessages();
+  const isAuthenticated = checkIsAuthenticated();
 
   return (
     <html lang={locale} suppressHydrationWarning>
       <body>
         <NextIntlClientProvider messages={messages}>
           <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
-            <Layout>{children}</Layout>
+            <Layout isAuthenticated={isAuthenticated}>{children}</Layout>
             <Toaster richColors position="top-right" />
           </ThemeProvider>
         </NextIntlClientProvider>

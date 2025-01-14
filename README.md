@@ -944,4 +944,46 @@ To guide the development process and ensure timely delivery of the Minimum Viabl
 - **Weeks 3-5**: Phase 2 - Roadmap and Learning Modules
 - **Weeks 6-7**: Phase 3 - Progress Tracking and Gamification
 - **Week 8**: Phase 4 - Suggestions and Improvements
-- **Weeks 9-10**: Phase 5 - Testing and Refinement
+- **Weeks 9-10**: Phase 5 - Testing and Refinemen
+
+
+
+
+ Islamic Growth
+    Daily Rituals
+      Five Daily Prayers
+      Morning/Evening Adhkar
+      Quran Reading
+      Personal Dua
+    Periodic Actions
+      Weekly
+        Friday Prayer
+        Family Time
+        Voluntary Fasting
+      Monthly
+        New Moon Dua
+        Charity
+      Yearly
+        Ramadan
+        Zakat
+        Eid Prayers
+    Knowledge Acquisition
+      Quran Understanding
+      Hadith Studies
+      Fiqh Learning
+      Seerah Studies
+    Character Development
+      Patience
+      Honesty
+      Kindness
+      Gratitude
+    Behavioral Changes
+      Speech Etiquette
+      Eating Habits
+      Sleep Habits
+      Social Interactions
+    Spiritual Growth
+      Heart Softening
+      Taqwa Development
+      Love for Allah
+      Following Sunnah
