@@ -4,6 +4,10 @@
     "description": "Your personal companion for daily Islamic practices, prayer tracking, and spiritual growth",
     "getStarted": "Get Started",
     "signIn": "Sign In",
+    "login": "Login",
+    "welcome": "Welcome to Falah",
+    "welcomeDescription": "Let's get started",
+    "learnMore": "Learn More",
     "featuresTitle": "Features",
     "features": {
       "prayers": {
@@ -26,6 +30,73 @@
     "startJourney": "Start Your Journey Today",
     "startJourneyDescription": "Join thousands of Muslims enhancing their daily Islamic practices with our digital companion",
     "joinNow": "Join Now"
+  },
+  "common": {
+    "appName": "Islamic Daily Companion",
+    "home": "Home",
+    "about": "About",
+    "donate": "Donate",
+    "locale": {
+      "en": "English",
+      "kk": "Kazakh",
+      "ru": "Russian"
+    }
+  },
+  "footer": {
+    "aboutUs": "About Us",
+    "aboutDescription": "Your trusted companion in daily Islamic practices",
+    "quickLinks": "Quick Links",
+    "connect": "Connect",
+    "copyright": "© 2024 Islamic Daily Companion. All rights reserved."
+  },
+  "donation": {
+    "modalTitle": "Support Us",
+    "modalDescription": "Your donation helps us continue our mission",
+    "donationMethods": "Donation Methods",
+    "close": "Close",
+    "donateNow": "Donate Now"
+  },
+  "about": {
+    "title": "About Us",
+    "description": "We help Muslims maintain and improve their daily Islamic practices"
+  },
+  "notFound": {
+    "title": "404 - Page Not Found",
+    "description": "The page you are looking for doesn't exist or has been moved",
+    "backHome": "Go back home"
+  },
+  "offline": {
+    "title": "You are offline",
+    "description": "Please check your internet connection and try again"
+  },
+  "Auth": {
+    "login": "Login",
+    "loginDescription": "Welcome back! Please enter your details",
+    "registerDescription": "Create an account to get started",
+    "email": "Email",
+    "password": "Password",
+    "confirmPassword": "Confirm Password",
+    "fullName": "Full Name",
+    "rememberMe": "Remember me",
+    "signIn": "Sign in",
+    "signingIn": "Signing in...",
+    "register": "Register",
+    "orContinueWith": "Or continue with",
+    "forgotPassword": "Forgot password?",
+    "noAccount": "Don't have an account?",
+    "createAccount": "Create account"
+  },
+  "profile": {
+    "title": "Profile Settings",
+    "description": "Update your profile information",
+    "name": "Name",
+    "email": "Email",
+    "emailHelp": "Email cannot be changed",
+    "saveChanges": "Save Changes",
+    "saving": "Saving...",
+    "updateSuccess": "Profile updated successfully",
+    "updateError": "Failed to update profile",
+    "loadError": "Failed to load profile"
   },
   "dashboard": {
     "greeting": "As-salaam-alaikum",
@@ -56,68 +127,5 @@
     "quran": "Quran",
     "community": "Community",
     "leaderboard": "Leaderboard"
-  },
-  "common": {
-    "appName": "Islamic Daily Companion",
-    "home": "Home",
-    "about": "About",
-    "donate": "Donate",
-    "locale": {
-      "en": "English",
-      "kk": "Kazakh",
-      "ru": "Russian"
-    }
-  },
-  "footer": {
-    "aboutUs": "About Us",
-    "aboutDescription": "A brief description of your application or company.",
-    "quickLinks": "Quick Links",
-    "connect": "Connect",
-    "copyright": "© 2024 Your Company. All rights reserved."
-  },
-  "donation": {
-    "modalTitle": "Support Us",
-    "modalDescription": "Your donation helps us continue our mission.",
-    "donationMethods": "Donation Methods",
-    "close": "Close",
-    "donateNow": "Donate Now"
-  },
-  "about": {
-    "title": "About Us",
-    "description": "This is a boilerplate Next.js application with internationalization and theming support."
-  },
-  "notFound": {
-    "title": "404 - Page Not Found",
-    "description": "The page you are looking for doesn't exist or has been moved.",
-    "backHome": "Go back home"
-  },
-  "offline": {
-    "title": "You are offline",
-    "description": "Please check your internet connection and try again."
-  },
-  "Auth": {
-    "login": "Login",
-    "loginDescription": "Welcome back! Please enter your details",
-    "registerDescription": "Create an account to get started",
-    "email": "Email",
-    "password": "Password",
-    "confirmPassword": "Confirm Password",
-    "fullName": "Full Name",
-    "rememberMe": "Remember me",
-    "signIn": "Sign in",
-    "signingIn": "Signing in...",
-    "register": "Register"
-  },
-  "profile": {
-    "title": "Profile Settings",
-    "description": "Update your profile information",
-    "name": "Name",
-    "email": "Email",
-    "emailHelp": "Email cannot be changed",
-    "saveChanges": "Save Changes",
-    "saving": "Saving...",
-    "updateSuccess": "Profile updated successfully",
-    "updateError": "Failed to update profile",
-    "loadError": "Failed to load profile"
   }
 }

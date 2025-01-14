@@ -1,18 +1,19 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useTranslations } from 'next-intl';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { 
   CheckCircle, X, Moon, AlertCircle, Home, Book, 
   Clock, Users, Sun, Star, Award, Heart, TrendingUp,
   Trophy, GraduationCap, BookOpen, ScrollText, Lock,
-  LucideIcon
+  LucideIcon, Loader2
 } from 'lucide-react';
 import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card';
 import { Alert, AlertDescription } from '@/components/ui/alert';
-import { getUserName } from '@/lib/appwrite';
 import AnonymousLeaderboard from '@/components/AnonymousLeaderboard';
+import { useAuth } from '@/contexts/auth-context';
+import { useRouter } from '@/i18n/routing';
 
 type Prayer = 'fajr' | 'dhuhr' | 'asr' | 'maghrib' | 'isha';
 type PrayerStatus = 'completed' | 'missed' | 'pending';
@@ -485,15 +486,26 @@ const ProgressPath = ({ title, description, level, prerequisites = [], completed
 
 export default function DashboardPage() {
   const t = useTranslations('dashboard');
-  const [userName, setUserName] = useState<string>('');
+  const { user, isLoading, isAuthenticated } = useAuth();
+  const router = useRouter();
 
   useEffect(() => {
-    const fetchUserName = async () => {
-      const name = await getUserName();
-      setUserName(name);
-    };
-    fetchUserName();
-  }, []);
+    if (!isLoading && !isAuthenticated) {
+      router.push('/login');
+    }
+  }, [isLoading, isAuthenticated, router]);
+
+  if (isLoading) {
+    return (
+      <div className="flex items-center justify-center min-h-screen">
+        <Loader2 className="h-8 w-8 animate-spin" />
+      </div>
+    );
+  }
+
+  if (!isAuthenticated) {
+    return null; // Will redirect in useEffect
+  }
 
   return (
     <div className="container mx-auto">
@@ -514,7 +526,7 @@ export default function DashboardPage() {
         </TabsList>
 
         <TabsContent value="home">
-          <HomeTab userName={userName} />
+          <HomeTab userName={user?.name || 'Guest'} />
         </TabsContent>
 
         <TabsContent value="growth">

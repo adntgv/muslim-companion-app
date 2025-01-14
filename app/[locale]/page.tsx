@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { useRouter } from '@/i18n/routing';
 import DashboardPage from './dashboard/page';
 import { useTranslations } from 'next-intl';
@@ -8,31 +8,25 @@ import { Link } from '@/i18n/routing';
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import LocaleSwitcher from '@/components/LocaleSwitcher';
+import { useAuth } from '@/contexts/auth-context';
+import { Loader2 } from 'lucide-react';
 
 export default function Home() {
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
-  const [isLoading, setIsLoading] = useState(true);
+  const { isAuthenticated, isLoading } = useAuth();
   const router = useRouter();
-
-  useEffect(() => {
-    const checkAuth = () => {
-      const isAuth = localStorage.getItem('isAuthenticated') === 'true';
-      setIsAuthenticated(isAuth);
-      setIsLoading(false);
-    };
-
-    checkAuth();
-  }, []);
+  const t = useTranslations('home');
 
   if (isLoading) {
-    return <div>Loading...</div>;
+    return (
+      <div className="flex items-center justify-center min-h-screen">
+        <Loader2 className="h-8 w-8 animate-spin" />
+      </div>
+    );
   }
 
   if (isAuthenticated) {
     return <DashboardPage />;
   }
-
-  const t = useTranslations('home');
   
   return (
     <div className="bg-background">
@@ -53,9 +47,14 @@ export default function Home() {
           </CardHeader>
           <CardContent>
             <p className="text-muted-foreground mb-4">{t('welcomeDescription')}</p>
-            <Button asChild>
-              <Link href="/about">{t('learnMore')}</Link>
-            </Button>
+            <div className="flex gap-4">
+              <Button asChild>
+                <Link href="/login">{t('login')}</Link>
+              </Button>
+              <Button asChild variant="outline">
+                <Link href="/about">{t('learnMore')}</Link>
+              </Button>
+            </div>
           </CardContent>
         </Card>
       </div>
