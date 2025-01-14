@@ -3,6 +3,7 @@ import { useState } from 'react';
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useRouter } from '@/i18n/routing';
+import { trackEvent, ANALYTICS_EVENTS } from '@/lib/analytics';
 
 export default function Auth() {
   const [loading, setLoading] = useState(false);
@@ -16,8 +17,10 @@ export default function Auth() {
     try {
       // TODO: Implement actual authentication logic
       console.log('Login attempt with:', { email, password });
+      trackEvent(ANALYTICS_EVENTS.LOGIN, { success: true });
       router.push('/dashboard');
     } catch (error: any) {
+      trackEvent(ANALYTICS_EVENTS.LOGIN, { success: false, error: error.message });
       alert(error.message);
     }
     setLoading(false);
@@ -28,8 +31,10 @@ export default function Auth() {
     try {
       // TODO: Implement actual signup logic
       console.log('Signup attempt with:', { email, password });
+      trackEvent(ANALYTICS_EVENTS.SIGNUP, { success: true });
       alert('Signed up successfully! You can now log in.');
     } catch (error: any) {
+      trackEvent(ANALYTICS_EVENTS.SIGNUP, { success: false, error: error.message });
       alert(error.message);
     }
     setLoading(false);

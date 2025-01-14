@@ -16,6 +16,7 @@ import {
 import { logout } from '@/lib/appwrite';
 import { useAuth } from '@/contexts/auth-context';
 import { toast } from 'sonner';
+import { trackEvent, ANALYTICS_EVENTS } from '@/lib/analytics';
 
 const ThemeToggle = dynamic(() => import('./themeToggle'), { ssr: false });
 
@@ -25,12 +26,16 @@ const Navbar = () => {
   const router = useRouter();
   const { user, isLoading, checkSession } = useAuth();
 
-  const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
+  const toggleMenu = () => {
+    setIsMenuOpen(!isMenuOpen);
+    trackEvent(ANALYTICS_EVENTS.PAGE_VIEW, { menu_toggled: !isMenuOpen });
+  };
 
   const handleLogout = async () => {
     try {
       await logout();
       await checkSession(); // Update auth state
+      trackEvent(ANALYTICS_EVENTS.LOGOUT, { success: true });
       toast.success('Successfully logged out');
       router.push('/login');
       // Reload the page after a short delay to ensure the router has time to push
@@ -38,6 +43,7 @@ const Navbar = () => {
         window.location.reload();
       }, 100);
     } catch (error: any) {
+      trackEvent(ANALYTICS_EVENTS.LOGOUT, { success: false, error: error.message });
       toast.error(error.message);
     }
   };

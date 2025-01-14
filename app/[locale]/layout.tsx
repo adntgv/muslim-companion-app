@@ -1,4 +1,5 @@
 import { getMessages } from 'next-intl/server';
+import Script from 'next/script';
 import ClientLayout from '../../components/ClientLayout';
 import '../globals.css';
 
@@ -20,6 +21,13 @@ export default async function LocaleLayout({
 
   return (
     <html lang={locale} suppressHydrationWarning>
+      <head>
+        <Script
+          src="https://umami.adntgv.com/script.js"
+          data-website-id="d9c1702a-df56-49fe-8452-018b45fa2d63"
+          strategy="afterInteractive"
+        />
+      </head>
       <body>
         <ClientLayout messages={messages} locale={locale}>
           {children}

@@ -4,6 +4,7 @@ import { useLocale, useTranslations } from 'next-intl';
 import { usePathname, useRouter } from '@/i18n/routing';
 import { Button } from "@/components/ui/button";
 import { routing } from '@/i18n/routing';
+import { trackEvent, ANALYTICS_EVENTS } from '@/lib/analytics';
 
 export default function LocaleSwitcher() {
   const t = useTranslations('common');
@@ -12,6 +13,11 @@ export default function LocaleSwitcher() {
   const pathname = usePathname();
 
   const switchLocale = (newLocale: "kk" | "ru" | "en") => {
+    trackEvent(ANALYTICS_EVENTS.LANGUAGE_CHANGED, { 
+      from: locale, 
+      to: newLocale,
+      path: pathname
+    });
     router.replace(pathname, { locale: newLocale });
   };
 
