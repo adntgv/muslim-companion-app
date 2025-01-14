@@ -80,5 +80,12 @@
     "forgotPassword": "Құпия сөзді ұмыттыңыз ба?",
     "noAccount": "Аккаунтыңыз жоқ па?",
     "createAccount": "Тіркелу"
+  },
+  "dashboard": {
+    "home": "Басты бет",
+    "prayers": "Намаз",
+    "quran": "Құран",
+    "community": "Қауымдастық",
+    "leaderboard": "Рейтинг"
   }
 }

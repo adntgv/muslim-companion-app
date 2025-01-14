@@ -80,5 +80,12 @@
     "forgotPassword": "Забыли пароль?",
     "noAccount": "Нет аккаунта?",
     "createAccount": "Создать аккаунт"
+  },
+  "dashboard": {
+    "home": "Главная",
+    "prayers": "Намаз",
+    "quran": "Коран",
+    "community": "Сообщество",
+    "leaderboard": "Рейтинг"
   }
 }

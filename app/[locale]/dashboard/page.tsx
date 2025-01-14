@@ -5,11 +5,13 @@ import { useTranslations } from 'next-intl';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { 
   CheckCircle, X, Moon, AlertCircle, Home, Book, 
-  Clock, Users, Sun, Star, Award, Heart, TrendingUp 
+  Clock, Users, Sun, Star, Award, Heart, TrendingUp,
+  Trophy 
 } from 'lucide-react';
 import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card';
 import { Alert, AlertDescription } from '@/components/ui/alert';
 import { getUserName } from '@/lib/appwrite';
+import AnonymousLeaderboard from '@/components/AnonymousLeaderboard';
 
 type Prayer = 'fajr' | 'dhuhr' | 'asr' | 'maghrib' | 'isha';
 type PrayerStatus = 'completed' | 'missed' | 'pending';
@@ -275,45 +277,53 @@ const CommunityTab = () => (
 );
 
 export default function DashboardPage() {
-  const [activeTab, setActiveTab] = useState("home"); 
+  const t = useTranslations('dashboard');
+  const [userName, setUserName] = useState<string>('');
+
   return (
-    <div className="container mx-auto py-4">
-      <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
-        <TabsList className="grid w-full grid-cols-4 mb-4">
-          <TabsTrigger value="home" className="flex items-center gap-2">
-            <Home className="h-4 w-4" />
-            <span className="hidden sm:inline">Home</span>
-          </TabsTrigger>
-          <TabsTrigger value="quran" className="flex items-center gap-2">
-            <Book className="h-4 w-4" />
-            <span className="hidden sm:inline">Quran</span>
-          </TabsTrigger>
-          <TabsTrigger value="prayers" className="flex items-center gap-2">
-            <Clock className="h-4 w-4" />
-            <span className="hidden sm:inline">Prayers</span>
-          </TabsTrigger>
-          <TabsTrigger value="community" className="flex items-center gap-2">
-            <Users className="h-4 w-4" />
-            <span className="hidden sm:inline">Community</span>
-          </TabsTrigger>
-        </TabsList>
-        
-        <TabsContent value="home">
-          <HomeTab />
-        </TabsContent>
-        
-        <TabsContent value="quran">
-          <QuranTab />
-        </TabsContent>
-        
-        <TabsContent value="prayers">
-          <PrayerTab />
-        </TabsContent>
-        
-        <TabsContent value="community">
-          <CommunityTab />
-        </TabsContent>
-      </Tabs>
-    </div>
+    <Tabs defaultValue="home" className="w-full">
+      <TabsList className="grid w-full grid-cols-5 mb-4">
+        <TabsTrigger value="home">
+          <Home className="h-4 w-4 mr-2" />
+          {t('home')}
+        </TabsTrigger>
+        <TabsTrigger value="prayers">
+          <Clock className="h-4 w-4 mr-2" />
+          {t('prayers')}
+        </TabsTrigger>
+        <TabsTrigger value="quran">
+          <Book className="h-4 w-4 mr-2" />
+          {t('quran')}
+        </TabsTrigger>
+        <TabsTrigger value="community">
+          <Users className="h-4 w-4 mr-2" />
+          {t('community')}
+        </TabsTrigger>
+        <TabsTrigger value="leaderboard">
+          <Trophy className="h-4 w-4 mr-2" />
+          {t('leaderboard')}
+        </TabsTrigger>
+      </TabsList>
+
+      <TabsContent value="home">
+        <HomeTab userName={userName} />
+      </TabsContent>
+
+      <TabsContent value="prayers">
+        <PrayerTab />
+      </TabsContent>
+
+      <TabsContent value="quran">
+        <QuranTab />
+      </TabsContent>
+
+      <TabsContent value="community">
+        <CommunityTab />
+      </TabsContent>
+
+      <TabsContent value="leaderboard">
+        <AnonymousLeaderboard />
+      </TabsContent>
+    </Tabs>
   );
 } 
