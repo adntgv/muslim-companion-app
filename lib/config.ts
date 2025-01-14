@@ -19,7 +19,7 @@ export const config = {
         refreshInterval: 60 * 60 * 1000, // 1 hour in milliseconds
       },
       appwrite: {
-        endpoint: process.env.NEXT_PUBLIC_APPWRITE_ENDPOINT || 'http://appwrite.adntgv.com/v1',
+        endpoint: process.env.NEXT_PUBLIC_APPWRITE_ENDPOINT || 'https://appwrite.adntgv.com/v1',
         projectId: process.env.NEXT_PUBLIC_APPWRITE_PROJECT_ID || '67852f14003b2e275a82',
       }
     // Add other configuration items here
