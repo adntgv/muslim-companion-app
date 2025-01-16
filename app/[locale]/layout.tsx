@@ -2,6 +2,10 @@ import { getMessages } from 'next-intl/server';
 import Script from 'next/script';
 import ClientLayout from '../../components/ClientLayout';
 import '../globals.css';
+import { Navbar } from '@/components/Navbar';
+import { ThemeProvider } from "@/components/theme-provider";
+import { Toaster } from "sonner";
+import { AuthProvider } from '@/contexts/auth-context';
 
 export async function generateMetadata({ params: { locale } }: { params: { locale: string } }) {
   return {
@@ -29,9 +33,24 @@ export default async function LocaleLayout({
         />
       </head>
       <body>
-        <ClientLayout messages={messages} locale={locale}>
-          {children}
-        </ClientLayout>
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="system"
+          enableSystem
+          disableTransitionOnChange
+        >
+          <AuthProvider>
+            <ClientLayout messages={messages} locale={locale}>
+              <div className="flex flex-col min-h-screen">
+                <Navbar />
+                <main className="flex-grow">
+                  {children}
+                </main>
+              </div>
+              <Toaster richColors position="top-center" />
+            </ClientLayout>
+          </AuthProvider>
+        </ThemeProvider>
       </body>
     </html>
   );

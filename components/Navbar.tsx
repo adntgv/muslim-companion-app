@@ -1,12 +1,11 @@
 'use client';
 
 import React, { useState } from 'react';
-import { Link, useRouter } from '@/i18n/routing';
-import { Button } from "@/components/ui/button";
-import { MenuIcon, XIcon, User } from 'lucide-react';
-import dynamic from 'next/dynamic';
-import { useTranslations } from 'next-intl';
-import LocaleSwitcher from './LocaleSwitcher';
+import { Link } from '@/i18n/routing';
+import { Button } from '@/components/ui/button';
+import { ROUTES } from '@/lib/navigation';
+import { useAuth } from '@/contexts/auth-context';
+import { User, Menu, X } from 'lucide-react';
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -14,54 +13,36 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { logout } from '@/lib/appwrite';
-import { useAuth } from '@/contexts/auth-context';
+import { useRouter } from 'next/navigation';
 import { toast } from 'sonner';
-import { trackEvent, ANALYTICS_EVENTS } from '@/lib/analytics';
+import LocaleSwitcher from './LocaleSwitcher';
+import ThemeToggle from './themeToggle';
 
-const ThemeToggle = dynamic(() => import('./themeToggle'), { ssr: false });
-
-const Navbar = () => {
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const t = useTranslations('common');
-  const router = useRouter();
+export function Navbar() {
   const { user, isLoading, checkSession } = useAuth();
-
-  const toggleMenu = () => {
-    setIsMenuOpen(!isMenuOpen);
-    trackEvent(ANALYTICS_EVENTS.PAGE_VIEW, { menu_toggled: !isMenuOpen });
-  };
+  const router = useRouter();
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   const handleLogout = async () => {
     try {
       await logout();
-      await checkSession(); // Update auth state
-      trackEvent(ANALYTICS_EVENTS.LOGOUT, { success: true });
+      await checkSession();
       toast.success('Successfully logged out');
-      router.push('/login');
-      // Reload the page after a short delay to ensure the router has time to push
-      setTimeout(() => {
-        window.location.reload();
-      }, 100);
+      router.push('/');
     } catch (error: any) {
-      trackEvent(ANALYTICS_EVENTS.LOGOUT, { success: false, error: error.message });
       toast.error(error.message);
     }
   };
-
-  const appName = "Falah"
 
   const UserMenu = () => (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
         <Button variant="ghost" className="flex items-center space-x-2">
           <User className="h-5 w-5" />
-          <span>{user?.name || 'User'}</span>
+          <span className="hidden md:inline">{user?.name || 'User'}</span>
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end">
-        <DropdownMenuItem asChild>
-          <Link href="/dashboard">Dashboard</Link>
-        </DropdownMenuItem>
         <DropdownMenuItem asChild>
           <Link href="/profile">Profile</Link>
         </DropdownMenuItem>
@@ -72,62 +53,98 @@ const Navbar = () => {
     </DropdownMenu>
   );
 
+  const NavLinks = () => (
+    <>
+      <Link 
+        href={ROUTES.DASHBOARD}
+        className="inline-flex items-center px-1 pt-1 text-sm font-medium text-gray-900 border-b-2 border-transparent hover:border-gray-300"
+      >
+        Dashboard
+      </Link>
+      <Link 
+        href={ROUTES.GROWTH_MAP}
+        className="inline-flex items-center px-1 pt-1 text-sm font-medium text-gray-500 border-b-2 border-transparent hover:border-gray-300"
+      >
+        Growth Map
+      </Link>
+      <Link 
+        href={ROUTES.LEARNING_CENTER}
+        className="inline-flex items-center px-1 pt-1 text-sm font-medium text-gray-500 border-b-2 border-transparent hover:border-gray-300"
+      >
+        Learning Center
+      </Link>
+      <Link 
+        href={ROUTES.REFLECTION_JOURNAL}
+        className="inline-flex items-center px-1 pt-1 text-sm font-medium text-gray-500 border-b-2 border-transparent hover:border-gray-300"
+      >
+        Reflection Journal
+      </Link>
+      <Link 
+        href={ROUTES.COMMUNITY}
+        className="inline-flex items-center px-1 pt-1 text-sm font-medium text-gray-500 border-b-2 border-transparent hover:border-gray-300"
+      >
+        Community
+      </Link>
+    </>
+  );
+
   return (
-    <nav className="border-b bg-background sticky top-0 z-10 shadow-sm">
-      <div className="container mx-auto px-4">
-        <div className="flex justify-between items-center h-16">
-          <Link href="/" className="text-2xl font-bold text-primary">{appName}</Link>
-          <div className="hidden md:flex items-center space-x-4">
-            <Button variant="ghost" asChild className="text-foreground hover:text-primary">
-              <Link href="/">{t('home')}</Link>
-            </Button>
-            <LocaleSwitcher />
-            <ThemeToggle />
+    <nav className="bg-white border-b">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="flex justify-between h-16">
+          <div className="flex">
+            <div className="flex-shrink-0 flex items-center">
+              <Link href="/" className="text-xl font-bold text-gray-900">
+                Falah
+              </Link>
+            </div>
+            <div className="hidden md:ml-6 md:flex md:space-x-8">
+              <NavLinks />
+            </div>
+          </div>
+          <div className="flex items-center space-x-2 md:space-x-4">
+            <div className="hidden md:flex md:items-center md:space-x-4">
+              <LocaleSwitcher />
+              <ThemeToggle />
+            </div>
             {!isLoading && (user ? (
               <UserMenu />
             ) : (
-              <Button asChild>
+              <Button asChild size="sm" className="hidden md:inline-flex">
                 <Link href="/login">Login</Link>
               </Button>
             ))}
-          </div>
-
-          <div className="md:hidden">
-            <Button variant="ghost" size="icon" onClick={toggleMenu}>
-              {isMenuOpen ? <XIcon className="h-6 w-6 text-primary" /> : <MenuIcon className="h-6 w-6 text-primary" />}
+            <Button 
+              variant="ghost" 
+              size="icon"
+              className="md:hidden"
+              onClick={() => setIsMenuOpen(!isMenuOpen)}
+            >
+              {isMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
             </Button>
           </div>
         </div>
 
+        {/* Mobile menu */}
         {isMenuOpen && (
-          <div className="md:hidden py-4 bg-background/95 backdrop-blur-sm animate-slideInFromBottom">
-            <div className="flex flex-col space-y-2">
-              <Button variant="ghost" asChild onClick={toggleMenu} className="text-foreground hover:text-primary">
-                <Link href="/">{t('home')}</Link>
-              </Button>
-              <LocaleSwitcher />
-              <ThemeToggle />
-              {!isLoading && (user ? (
-                <>
-                  <Button variant="ghost" asChild onClick={toggleMenu}>
-                    <Link href="/dashboard">Dashboard</Link>
+          <div className="md:hidden py-2 space-y-2">
+            <div className="space-y-2 px-2">
+              <NavLinks />
+            </div>
+            <div className="border-t border-gray-200 pt-2 px-2">
+              <div className="flex items-center justify-between space-x-2">
+                <LocaleSwitcher />
+                <ThemeToggle />
+                {!isLoading && !user && (
+                  <Button asChild size="sm">
+                    <Link href="/login">Login</Link>
                   </Button>
-                  <Button variant="ghost" asChild onClick={toggleMenu}>
-                    <Link href="/profile">Profile</Link>
-                  </Button>
-                  <Button onClick={handleLogout}>Logout</Button>
-                </>
-              ) : (
-                <Button asChild>
-                  <Link href="/login">Login</Link>
-                </Button>
-              ))}
+                )}
+              </div>
             </div>
           </div>
         )}
       </div>
     </nav>
   );
-};
-
-export default Navbar;
+}

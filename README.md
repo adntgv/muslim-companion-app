@@ -937,17 +937,7 @@ To guide the development process and ensure timely delivery of the Minimum Viabl
   - [ ] Prioritize issues and improvements
   - [ ] Implement UI/UX enhancements
   - [ ] Optimize app performance
-
-## Timeline Overview
-
-- **Weeks 1-2**: Phase 1 - Foundations
-- **Weeks 3-5**: Phase 2 - Roadmap and Learning Modules
-- **Weeks 6-7**: Phase 3 - Progress Tracking and Gamification
-- **Week 8**: Phase 4 - Suggestions and Improvements
-- **Weeks 9-10**: Phase 5 - Testing and Refinemen
-
-
-
+ 
 
  Islamic Growth
     Daily Rituals
@@ -987,3 +977,42 @@ To guide the development process and ensure timely delivery of the Minimum Viabl
       Taqwa Development
       Love for Allah
       Following Sunnah
+
+
+
+Core Screens for Falah
+
+Assessment & Planning Screens
+
+
+Initial Assessment Screen
+Plan Generation Screen
+Plan Customization Screen
+Goals Setting Screen
+
+
+Daily Journey Screens
+
+
+Main Dashboard
+Daily Planner
+Progress Tracking
+Reflection Journal
+
+
+Growth Map Screens
+
+
+Overall Progress Map
+Knowledge Progress
+Character Development
+Achievement Display
+
+
+Learning Screens
+
+
+Knowledge Library
+Course Progression
+Study Materials
+Practice Exercises
