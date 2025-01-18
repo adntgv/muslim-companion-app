@@ -1,0 +1,33 @@
+name: Deploy to Coolify
+
+on:
+  push:
+    branches:
+      - master  # Triggers on pushes to master branch
+  pull_request:
+    types:
+      - closed  # Triggers when a PR is merged
+
+jobs:
+  deploy:
+    # Only run this job if the PR was merged or if it's a direct push to master
+    if: github.event.pull_request.merged == true || github.event_name == 'push'
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Trigger Coolify Deployment
+        run: |
+          curl -X POST \
+            'https://coolify.adntgv.com/api/v1/deploy?uuid=lg88so0w8g4w0s8ckgs0wksc&force=false' \
+            -H 'Authorization: Bearer svk7D4gjGzrhE389udDZ9j1U3OqIslpXgpwaMxah9b3c3d4b' \
+            -H 'Content-Type: application/json'
+        
+      - name: Check deployment status
+        if: ${{ always() }}
+        run: |
+          if [ $? -eq 0 ]; then
+            echo "Deployment webhook triggered successfully"
+          else
+            echo "Failed to trigger deployment webhook"
+            exit 1
+          fi
