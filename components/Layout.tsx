@@ -1,22 +1,21 @@
 import React from "react";
-import Navbar from "./Navbar";
+import { Navbar } from "./Navbar";
 import Footer from "./Footer";
 import { Analytics } from "@vercel/analytics/react";
 
 interface LayoutProps {
   children: React.ReactNode;
-  isAuthenticated?: boolean;
 }
 
-const Layout: React.FC<LayoutProps> = ({ children, isAuthenticated }) => {
+export default function Layout({ children }: LayoutProps) {
   return (
     <div className="flex flex-col min-h-screen">
       <Navbar />
-      <main className="flex-grow">{children}</main>
+      <main className="flex-grow">
+        {children}
+      </main>
+      <Footer />
       <Analytics />
-      {/* <Footer /> */}
     </div>
   );
-};
-
-export default Layout;
+}
