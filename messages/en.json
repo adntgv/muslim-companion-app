@@ -128,5 +128,9 @@
     "quran": "Quran",
     "community": "Community",
     "leaderboard": "Leaderboard"
+  },
+  "Offline": {
+    "title": "You are offline",
+    "description": "Please check your internet connection and try again"
   }
 }
