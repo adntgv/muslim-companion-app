@@ -18,14 +18,14 @@ export default function Home() {
 
   if (isLoading || user) {
     return (
-      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
-        <div className="w-6 h-6 border-2 border-blue-600 border-t-transparent rounded-full animate-spin"></div>
+      <div className="min-h-screen bg-background flex items-center justify-center">
+        <div className="w-6 h-6 border-2 border-primary border-t-transparent rounded-full animate-spin"></div>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-background">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <div className="text-center">
           <h1 className="text-4xl font-bold text-gray-900 sm:text-5xl md:text-6xl">
@@ -56,17 +56,17 @@ export default function Home() {
         <div className="mt-32">
           <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
             <div className="pt-6">
-              <div className="flow-root bg-white rounded-lg px-6 pb-8">
+              <div className="flow-root bg-card rounded-lg px-6 pb-8">
                 <div className="-mt-6">
                   <div>
-                    <span className="inline-flex items-center justify-center p-3 bg-blue-500 rounded-md shadow-lg">
-                      <svg className="h-6 w-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <span className="inline-flex items-center justify-center p-3 bg-primary rounded-md shadow-lg">
+                      <svg className="h-6 w-6 text-primary-foreground" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
                       </svg>
                     </span>
                   </div>
-                  <h3 className="mt-8 text-lg font-medium text-gray-900 tracking-tight">Personalized Growth</h3>
-                  <p className="mt-5 text-base text-gray-500">
+                  <h3 className="mt-8 text-lg font-medium text-foreground tracking-tight">Personalized Growth</h3>
+                  <p className="mt-5 text-base text-muted-foreground">
                     Start with an assessment to create your customized spiritual development plan
                   </p>
                 </div>
@@ -74,17 +74,17 @@ export default function Home() {
             </div>
 
             <div className="pt-6">
-              <div className="flow-root bg-white rounded-lg px-6 pb-8">
+              <div className="flow-root bg-card rounded-lg px-6 pb-8">
                 <div className="-mt-6">
                   <div>
-                    <span className="inline-flex items-center justify-center p-3 bg-blue-500 rounded-md shadow-lg">
-                      <svg className="h-6 w-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <span className="inline-flex items-center justify-center p-3 bg-primary rounded-md shadow-lg">
+                      <svg className="h-6 w-6 text-primary-foreground" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 10h16M4 14h16M4 18h16" />
                       </svg>
                     </span>
                   </div>
-                  <h3 className="mt-8 text-lg font-medium text-gray-900 tracking-tight">Track Progress</h3>
-                  <p className="mt-5 text-base text-gray-500">
+                  <h3 className="mt-8 text-lg font-medium text-foreground tracking-tight">Track Progress</h3>
+                  <p className="mt-5 text-base text-muted-foreground">
                     Monitor your journey with detailed progress tracking and insights
                   </p>
                 </div>

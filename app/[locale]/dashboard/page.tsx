@@ -110,7 +110,7 @@ export default function Dashboard() {
   ];
 
   return (
-    <div className="min-h-screen bg-gray-50 p-6">
+    <div className="min-h-screen bg-background p-6">
       <div className="max-w-7xl mx-auto">
         {/* Header */}
         <div className="flex justify-between items-start mb-8">
@@ -143,19 +143,19 @@ export default function Dashboard() {
                   <div
                     key={prayer.name}
                     className={`p-4 rounded-lg ${
-                      prayer.isNext ? 'bg-blue-50 border-2 border-blue-200' :
-                      prayer.status === 'completed' ? 'bg-green-50' : 'bg-gray-50'
+                      prayer.isNext ? 'bg-primary/10 border-2 border-primary/20' :
+                      prayer.status === 'completed' ? 'bg-green-500/10' : 'bg-muted'
                     }`}
                   >
                     <div className="flex justify-between items-start mb-2">
-                      <span className="font-medium">{prayer.name}</span>
+                      <span className="font-medium text-foreground">{prayer.name}</span>
                       {prayer.status === 'completed' && (
-                        <CheckCircle className="h-4 w-4 text-green-600" />
+                        <CheckCircle className="h-4 w-4 text-green-500" />
                       )}
                     </div>
-                    <p className="text-sm text-gray-600">{prayer.time}</p>
+                    <p className="text-sm text-muted-foreground">{prayer.time}</p>
                     {prayer.isNext && (
-                      <span className="text-xs text-blue-600 mt-2 block">Next Prayer</span>
+                      <span className="text-xs text-primary mt-2 block">Next Prayer</span>
                     )}
                   </div>
                 ))}
@@ -176,25 +176,25 @@ export default function Dashboard() {
                   <div
                     key={task.id}
                     className={`p-4 rounded-lg ${
-                      task.status === 'completed' ? 'bg-green-50' :
-                      task.status === 'pending' ? 'bg-yellow-50' : 'bg-gray-50'
+                      task.status === 'completed' ? 'bg-green-500/10' :
+                      task.status === 'pending' ? 'bg-yellow-500/10' : 'bg-muted'
                     }`}
                   >
                     <div className="flex items-center justify-between">
                       <div className="flex items-center gap-4">
                         <div className={`p-2 rounded-lg ${
-                          task.status === 'completed' ? 'bg-green-100' :
-                          task.status === 'pending' ? 'bg-yellow-100' : 'bg-gray-100'
+                          task.status === 'completed' ? 'bg-green-500/20' :
+                          task.status === 'pending' ? 'bg-yellow-500/20' : 'bg-muted'
                         }`}>
-                          <task.icon className="h-5 w-5 text-gray-600" />
+                          <task.icon className="h-5 w-5 text-foreground" />
                         </div>
                         <div>
-                          <h3 className="font-medium">{task.title}</h3>
+                          <h3 className="font-medium text-foreground">{task.title}</h3>
                           <div className="flex items-center gap-3 mt-1">
-                            <span className="text-sm text-gray-600">{task.time}</span>
+                            <span className="text-sm text-muted-foreground">{task.time}</span>
                             <span className={`text-xs px-2 py-1 rounded-full ${
-                              task.priority === 'high' ? 'bg-red-100 text-red-600' :
-                              'bg-blue-100 text-blue-600'
+                              task.priority === 'high' ? 'bg-destructive/10 text-destructive' :
+                              'bg-primary/10 text-primary'
                             }`}>
                               {task.category}
                             </span>
@@ -202,7 +202,7 @@ export default function Dashboard() {
                         </div>
                       </div>
                       {task.status === 'completed' ? (
-                        <CheckCircle className="h-5 w-5 text-green-600" />
+                        <CheckCircle className="h-5 w-5 text-green-500" />
                       ) : (
                         <Button size="sm" variant={task.status === 'pending' ? 'default' : 'outline'}>
                           Complete
@@ -225,13 +225,13 @@ export default function Dashboard() {
                   <div key={area.area} className="space-y-2">
                     <div className="flex justify-between items-center">
                       <div className="flex items-center gap-2">
-                        <area.icon className="h-4 w-4 text-gray-600" />
-                        <span className="font-medium">{area.area}</span>
+                        <area.icon className="h-4 w-4 text-muted-foreground" />
+                        <span className="font-medium text-foreground">{area.area}</span>
                       </div>
-                      <span className="text-sm text-gray-600">{area.progress}%</span>
+                      <span className="text-sm text-muted-foreground">{area.progress}%</span>
                     </div>
                     <Progress value={area.progress} />
-                    <p className="text-sm text-gray-600">Next: {area.nextTask}</p>
+                    <p className="text-sm text-muted-foreground">Next: {area.nextTask}</p>
                   </div>
                 ))}
               </div>
@@ -245,23 +245,23 @@ export default function Dashboard() {
                   <div
                     key={insight.title}
                     className={`p-3 rounded-lg ${
-                      insight.type === 'achievement' ? 'bg-green-50' :
-                      insight.type === 'suggestion' ? 'bg-yellow-50' : 'bg-blue-50'
+                      insight.type === 'achievement' ? 'bg-green-500/10' :
+                      insight.type === 'suggestion' ? 'bg-yellow-500/10' : 'bg-primary/10'
                     }`}
                   >
                     <div className="flex items-center gap-3">
                       <div className={`p-2 rounded-lg ${
-                        insight.type === 'achievement' ? 'bg-green-100' :
-                        insight.type === 'suggestion' ? 'bg-yellow-100' : 'bg-blue-100'
+                        insight.type === 'achievement' ? 'bg-green-500/20' :
+                        insight.type === 'suggestion' ? 'bg-yellow-500/20' : 'bg-primary/20'
                       }`}>
                         <insight.icon className={`h-4 w-4 ${
-                          insight.type === 'achievement' ? 'text-green-600' :
-                          insight.type === 'suggestion' ? 'text-yellow-600' : 'text-blue-600'
+                          insight.type === 'achievement' ? 'text-green-500' :
+                          insight.type === 'suggestion' ? 'text-yellow-500' : 'text-primary'
                         }`} />
                       </div>
                       <div>
-                        <p className="font-medium">{insight.title}</p>
-                        <p className="text-sm text-gray-600">{insight.description}</p>
+                        <p className="font-medium text-foreground">{insight.title}</p>
+                        <p className="text-sm text-muted-foreground">{insight.description}</p>
                       </div>
                     </div>
                   </div>

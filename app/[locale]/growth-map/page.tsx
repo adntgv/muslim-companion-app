@@ -189,7 +189,7 @@ export default function GrowthMapScreen() {
   ];
 
   return (
-    <div className="min-h-screen bg-gray-50 p-6">
+    <div className="min-h-screen bg-background p-6">
       <div className="max-w-7xl mx-auto">
         {/* Header */}
         <div className="mb-8">
@@ -204,22 +204,22 @@ export default function GrowthMapScreen() {
             {growthPaths.map((path) => (
               <Card key={path.id} className="p-6">
                 <div className="flex items-center gap-4 mb-6">
-                  <div className="p-3 rounded-lg bg-blue-100">
-                    <path.icon className="h-6 w-6 text-blue-600" />
+                  <div className="p-3 rounded-lg bg-primary/20">
+                    <path.icon className="h-6 w-6 text-primary" />
                   </div>
                   <div className="flex-1">
                     <div className="flex justify-between items-start">
                       <div>
-                        <h2 className="text-xl font-semibold">{path.title}</h2>
-                        <p className="text-gray-600">{path.description}</p>
+                        <h2 className="text-xl font-semibold text-foreground">{path.title}</h2>
+                        <p className="text-muted-foreground">{path.description}</p>
                       </div>
-                      <span className="text-sm bg-blue-50 text-blue-600 px-3 py-1 rounded-full">
+                      <span className="text-sm bg-primary/10 text-primary px-3 py-1 rounded-full">
                         Level {path.currentLevel}
                       </span>
                     </div>
                     <div className="mt-2">
                       <Progress value={path.overallProgress} />
-                      <p className="text-sm text-gray-600 mt-1">{path.overallProgress}% Complete</p>
+                      <p className="text-sm text-muted-foreground mt-1">{path.overallProgress}% Complete</p>
                     </div>
                   </div>
                 </div>
@@ -229,26 +229,26 @@ export default function GrowthMapScreen() {
                     <div
                       key={level.title}
                       className={`p-4 rounded-lg ${
-                        level.status === 'completed' ? 'bg-green-50' :
-                        level.status === 'in-progress' ? 'bg-blue-50' :
-                        'bg-gray-50'
+                        level.status === 'completed' ? 'bg-green-500/10' :
+                        level.status === 'in-progress' ? 'bg-primary/10' :
+                        'bg-muted'
                       }`}
                     >
                       <div className="flex items-start justify-between mb-2">
                         <div className="flex items-center gap-3">
                           {level.status === 'completed' ? (
-                            <CheckCircle className="h-5 w-5 text-green-600" />
+                            <CheckCircle className="h-5 w-5 text-green-500" />
                           ) : level.status === 'locked' ? (
-                            <Lock className="h-5 w-5 text-gray-400" />
+                            <Lock className="h-5 w-5 text-muted-foreground" />
                           ) : (
-                            <Target className="h-5 w-5 text-blue-600" />
+                            <Target className="h-5 w-5 text-primary" />
                           )}
                           <div>
-                            <h3 className="font-medium">{level.title}</h3>
-                            <p className="text-sm text-gray-600">{level.description}</p>
+                            <h3 className="font-medium text-foreground">{level.title}</h3>
+                            <p className="text-sm text-muted-foreground">{level.description}</p>
                           </div>
                         </div>
-                        <span className="text-sm font-medium">
+                        <span className="text-sm font-medium text-muted-foreground">
                           Level {index + 1}
                         </span>
                       </div>
@@ -281,27 +281,27 @@ export default function GrowthMapScreen() {
           {/* Sidebar */}
           <div className="space-y-6">
             {/* Overall Progress */}
-            <Card className="p-6 bg-gradient-to-br from-blue-50 to-indigo-50">
+            <Card className="p-6 bg-gradient-to-br from-primary/10 to-primary/5">
               <div className="flex items-center justify-between mb-4">
-                <h2 className="text-lg font-semibold">Overall Progress</h2>
-                <Award className="h-6 w-6 text-blue-600" />
+                <h2 className="text-lg font-semibold text-foreground">Overall Progress</h2>
+                <Award className="h-6 w-6 text-primary" />
               </div>
               <div className="space-y-4">
                 <div>
                   <div className="flex justify-between text-sm mb-1">
-                    <span>Journey Progress</span>
-                    <span>Level 2</span>
+                    <span className="text-muted-foreground">Journey Progress</span>
+                    <span className="text-muted-foreground">Level 2</span>
                   </div>
                   <Progress value={55} />
                 </div>
                 <div className="grid grid-cols-2 gap-4 mt-4">
-                  <div className="bg-white p-3 rounded-lg text-center">
-                    <p className="text-2xl font-bold text-blue-600">4</p>
-                    <p className="text-xs text-gray-600">Active Paths</p>
+                  <div className="bg-background p-3 rounded-lg text-center">
+                    <p className="text-2xl font-bold text-primary">4</p>
+                    <p className="text-xs text-muted-foreground">Active Paths</p>
                   </div>
-                  <div className="bg-white p-3 rounded-lg text-center">
-                    <p className="text-2xl font-bold text-green-600">7</p>
-                    <p className="text-xs text-gray-600">Milestones</p>
+                  <div className="bg-background p-3 rounded-lg text-center">
+                    <p className="text-2xl font-bold text-green-500">7</p>
+                    <p className="text-xs text-muted-foreground">Milestones</p>
                   </div>
                 </div>
               </div>
@@ -312,13 +312,13 @@ export default function GrowthMapScreen() {
               <h2 className="text-lg font-semibold mb-4">Recent Achievements</h2>
               <div className="space-y-4">
                 {achievements.map((achievement) => (
-                  <div key={achievement.title} className="flex items-center gap-3 p-3 bg-gray-50 rounded-lg">
-                    <div className="p-2 bg-green-100 rounded-lg">
-                      <achievement.icon className="h-4 w-4 text-green-600" />
+                  <div key={achievement.title} className="flex items-center gap-3 p-3 bg-muted rounded-lg">
+                    <div className="p-2 bg-green-500/20 rounded-lg">
+                      <achievement.icon className="h-4 w-4 text-green-500" />
                     </div>
                     <div>
-                      <p className="font-medium">{achievement.title}</p>
-                      <p className="text-sm text-gray-600">{achievement.description}</p>
+                      <p className="font-medium text-foreground">{achievement.title}</p>
+                      <p className="text-sm text-muted-foreground">{achievement.description}</p>
                     </div>
                   </div>
                 ))}

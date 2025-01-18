@@ -70,7 +70,7 @@ export default function CommunityFeatures() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 p-6">
+    <div className="min-h-screen bg-background p-6">
       <div className="max-w-7xl mx-auto">
         {/* Header */}
         <div className="mb-8">
@@ -93,16 +93,16 @@ export default function CommunityFeatures() {
 
               <div className="space-y-4">
                 {activeChallenges.map((challenge) => (
-                  <div key={challenge.id} className="p-4 bg-gray-50 rounded-lg">
+                  <div key={challenge.id} className="p-4 bg-muted rounded-lg">
                     <div className="flex justify-between items-start mb-4">
                       <div>
-                        <h3 className="font-semibold">{challenge.title}</h3>
+                        <h3 className="font-semibold text-foreground">{challenge.title}</h3>
                         <div className="flex items-center gap-4 mt-1">
-                          <span className="text-sm text-gray-600 flex items-center gap-1">
+                          <span className="text-sm text-muted-foreground flex items-center gap-1">
                             <Users className="h-4 w-4" />
                             {challenge.participants} participants
                           </span>
-                          <span className="text-sm text-gray-600 flex items-center gap-1">
+                          <span className="text-sm text-muted-foreground flex items-center gap-1">
                             <Clock className="h-4 w-4" />
                             {challenge.daysLeft} days left
                           </span>
@@ -115,7 +115,7 @@ export default function CommunityFeatures() {
                     {challenge.joined && (
                       <>
                         <Progress value={challenge.progress} />
-                        <p className="text-sm text-gray-600 mt-2">
+                        <p className="text-sm text-muted-foreground mt-2">
                           {challenge.progress}% completed
                         </p>
                       </>
@@ -134,26 +134,26 @@ export default function CommunityFeatures() {
 
               <div className="space-y-4">
                 {communityInsights.map((insight) => (
-                  <div key={insight.id} className="p-4 bg-gray-50 rounded-lg">
+                  <div key={insight.id} className="p-4 bg-muted rounded-lg">
                     <div className="flex items-start gap-3">
-                      <UserCircle className="h-10 w-10 text-gray-400" />
+                      <UserCircle className="h-10 w-10 text-muted-foreground" />
                       <div className="flex-1">
                         <div className="flex justify-between items-start">
                           <div>
-                            <p className="font-medium">{insight.user}</p>
-                            <p className="text-sm text-gray-600">{insight.timeAgo}</p>
+                            <p className="font-medium text-foreground">{insight.user}</p>
+                            <p className="text-sm text-muted-foreground">{insight.timeAgo}</p>
                           </div>
-                          <span className="text-sm bg-blue-50 text-blue-600 px-2 py-1 rounded-full">
+                          <span className="text-sm bg-primary/10 text-primary px-2 py-1 rounded-full">
                             {insight.category}
                           </span>
                         </div>
-                        <p className="mt-2 text-gray-600">{insight.content}</p>
+                        <p className="mt-2 text-muted-foreground">{insight.content}</p>
                         <div className="flex items-center gap-4 mt-3">
-                          <Button variant="ghost" size="sm" className="text-gray-600">
+                          <Button variant="ghost" size="sm" className="text-muted-foreground">
                             <Heart className="h-4 w-4 mr-2" />
                             {insight.likes}
                           </Button>
-                          <Button variant="ghost" size="sm" className="text-gray-600">
+                          <Button variant="ghost" size="sm" className="text-muted-foreground">
                             <MessageSquare className="h-4 w-4 mr-2" />
                             Reply
                           </Button>
@@ -172,21 +172,21 @@ export default function CommunityFeatures() {
             <Card className="p-6">
               <h2 className="text-lg font-semibold mb-4">Your Community Impact</h2>
               <div className="grid grid-cols-2 gap-4">
-                <div className="bg-gray-50 p-3 rounded-lg text-center">
-                  <p className="text-2xl font-bold text-green-600">{userStats.challengesCompleted}</p>
-                  <p className="text-xs text-gray-600">Challenges Done</p>
+                <div className="bg-muted p-3 rounded-lg text-center">
+                  <p className="text-2xl font-bold text-green-500">{userStats.challengesCompleted}</p>
+                  <p className="text-xs text-muted-foreground">Challenges Done</p>
                 </div>
-                <div className="bg-gray-50 p-3 rounded-lg text-center">
-                  <p className="text-2xl font-bold text-blue-600">{userStats.streakDays}</p>
-                  <p className="text-xs text-gray-600">Day Streak</p>
+                <div className="bg-muted p-3 rounded-lg text-center">
+                  <p className="text-2xl font-bold text-primary">{userStats.streakDays}</p>
+                  <p className="text-xs text-muted-foreground">Day Streak</p>
                 </div>
-                <div className="bg-gray-50 p-3 rounded-lg text-center">
-                  <p className="text-2xl font-bold text-purple-600">{userStats.peopleMotivated}</p>
-                  <p className="text-xs text-gray-600">People Motivated</p>
+                <div className="bg-muted p-3 rounded-lg text-center">
+                  <p className="text-2xl font-bold text-purple-500">{userStats.peopleMotivated}</p>
+                  <p className="text-xs text-muted-foreground">People Motivated</p>
                 </div>
-                <div className="bg-gray-50 p-3 rounded-lg text-center">
-                  <p className="text-2xl font-bold text-orange-600">{userStats.activeChallenges}</p>
-                  <p className="text-xs text-gray-600">Active Challenges</p>
+                <div className="bg-muted p-3 rounded-lg text-center">
+                  <p className="text-2xl font-bold text-orange-500">{userStats.activeChallenges}</p>
+                  <p className="text-xs text-muted-foreground">Active Challenges</p>
                 </div>
               </div>
             </Card>
@@ -214,21 +214,21 @@ export default function CommunityFeatures() {
             <Card className="p-6">
               <h2 className="text-lg font-semibold mb-4">Community Goals</h2>
               <div className="space-y-4">
-                <div className="bg-gray-50 p-3 rounded-lg">
+                <div className="bg-muted p-3 rounded-lg">
                   <div className="flex justify-between items-center mb-2">
-                    <span className="font-medium">1M Prayers on Time</span>
+                    <span className="font-medium text-foreground">1M Prayers on Time</span>
                     <Trophy className="h-4 w-4 text-yellow-500" />
                   </div>
                   <Progress value={85} />
-                  <p className="text-sm text-gray-600 mt-2">150K prayers to go</p>
+                  <p className="text-sm text-muted-foreground mt-2">150K prayers to go</p>
                 </div>
-                <div className="bg-gray-50 p-3 rounded-lg">
+                <div className="bg-muted p-3 rounded-lg">
                   <div className="flex justify-between items-center mb-2">
-                    <span className="font-medium">100K Quran Pages</span>
+                    <span className="font-medium text-foreground">100K Quran Pages</span>
                     <Trophy className="h-4 w-4 text-yellow-500" />
                   </div>
                   <Progress value={65} />
-                  <p className="text-sm text-gray-600 mt-2">35K pages remaining</p>
+                  <p className="text-sm text-muted-foreground mt-2">35K pages remaining</p>
                 </div>
               </div>
             </Card>

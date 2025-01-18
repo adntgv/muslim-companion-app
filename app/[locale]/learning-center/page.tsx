@@ -155,7 +155,7 @@ export default function LearningCenter() {
   ];
 
   return (
-    <div className="min-h-screen bg-gray-50 p-6">
+    <div className="min-h-screen bg-background p-6">
       <div className="max-w-7xl mx-auto">
         {/* Header */}
         <div className="flex justify-between items-center mb-8">
@@ -192,21 +192,21 @@ export default function LearningCenter() {
                   </Button>
                 </div>
 
-                <div className="bg-blue-50 p-4 rounded-lg">
+                <div className="bg-primary/10 p-4 rounded-lg">
                   <div className="flex items-start justify-between mb-4">
                     <div>
-                      <h3 className="font-medium">
+                      <h3 className="font-medium text-foreground">
                         {courses.find(c => c.status === 'in-progress' && c.nextLesson)?.nextLesson?.title}
                       </h3>
-                      <p className="text-sm text-gray-600 mt-1">
+                      <p className="text-sm text-muted-foreground mt-1">
                         {courses.find(c => c.status === 'in-progress' && c.nextLesson)?.nextLesson?.description}
                       </p>
-                      <p className="text-sm text-gray-600 flex items-center gap-2 mt-2">
+                      <p className="text-sm text-muted-foreground flex items-center gap-2 mt-2">
                         <Clock className="h-4 w-4" />
                         {courses.find(c => c.status === 'in-progress' && c.nextLesson)?.nextLesson?.duration}
                       </p>
                     </div>
-                    <div className="bg-white px-3 py-1 rounded-full text-sm text-blue-600">
+                    <div className="bg-background px-3 py-1 rounded-full text-sm text-primary">
                       Next Lesson
                     </div>
                   </div>
@@ -226,54 +226,54 @@ export default function LearningCenter() {
                   <div className="flex justify-between items-start mb-4">
                     <div className="flex gap-4">
                       <div className={`p-3 rounded-lg ${
-                        course.status === 'locked' ? 'bg-gray-100' :
-                        course.status === 'completed' ? 'bg-green-100' : 'bg-blue-100'
+                        course.status === 'locked' ? 'bg-muted' :
+                        course.status === 'completed' ? 'bg-green-500/20' : 'bg-primary/20'
                       }`}>
                         {course.category === 'Aqeedah' && <GraduationCap className={`h-6 w-6 ${
-                          course.status === 'locked' ? 'text-gray-500' :
-                          course.status === 'completed' ? 'text-green-600' : 'text-blue-600'
+                          course.status === 'locked' ? 'text-muted-foreground' :
+                          course.status === 'completed' ? 'text-green-500' : 'text-primary'
                         }`} />}
                         {course.category === 'Fiqh' && <Target className={`h-6 w-6 ${
-                          course.status === 'locked' ? 'text-gray-500' :
-                          course.status === 'completed' ? 'text-green-600' : 'text-blue-600'
+                          course.status === 'locked' ? 'text-muted-foreground' :
+                          course.status === 'completed' ? 'text-green-500' : 'text-primary'
                         }`} />}
                         {course.category === 'Quran' && <BookOpen className={`h-6 w-6 ${
-                          course.status === 'locked' ? 'text-gray-500' :
-                          course.status === 'completed' ? 'text-green-600' : 'text-blue-600'
+                          course.status === 'locked' ? 'text-muted-foreground' :
+                          course.status === 'completed' ? 'text-green-500' : 'text-primary'
                         }`} />}
                         {course.category === 'Personal Growth' && <Heart className={`h-6 w-6 ${
-                          course.status === 'locked' ? 'text-gray-500' :
-                          course.status === 'completed' ? 'text-green-600' : 'text-blue-600'
+                          course.status === 'locked' ? 'text-muted-foreground' :
+                          course.status === 'completed' ? 'text-green-500' : 'text-primary'
                         }`} />}
                       </div>
                       <div>
                         <div className="flex items-center gap-2">
-                          <h3 className="font-semibold">{course.title}</h3>
+                          <h3 className="font-semibold text-foreground">{course.title}</h3>
                           <span className={`text-xs px-2 py-1 rounded-full ${
-                            course.level === 1 ? 'bg-green-100 text-green-600' :
-                            course.level === 2 ? 'bg-blue-100 text-blue-600' :
-                            'bg-purple-100 text-purple-600'
+                            course.level === 1 ? 'bg-green-500/10 text-green-500' :
+                            course.level === 2 ? 'bg-primary/10 text-primary' :
+                            'bg-purple-500/10 text-purple-500'
                           }`}>
                             Level {course.level}
                           </span>
                         </div>
-                        <p className="text-gray-600 text-sm mt-1">{course.description}</p>
+                        <p className="text-muted-foreground text-sm mt-1">{course.description}</p>
                         <div className="flex items-center gap-4 mt-2">
-                          <span className="text-sm text-gray-500 flex items-center gap-1">
+                          <span className="text-sm text-muted-foreground flex items-center gap-1">
                             <Clock className="h-4 w-4" />
                             {course.duration}
                           </span>
-                          <span className="text-sm text-gray-500">
+                          <span className="text-sm text-muted-foreground">
                             {course.completedLessons}/{course.totalLessons} Lessons
                           </span>
-                          <span className="text-sm bg-gray-100 px-2 py-1 rounded-full">
+                          <span className="text-sm bg-muted px-2 py-1 rounded-full text-muted-foreground">
                             {course.category}
                           </span>
                         </div>
                       </div>
                     </div>
                     {course.status === 'locked' ? (
-                      <Lock className="h-5 w-5 text-gray-400" />
+                      <Lock className="h-5 w-5 text-muted-foreground" />
                     ) : (
                       <Button variant="outline">Continue</Button>
                     )}
@@ -282,10 +282,10 @@ export default function LearningCenter() {
                     <Progress value={course.progress} />
                   )}
                   {course.status === 'locked' && course.prerequisites && (
-                    <div className="mt-4 p-3 bg-gray-50 rounded-lg">
-                      <p className="text-sm font-medium text-gray-600 mb-2">Prerequisites:</p>
+                    <div className="mt-4 p-3 bg-muted rounded-lg">
+                      <p className="text-sm font-medium text-muted-foreground mb-2">Prerequisites:</p>
                       {course.prerequisites.map((prereq, index) => (
-                        <p key={index} className="text-sm text-gray-600 flex items-center gap-2">
+                        <p key={index} className="text-sm text-muted-foreground flex items-center gap-2">
                           <Star className="h-3 w-3 text-yellow-500" />
                           {prereq}
                         </p>
@@ -303,21 +303,21 @@ export default function LearningCenter() {
             <Card className="p-6">
               <h2 className="text-lg font-semibold mb-4">Learning Stats</h2>
               <div className="grid grid-cols-2 gap-4">
-                <div className="bg-gray-50 p-3 rounded-lg text-center">
-                  <p className="text-2xl font-bold text-blue-600">{learningStats.activeCourses}</p>
-                  <p className="text-xs text-gray-600">Active Courses</p>
+                <div className="bg-muted p-3 rounded-lg text-center">
+                  <p className="text-2xl font-bold text-primary">{learningStats.activeCourses}</p>
+                  <p className="text-xs text-muted-foreground">Active Courses</p>
                 </div>
-                <div className="bg-gray-50 p-3 rounded-lg text-center">
-                  <p className="text-2xl font-bold text-green-600">{learningStats.hoursLearned}</p>
-                  <p className="text-xs text-gray-600">Hours Learned</p>
+                <div className="bg-muted p-3 rounded-lg text-center">
+                  <p className="text-2xl font-bold text-green-500">{learningStats.hoursLearned}</p>
+                  <p className="text-xs text-muted-foreground">Hours Learned</p>
                 </div>
-                <div className="bg-gray-50 p-3 rounded-lg text-center">
-                  <p className="text-2xl font-bold text-purple-600">{learningStats.lessonsCompleted}</p>
-                  <p className="text-xs text-gray-600">Lessons Done</p>
+                <div className="bg-muted p-3 rounded-lg text-center">
+                  <p className="text-2xl font-bold text-purple-500">{learningStats.lessonsCompleted}</p>
+                  <p className="text-xs text-muted-foreground">Lessons Done</p>
                 </div>
-                <div className="bg-gray-50 p-3 rounded-lg text-center">
-                  <p className="text-2xl font-bold text-orange-600">{learningStats.streak}</p>
-                  <p className="text-xs text-gray-600">Day Streak</p>
+                <div className="bg-muted p-3 rounded-lg text-center">
+                  <p className="text-2xl font-bold text-orange-500">{learningStats.streak}</p>
+                  <p className="text-xs text-muted-foreground">Day Streak</p>
                 </div>
               </div>
             </Card>
@@ -327,15 +327,15 @@ export default function LearningCenter() {
               <h2 className="text-lg font-semibold mb-4">Upcoming Lessons</h2>
               <div className="space-y-4">
                 {upcomingLessons.map((lesson, index) => (
-                  <div key={index} className="flex items-center gap-3 p-3 bg-gray-50 rounded-lg">
-                    <div className="p-2 bg-blue-100 rounded-lg">
-                      <Calendar className="h-4 w-4 text-blue-600" />
+                  <div key={index} className="flex items-center gap-3 p-3 bg-muted rounded-lg">
+                    <div className="p-2 bg-primary/20 rounded-lg">
+                      <Calendar className="h-4 w-4 text-primary" />
                     </div>
                     <div className="flex-1">
-                      <p className="font-medium">{lesson.title}</p>
+                      <p className="font-medium text-foreground">{lesson.title}</p>
                       <div className="flex items-center gap-3 mt-1">
-                        <span className="text-sm text-gray-600">{lesson.date}</span>
-                        <span className="text-xs bg-gray-100 px-2 py-1 rounded-full">
+                        <span className="text-sm text-muted-foreground">{lesson.date}</span>
+                        <span className="text-xs bg-muted px-2 py-1 rounded-full text-muted-foreground">
                           {lesson.duration}
                         </span>
                       </div>

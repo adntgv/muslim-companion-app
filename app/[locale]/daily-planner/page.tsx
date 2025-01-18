@@ -51,8 +51,8 @@ export default function DailyPlanner() {
   ];
 
   return (
-    <div className="min-h-screen bg-gray-50 p-6">
-      <div className="max-w-4xl mx-auto">
+    <div className="min-h-screen bg-background p-6">
+      <div className="max-w-7xl mx-auto">
         {/* Header */}
         <div className="flex justify-between items-center mb-6">
           <div>
@@ -75,31 +75,31 @@ export default function DailyPlanner() {
                   key={prayer.name}
                   className={`flex items-center justify-between p-3 rounded-lg ${
                     prayer.status === 'completed'
-                      ? 'bg-green-50'
+                      ? 'bg-green-500/10'
                       : prayer.status === 'missed'
-                      ? 'bg-red-50'
-                      : 'bg-gray-50'
+                      ? 'bg-destructive/10'
+                      : 'bg-muted'
                   }`}
                 >
                   <div className="flex items-center gap-3">
                     <Clock className={`h-5 w-5 ${
                       prayer.status === 'completed'
-                        ? 'text-green-600'
+                        ? 'text-green-500'
                         : prayer.status === 'missed'
-                        ? 'text-red-600'
-                        : 'text-gray-600'
+                        ? 'text-destructive'
+                        : 'text-muted-foreground'
                     }`} />
                     <div>
-                      <p className="font-medium">{prayer.name}</p>
-                      <p className="text-sm text-gray-600">{prayer.time}</p>
+                      <p className="font-medium text-foreground">{prayer.name}</p>
+                      <p className="text-sm text-muted-foreground">{prayer.time}</p>
                     </div>
                   </div>
                   {prayer.status === 'completed' ? (
-                    <Check className="h-5 w-5 text-green-600" />
+                    <Check className="h-5 w-5 text-green-500" />
                   ) : prayer.status === 'upcoming' ? (
                     <Button size="sm" variant="outline">Mark Complete</Button>
                   ) : (
-                    <span className="text-sm text-red-600">Missed</span>
+                    <span className="text-sm text-destructive">Missed</span>
                   )}
                 </div>
               ))}
@@ -112,16 +112,16 @@ export default function DailyPlanner() {
               <h3 className="font-semibold mb-4">Today's Progress</h3>
               <div className="space-y-4">
                 <div className="flex items-center justify-between">
-                  <span className="text-gray-600">Tasks Completed</span>
-                  <span className="font-semibold">4/7</span>
+                  <span className="text-muted-foreground">Tasks Completed</span>
+                  <span className="font-semibold text-foreground">4/7</span>
                 </div>
                 <div className="flex items-center justify-between">
-                  <span className="text-gray-600">Prayers on Time</span>
-                  <span className="font-semibold">2/5</span>
+                  <span className="text-muted-foreground">Prayers on Time</span>
+                  <span className="font-semibold text-foreground">2/5</span>
                 </div>
                 <div className="flex items-center justify-between">
-                  <span className="text-gray-600">Quran Pages</span>
-                  <span className="font-semibold">1/3</span>
+                  <span className="text-muted-foreground">Quran Pages</span>
+                  <span className="font-semibold text-foreground">1/3</span>
                 </div>
               </div>
             </Card>
@@ -161,29 +161,29 @@ export default function DailyPlanner() {
                 key={task.id}
                 className={`flex items-center justify-between p-4 rounded-lg ${
                   task.status === 'completed'
-                    ? 'bg-green-50'
+                    ? 'bg-green-500/10'
                     : task.status === 'pending'
-                    ? 'bg-yellow-50'
-                    : 'bg-gray-50'
+                    ? 'bg-yellow-500/10'
+                    : 'bg-muted'
                 }`}
               >
                 <div className="flex items-center gap-4">
                   <div className={`p-2 rounded-lg ${
                     task.status === 'completed'
-                      ? 'bg-green-100'
+                      ? 'bg-green-500/20'
                       : task.status === 'pending'
-                      ? 'bg-yellow-100'
-                      : 'bg-gray-100'
+                      ? 'bg-yellow-500/20'
+                      : 'bg-muted'
                   }`}>
-                    <task.icon className="h-5 w-5 text-gray-600" />
+                    <task.icon className="h-5 w-5 text-foreground" />
                   </div>
                   <div>
-                    <p className="font-medium">{task.title}</p>
-                    <p className="text-sm text-gray-600">{task.time}</p>
+                    <p className="font-medium text-foreground">{task.title}</p>
+                    <p className="text-sm text-muted-foreground">{task.time}</p>
                   </div>
                 </div>
                 {task.status === 'completed' ? (
-                  <div className="flex items-center gap-2 text-green-600">
+                  <div className="flex items-center gap-2 text-green-500">
                     <Check className="h-5 w-5" />
                     <span className="text-sm font-medium">Completed</span>
                   </div>

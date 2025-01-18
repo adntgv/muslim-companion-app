@@ -32,18 +32,18 @@ export default async function LocaleLayout({
           strategy="afterInteractive"
         />
       </head>
-      <body>
+      <body className="min-h-screen bg-background font-sans antialiased">
         <ThemeProvider
           attribute="class"
-          defaultTheme="system"
-          enableSystem
+          defaultTheme="dark"
+          enableSystem={false}
           disableTransitionOnChange
         >
           <AuthProvider>
             <ClientLayout messages={messages} locale={locale}>
-              <div className="flex flex-col min-h-screen">
+              <div className="relative flex min-h-screen flex-col bg-background">
                 <Navbar />
-                <main className="flex-grow">
+                <main className="flex-1 bg-background">
                   {children}
                 </main>
               </div>

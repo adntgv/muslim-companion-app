@@ -31,29 +31,29 @@ export default function ReflectionJournal() {
   ];
 
   const moodOptions = [
-    { icon: Smile, label: "Peaceful", color: "text-green-500" },
-    { icon: Meh, label: "Neutral", color: "text-yellow-500" },
-    { icon: Frown, label: "Struggling", color: "text-red-500" }
+    { icon: Smile, label: "Peaceful", color: "text-primary dark:text-primary" },
+    { icon: Meh, label: "Neutral", color: "text-yellow-500 dark:text-yellow-400" },
+    { icon: Frown, label: "Struggling", color: "text-destructive dark:text-destructive" }
   ];
 
   return (
-    <div className="min-h-screen bg-gray-50 p-6">
+    <div className="min-h-screen bg-background p-6">
       <div className="max-w-7xl mx-auto">
         {/* Header */}
         <div className="mb-8">
-          <h1 className="text-3xl font-bold text-gray-900">Reflection Journal</h1>
-          <p className="text-gray-600 mt-2">Document your spiritual journey and insights</p>
+          <h1 className="text-3xl font-bold text-foreground">Reflection Journal</h1>
+          <p className="text-muted-foreground mt-2">Document your spiritual journey and insights</p>
         </div>
 
         <div className="grid lg:grid-cols-3 gap-6">
           {/* Main Journal Area */}
           <div className="lg:col-span-2 space-y-6">
             {/* Today's Entry */}
-            <Card className="p-6">
+            <Card className="p-6 bg-card">
               <div className="flex justify-between items-center mb-6">
                 <div>
-                  <h2 className="text-xl font-semibold">Today's Reflection</h2>
-                  <p className="text-gray-600">Monday, 15 January 2024</p>
+                  <h2 className="text-xl font-semibold text-card-foreground">Today's Reflection</h2>
+                  <p className="text-muted-foreground">Monday, 15 January 2024</p>
                 </div>
                 <div className="flex gap-2">
                   <Button variant="outline" size="sm">
@@ -67,7 +67,7 @@ export default function ReflectionJournal() {
 
               {/* Mood Selector */}
               <div className="mb-6">
-                <h3 className="font-medium mb-3">How are you feeling spiritually today?</h3>
+                <h3 className="font-medium text-card-foreground mb-3">How are you feeling spiritually today?</h3>
                 <div className="flex gap-4">
                   {moodOptions.map((mood) => (
                     <button
@@ -75,12 +75,12 @@ export default function ReflectionJournal() {
                       onClick={() => setSelectedMood(mood.label)}
                       className={`flex-1 p-4 rounded-lg border ${
                         selectedMood === mood.label 
-                          ? 'border-blue-500 bg-blue-50' 
-                          : 'border-gray-200 hover:border-blue-200'
+                          ? 'border-primary bg-primary/10 dark:bg-primary/20' 
+                          : 'border-border hover:border-primary/50 dark:hover:border-primary/70'
                       }`}
                     >
                       <mood.icon className={`h-6 w-6 mx-auto mb-2 ${mood.color}`} />
-                      <p className="text-sm text-center">{mood.label}</p>
+                      <p className="text-sm text-center text-card-foreground">{mood.label}</p>
                     </button>
                   ))}
                 </div>
@@ -90,10 +90,10 @@ export default function ReflectionJournal() {
               <div className="space-y-6">
                 {promptsOfDay.map((prompt, index) => (
                   <div key={index}>
-                    <p className="font-medium mb-2">{prompt}</p>
+                    <p className="font-medium text-card-foreground mb-2">{prompt}</p>
                     <Textarea 
                       placeholder="Write your reflection here..." 
-                      className="min-h-[100px]"
+                      className="min-h-[100px] bg-background text-foreground placeholder:text-muted-foreground"
                     />
                   </div>
                 ))}
@@ -101,25 +101,25 @@ export default function ReflectionJournal() {
             </Card>
 
             {/* Past Entries Preview */}
-            <Card className="p-6">
+            <Card className="p-6 bg-card">
               <div className="flex justify-between items-center mb-4">
-                <h2 className="text-xl font-semibold">Recent Reflections</h2>
+                <h2 className="text-xl font-semibold text-card-foreground">Recent Reflections</h2>
                 <Button variant="outline">View All</Button>
               </div>
               <div className="space-y-4">
                 {[1, 2, 3].map((day) => (
-                  <div key={day} className="p-4 bg-gray-50 rounded-lg">
+                  <div key={day} className="p-4 bg-muted rounded-lg">
                     <div className="flex justify-between items-start mb-2">
                       <div>
-                        <p className="font-medium">Sunday, 14 January 2024</p>
-                        <div className="flex items-center gap-2 text-sm text-gray-600 mt-1">
-                          <Smile className="h-4 w-4 text-green-500" />
+                        <p className="font-medium text-card-foreground">Sunday, 14 January 2024</p>
+                        <div className="flex items-center gap-2 text-sm text-muted-foreground mt-1">
+                          <Smile className="h-4 w-4 text-primary" />
                           <span>Peaceful</span>
                         </div>
                       </div>
                       <Button variant="ghost" size="sm">Read</Button>
                     </div>
-                    <p className="text-gray-600 text-sm line-clamp-2">
+                    <p className="text-muted-foreground text-sm line-clamp-2">
                       Today I felt a strong connection during Fajr prayer. The morning dhikr routine helped me...
                     </p>
                   </div>
@@ -131,9 +131,9 @@ export default function ReflectionJournal() {
           {/* Sidebar */}
           <div className="space-y-6">
             {/* Calendar */}
-            <Card className="p-6">
+            <Card className="p-6 bg-card">
               <div className="flex justify-between items-center mb-4">
-                <h2 className="text-lg font-semibold">January 2024</h2>
+                <h2 className="text-lg font-semibold text-card-foreground">January 2024</h2>
                 <div className="flex gap-2">
                   <Button variant="ghost" size="icon">
                     <ChevronLeft className="h-4 w-4" />
@@ -147,29 +147,29 @@ export default function ReflectionJournal() {
             </Card>
 
             {/* Insights */}
-            <Card className="p-6">
-              <h2 className="text-lg font-semibold mb-4">Monthly Insights</h2>
+            <Card className="p-6 bg-card">
+              <h2 className="text-lg font-semibold text-card-foreground mb-4">Monthly Insights</h2>
               <div className="space-y-4">
-                <div className="bg-green-50 p-3 rounded-lg">
+                <div className="bg-primary/10 dark:bg-primary/20 p-3 rounded-lg">
                   <div className="flex items-center gap-2 mb-2">
-                    <Star className="h-5 w-5 text-green-600" />
-                    <span className="font-medium">Most Peaceful Days</span>
+                    <Star className="h-5 w-5 text-primary" />
+                    <span className="font-medium text-card-foreground">Most Peaceful Days</span>
                   </div>
-                  <p className="text-sm text-gray-600">Fridays and early mornings show your highest spiritual connection</p>
+                  <p className="text-sm text-muted-foreground">Fridays and early mornings show your highest spiritual connection</p>
                 </div>
-                <div className="bg-blue-50 p-3 rounded-lg">
+                <div className="bg-secondary/10 dark:bg-secondary/20 p-3 rounded-lg">
                   <div className="flex items-center gap-2 mb-2">
-                    <Heart className="h-5 w-5 text-blue-600" />
-                    <span className="font-medium">Growth Areas</span>
+                    <Heart className="h-5 w-5 text-secondary" />
+                    <span className="font-medium text-card-foreground">Growth Areas</span>
                   </div>
-                  <p className="text-sm text-gray-600">Consistent improvement in patience and gratitude</p>
+                  <p className="text-sm text-muted-foreground">Consistent improvement in patience and gratitude</p>
                 </div>
               </div>
             </Card>
 
             {/* Quick Prompts */}
-            <Card className="p-6">
-              <h2 className="text-lg font-semibold mb-4">Reflection Prompts</h2>
+            <Card className="p-6 bg-card">
+              <h2 className="text-lg font-semibold text-card-foreground mb-4">Reflection Prompts</h2>
               <div className="space-y-2">
                 <Button variant="outline" className="w-full justify-start">
                   <Sun className="h-4 w-4 mr-2" />
