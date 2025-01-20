@@ -1,3 +1,5 @@
+'use client';
+
 import React from 'react';
 import { Link } from '@/i18n/routing';
 import { Card } from '@/components/ui/card';
@@ -19,153 +21,12 @@ import {
   Users
 } from 'lucide-react';
 import { ROUTES } from '@/lib/navigation';
-
-interface PathLevel {
-  title: string;
-  description: string;
-  progress: number;
-  status: 'completed' | 'in-progress' | 'locked';
-  requirements?: string[];
-}
-
-interface GrowthPath {
-  id: string;
-  title: string;
-  description: string;
-  icon: any;
-  category: string;
-  currentLevel: number;
-  levels: PathLevel[];
-  overallProgress: number;
-}
+import { GROWTH_PATHS } from '@/data/growth-paths';
+import { useGrowthMap } from '@/hooks/useGrowthMap';
+import type { GrowthPath, PathLevel } from '@/types/growth-map';
 
 export default function GrowthMapScreen() {
-  const growthPaths: GrowthPath[] = [
-    {
-      id: 'prayers',
-      title: "Prayer Excellence",
-      description: "Master the art of prayer and khushu",
-      icon: Clock,
-      category: "Core Practices",
-      currentLevel: 2,
-      overallProgress: 65,
-      levels: [
-        {
-          title: "5 Daily Prayers",
-          description: "Establish consistency in obligatory prayers",
-          progress: 100,
-          status: 'completed'
-        },
-        {
-          title: "Prayer Quality",
-          description: "Develop khushu and understanding",
-          progress: 60,
-          status: 'in-progress',
-          requirements: ['Complete all daily prayers on time for 30 days']
-        },
-        {
-          title: "Sunnah Prayers",
-          description: "Incorporate regular sunnah prayers",
-          progress: 0,
-          status: 'locked',
-          requirements: ['Master prayer quality', 'Maintain 90% prayer consistency']
-        }
-      ]
-    },
-    {
-      id: 'quran',
-      title: "Quran Connection",
-      description: "Build a strong relationship with the Quran",
-      icon: BookOpen,
-      category: "Core Practices",
-      currentLevel: 1,
-      overallProgress: 45,
-      levels: [
-        {
-          title: "Daily Reading",
-          description: "Establish daily Quran reading habit",
-          progress: 75,
-          status: 'in-progress'
-        },
-        {
-          title: "Tajweed Mastery",
-          description: "Learn and apply tajweed rules",
-          progress: 0,
-          status: 'locked',
-          requirements: ['Complete daily reading for 40 days']
-        },
-        {
-          title: "Understanding & Reflection",
-          description: "Study translation and tafsir",
-          progress: 0,
-          status: 'locked',
-          requirements: ['Master tajweed rules', 'Complete basic Arabic course']
-        }
-      ]
-    },
-    {
-      id: 'knowledge',
-      title: "Islamic Knowledge",
-      description: "Build a strong foundation in Islamic sciences",
-      icon: GraduationCap,
-      category: "Learning",
-      currentLevel: 1,
-      overallProgress: 30,
-      levels: [
-        {
-          title: "Basic Aqeedah",
-          description: "Learn fundamental beliefs",
-          progress: 90,
-          status: 'in-progress'
-        },
-        {
-          title: "Fiqh of Worship",
-          description: "Study rules of Islamic practices",
-          progress: 0,
-          status: 'locked',
-          requirements: ['Complete basic aqeedah course']
-        },
-        {
-          title: "Advanced Studies",
-          description: "Deep dive into Islamic sciences",
-          progress: 0,
-          status: 'locked',
-          requirements: ['Master fiqh of worship', 'Complete intermediate level']
-        }
-      ]
-    },
-    {
-      id: 'character',
-      title: "Character Excellence",
-      description: "Develop noble character traits",
-      icon: Heart,
-      category: "Personal Growth",
-      currentLevel: 2,
-      overallProgress: 70,
-      levels: [
-        {
-          title: "Core Values",
-          description: "Establish basic Islamic character",
-          progress: 100,
-          status: 'completed'
-        },
-        {
-          title: "Advanced Traits",
-          description: "Develop patience and gratitude",
-          progress: 65,
-          status: 'in-progress',
-          requirements: ['Practice core values for 30 days']
-        },
-        {
-          title: "Leadership Qualities",
-          description: "Become a positive influence",
-          progress: 0,
-          status: 'locked',
-          requirements: ['Master advanced traits', 'Complete mentorship program']
-        }
-      ]
-    }
-  ];
+  const { progress, updateLevelProgress } = useGrowthMap();
 
   const achievements = [
     {
@@ -201,81 +62,87 @@ export default function GrowthMapScreen() {
           {/* Main Content */}
           <div className="lg:col-span-2 space-y-6">
             {/* Growth Paths */}
-            {growthPaths.map((path) => (
-              <Card key={path.id} className="p-6">
-                <div className="flex items-center gap-4 mb-6">
-                  <div className="p-3 rounded-lg bg-primary/20">
-                    <path.icon className="h-6 w-6 text-primary" />
-                  </div>
-                  <div className="flex-1">
-                    <div className="flex justify-between items-start">
-                      <div>
-                        <h2 className="text-xl font-semibold text-foreground">{path.title}</h2>
-                        <p className="text-muted-foreground">{path.description}</p>
-                      </div>
-                      <span className="text-sm bg-primary/10 text-primary px-3 py-1 rounded-full">
-                        Level {path.currentLevel}
-                      </span>
-                    </div>
-                    <div className="mt-2">
-                      <Progress value={path.overallProgress} />
-                      <p className="text-sm text-muted-foreground mt-1">{path.overallProgress}% Complete</p>
-                    </div>
-                  </div>
-                </div>
+            {GROWTH_PATHS.map((path) => {
+              const pathProgress = progress.paths.find(p => p.pathId === path.id);
+              if (!pathProgress) return null;
 
-                <div className="space-y-4">
-                  {path.levels.map((level, index) => (
-                    <div
-                      key={level.title}
-                      className={`p-4 rounded-lg ${
-                        level.status === 'completed' ? 'bg-green-500/10' :
-                        level.status === 'in-progress' ? 'bg-primary/10' :
-                        'bg-muted'
-                      }`}
-                    >
-                      <div className="flex items-start justify-between mb-2">
-                        <div className="flex items-center gap-3">
-                          {level.status === 'completed' ? (
-                            <CheckCircle className="h-5 w-5 text-green-500" />
-                          ) : level.status === 'locked' ? (
-                            <Lock className="h-5 w-5 text-muted-foreground" />
-                          ) : (
-                            <Target className="h-5 w-5 text-primary" />
-                          )}
-                          <div>
-                            <h3 className="font-medium text-foreground">{level.title}</h3>
-                            <p className="text-sm text-muted-foreground">{level.description}</p>
-                          </div>
+              return (
+                <Card key={path.id} className="p-6">
+                  <div className="flex items-center gap-4 mb-6">
+                    <div className="p-3 rounded-lg bg-primary/20">
+                      <path.icon className="h-6 w-6 text-primary" />
+                    </div>
+                    <div className="flex-1">
+                      <div className="flex justify-between items-start">
+                        <div>
+                          <h2 className="text-xl font-semibold text-foreground">{path.title}</h2>
+                          <p className="text-muted-foreground">{path.description}</p>
                         </div>
-                        <span className="text-sm font-medium text-muted-foreground">
-                          Level {index + 1}
+                        <span className="text-sm bg-primary/10 text-primary px-3 py-1 rounded-full">
+                          Level {pathProgress.currentLevel}
                         </span>
                       </div>
-                      {level.status !== 'locked' && (
-                        <>
-                          <Progress value={level.progress} className="mt-2" />
-                          <p className="text-sm text-gray-600 mt-1">
-                            {level.progress}% Complete
-                          </p>
-                        </>
-                      )}
-                      {level.status === 'locked' && level.requirements && (
-                        <div className="mt-2 space-y-1">
-                          <p className="text-sm font-medium text-gray-600">Requirements:</p>
-                          {level.requirements.map((req, idx) => (
-                            <p key={idx} className="text-sm text-gray-600 flex items-center gap-2">
-                              <Star className="h-3 w-3 text-yellow-500" />
-                              {req}
-                            </p>
-                          ))}
-                        </div>
-                      )}
+                      <div className="mt-2">
+                        <Progress value={pathProgress.overallProgress} />
+                        <p className="text-sm text-muted-foreground mt-1">{pathProgress.overallProgress}% Complete</p>
+                      </div>
                     </div>
-                  ))}
-                </div>
-              </Card>
-            ))}
+                  </div>
+
+                  <div className="space-y-4">
+                    {path.levels.map((level) => {
+                      const levelProgress = pathProgress.levels.find(l => l.levelId === level.id);
+                      if (!levelProgress) return null;
+
+                      return (
+                        <div
+                          key={level.id}
+                          className={`p-4 rounded-lg ${
+                            levelProgress.status === 'completed' ? 'bg-green-500/10' :
+                            levelProgress.status === 'in-progress' ? 'bg-primary/10' :
+                            'bg-muted'
+                          }`}
+                        >
+                          <div className="flex items-start justify-between mb-2">
+                            <div className="flex items-center gap-3">
+                              {levelProgress.status === 'completed' ? (
+                                <CheckCircle className="h-5 w-5 text-green-500" />
+                              ) : levelProgress.status === 'locked' ? (
+                                <Lock className="h-5 w-5 text-muted-foreground" />
+                              ) : (
+                                <Target className="h-5 w-5 text-primary" />
+                              )}
+                              <div>
+                                <h3 className="font-medium text-foreground">{level.title}</h3>
+                                <p className="text-sm text-muted-foreground">{level.description}</p>
+                              </div>
+                            </div>
+                            {levelProgress.status !== 'locked' && (
+                              <div className="text-sm">
+                                <Progress value={levelProgress.progress} className="w-24" />
+                                <p className="text-right mt-1 text-muted-foreground">
+                                  {levelProgress.progress}%
+                                </p>
+                              </div>
+                            )}
+                          </div>
+                          {level.requirements && levelProgress.status === 'locked' && (
+                            <div className="mt-2 text-sm text-muted-foreground">
+                              <p className="font-medium">Requirements:</p>
+                              <ul className="list-disc list-inside mt-1">
+                                {level.requirements.map((req: string, idx: number) => (
+                                  <li key={idx}>{req}</li>
+                                ))}
+                              </ul>
+                            </div>
+                          )}
+                        </div>
+                      );
+                    })}
+                  </div>
+                </Card>
+              );
+            })}
           </div>
 
           {/* Sidebar */}
