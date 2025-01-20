@@ -3,7 +3,7 @@
 import React, { createContext, useContext, useEffect, useState } from 'react';
 import { getCurrentSession, account } from '@/lib/appwrite';
 import { Models } from 'appwrite';
-import { useRouter } from 'next/navigation';
+import { useRouter } from '@/i18n/routing';
 import { toast } from 'sonner';
 
 interface AuthContextType {
