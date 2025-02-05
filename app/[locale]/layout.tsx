@@ -11,6 +11,8 @@ export async function generateMetadata({ params: { locale } }: { params: { local
   return {
     title: 'Falah',
     description: 'Your personal companion for daily Islamic practices',
+    manifest: '/manifest.json',
+    themeColor: '#C19A6B',
   };
 }
 
@@ -26,6 +28,8 @@ export default async function LocaleLayout({
   return (
     <html lang={locale} suppressHydrationWarning>
       <head>
+        <link rel="manifest" href="/manifest.json" />
+        <meta name="theme-color" content="#C19A6B" />
         <Script
           src="https://umami.adntgv.com/script.js"
           data-website-id="d9c1702a-df56-49fe-8452-018b45fa2d63"
