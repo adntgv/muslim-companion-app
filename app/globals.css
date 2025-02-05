@@ -34,13 +34,13 @@
     --card: 224 71% 4%;
     --card-foreground: 213 31% 91%;
     --popover: 224 71% 4%;
-    --popover-foreground: 215 20.2% 65.1%;
+    --popover-foreground: 213 31% 91%;
     --primary: 175 50% 45%;
     --primary-foreground: 222 47% 11%;
     --secondary: 42 60% 45%;
     --secondary-foreground: 210 40% 98%;
     --muted: 223 47% 11%;
-    --muted-foreground: 215 20.2% 65.1%;
+    --muted-foreground: 215 20.2% 75.1%;
     --accent: 30 80% 50%;
     --accent-foreground: 210 40% 98%;
     --destructive: 0 62.8% 30.6%;
@@ -83,18 +83,24 @@
   }
   
   .main-nav-title {
-    @apply text-lg font-semibold;
+    font-size: 1.125rem;
+    font-weight: 600;
     color: hsl(var(--foreground));
   }
   
   .main-nav-button {
-    @apply ml-auto;
+    margin-left: auto;
   }
   
   .main-nav-link {
-    @apply text-sm font-medium transition-colors;
+    font-size: 0.875rem;
+    font-weight: 500;
+    transition-property: color;
+    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+    transition-duration: 150ms;
     color: hsl(var(--foreground));
   }
+  
   .main-nav-link:hover {
     color: hsl(var(--primary));
   }

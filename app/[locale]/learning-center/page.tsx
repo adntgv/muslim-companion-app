@@ -160,8 +160,8 @@ export default function LearningCenter() {
         {/* Header */}
         <div className="flex justify-between items-center mb-8">
           <div>
-            <h1 className="text-3xl font-bold text-gray-900">Learning Center</h1>
-            <p className="text-gray-600 mt-2">Your personalized Islamic learning journey</p>
+            <h1 className="text-3xl font-bold text-foreground">Learning Center</h1>
+            <p className="text-muted-foreground mt-2">Your personalized Islamic learning journey</p>
           </div>
           <Button 
             variant="outline"
@@ -366,15 +366,15 @@ export default function LearningCenter() {
                 {recommendedResources.map((resource, index) => (
                   <Button key={index} variant="outline" className="w-full justify-between">
                     <div className="flex items-center gap-3">
-                      <div className="p-2 bg-gray-100 rounded-lg">
-                        <resource.icon className="h-4 w-4 text-gray-600" />
+                      <div className="p-2 bg-muted rounded-lg">
+                        <resource.icon className="h-4 w-4 text-muted-foreground" />
                       </div>
                       <div className="text-left">
-                        <p className="font-medium">{resource.title}</p>
+                        <p className="font-medium text-foreground">{resource.title}</p>
                         <div className="flex items-center gap-2">
-                          <span className="text-xs text-gray-600">{resource.type}</span>
-                          <span className="text-xs text-gray-600">•</span>
-                          <span className="text-xs text-gray-600">{resource.duration}</span>
+                          <span className="text-xs text-muted-foreground">{resource.type}</span>
+                          <span className="text-xs text-muted-foreground">•</span>
+                          <span className="text-xs text-muted-foreground">{resource.duration}</span>
                         </div>
                       </div>
                     </div>

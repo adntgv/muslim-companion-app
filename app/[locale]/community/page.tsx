@@ -74,8 +74,8 @@ export default function CommunityFeatures() {
       <div className="max-w-7xl mx-auto">
         {/* Header */}
         <div className="mb-8">
-          <h1 className="text-3xl font-bold text-gray-900">Community</h1>
-          <p className="text-gray-600 mt-2">Grow together with other seekers of knowledge</p>
+          <h1 className="text-3xl font-bold text-foreground">Community</h1>
+          <p className="text-muted-foreground mt-2">Grow together with other seekers of knowledge</p>
         </div>
 
         <div className="grid lg:grid-cols-3 gap-6">
@@ -85,8 +85,8 @@ export default function CommunityFeatures() {
             <Card className="p-6">
               <div className="flex justify-between items-center mb-6">
                 <div>
-                  <h2 className="text-xl font-semibold">Active Challenges</h2>
-                  <p className="text-gray-600">Join challenges to grow consistently</p>
+                  <h2 className="text-xl font-semibold text-foreground">Active Challenges</h2>
+                  <p className="text-muted-foreground">Join challenges to grow consistently</p>
                 </div>
                 <Button variant="outline">Browse All</Button>
               </div>
@@ -128,7 +128,7 @@ export default function CommunityFeatures() {
             {/* Community Insights */}
             <Card className="p-6">
               <div className="flex justify-between items-center mb-6">
-                <h2 className="text-xl font-semibold">Community Insights</h2>
+                <h2 className="text-xl font-semibold text-foreground">Community Insights</h2>
                 <Button variant="outline">Share Your Story</Button>
               </div>
 
@@ -170,7 +170,7 @@ export default function CommunityFeatures() {
           <div className="space-y-6">
             {/* User Stats */}
             <Card className="p-6">
-              <h2 className="text-lg font-semibold mb-4">Your Community Impact</h2>
+              <h2 className="text-lg font-semibold mb-4 text-foreground">Your Community Impact</h2>
               <div className="grid grid-cols-2 gap-4">
                 <div className="bg-muted p-3 rounded-lg text-center">
                   <p className="text-2xl font-bold text-green-500">{userStats.challengesCompleted}</p>
@@ -193,7 +193,7 @@ export default function CommunityFeatures() {
 
             {/* Trending Challenges */}
             <Card className="p-6">
-              <h2 className="text-lg font-semibold mb-4">Trending Challenges</h2>
+              <h2 className="text-lg font-semibold mb-4 text-foreground">Trending Challenges</h2>
               <div className="space-y-3">
                 <Button variant="outline" className="w-full justify-between">
                   <span>Ramadan Prep Challenge</span>
@@ -212,7 +212,7 @@ export default function CommunityFeatures() {
 
             {/* Community Goals */}
             <Card className="p-6">
-              <h2 className="text-lg font-semibold mb-4">Community Goals</h2>
+              <h2 className="text-lg font-semibold mb-4 text-foreground">Community Goals</h2>
               <div className="space-y-4">
                 <div className="bg-muted p-3 rounded-lg">
                   <div className="flex justify-between items-center mb-2">

@@ -54,8 +54,8 @@ export default function GrowthMapScreen() {
       <div className="max-w-7xl mx-auto">
         {/* Header */}
         <div className="mb-8">
-          <h1 className="text-3xl font-bold text-gray-900">Your Growth Journey</h1>
-          <p className="text-gray-600 mt-2">Track your progress and plan your next steps</p>
+          <h1 className="text-3xl font-bold text-foreground">Your Growth Journey</h1>
+          <p className="text-muted-foreground mt-2">Track your progress and plan your next steps</p>
         </div>
 
         <div className="grid lg:grid-cols-3 gap-6">
