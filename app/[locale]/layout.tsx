@@ -30,6 +30,10 @@ export default async function LocaleLayout({
       <head>
         <link rel="manifest" href="/manifest.json" />
         <meta name="theme-color" content="#C19A6B" />
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+        <meta name="apple-mobile-web-app-title" content="falah" />
+        <link rel="apple-touch-icon" href="/192x192.png" />
         <Script
           src="https://umami.adntgv.com/script.js"
           data-website-id="d9c1702a-df56-49fe-8452-018b45fa2d63"
