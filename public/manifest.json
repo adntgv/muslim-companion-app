@@ -1,12 +1,15 @@
 {
-  "name": "falah",
-  "short_name": "falah",
+  "name": "Falah",
+  "short_name": "Falah",
   "description": "Your personal companion for Islamic spiritual growth and daily planning",
   "start_url": "/en/dashboard",
+  "id": "/en/dashboard",
   "scope": "/",
   "display": "standalone",
+  "orientation": "portrait",
   "background_color": "#F5E6D3",
   "theme_color": "#C19A6B",
+  "categories": ["lifestyle", "education", "productivity"],
   "icons": [
     {
       "src": "/192x192.png",
@@ -17,7 +20,16 @@
     {
       "src": "/512x512.png",
       "sizes": "512x512",
-      "type": "image/png"
+      "type": "image/png",
+      "purpose": "any"
     }
-  ]
+  ],
+  "shortcuts": [
+    {
+      "name": "Dashboard",
+      "url": "/en/dashboard",
+      "icons": [{ "src": "/192x192.png", "sizes": "192x192" }]
+    }
+  ],
+  "prefer_related_applications": false
 }

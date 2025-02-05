@@ -6,6 +6,7 @@ import { Navbar } from '@/components/Navbar';
 import { ThemeProvider } from "@/components/theme-provider";
 import { Toaster } from "sonner";
 import { AuthProvider } from '@/contexts/auth-context';
+import { LoadingProgress } from '@/components/LoadingProgress';
 
 export async function generateMetadata({ params: { locale } }: { params: { locale: string } }) {
   return {
@@ -13,6 +14,20 @@ export async function generateMetadata({ params: { locale } }: { params: { local
     description: 'Your personal companion for daily Islamic practices',
     manifest: '/manifest.json',
     themeColor: '#C19A6B',
+    appleWebApp: {
+      capable: true,
+      title: 'Falah',
+      statusBarStyle: 'default',
+    },
+    formatDetection: {
+      telephone: false,
+    },
+    viewport: {
+      width: 'device-width',
+      initialScale: 1,
+      maximumScale: 1,
+      userScalable: false,
+    },
   };
 }
 
@@ -30,6 +45,7 @@ export default async function LocaleLayout({
       <head>
         <link rel="manifest" href="/manifest.json" />
         <meta name="theme-color" content="#C19A6B" />
+        <meta name="mobile-web-app-capable" content="yes" />
         <meta name="apple-mobile-web-app-capable" content="yes" />
         <meta name="apple-mobile-web-app-status-bar-style" content="default" />
         <meta name="apple-mobile-web-app-title" content="falah" />
@@ -49,6 +65,7 @@ export default async function LocaleLayout({
         >
           <AuthProvider>
             <ClientLayout messages={messages} locale={locale}>
+              <LoadingProgress />
               <div className="relative flex min-h-screen flex-col bg-background">
                 <Navbar />
                 <main className="flex-1 bg-background">

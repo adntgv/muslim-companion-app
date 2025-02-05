@@ -6,6 +6,7 @@ import { Button } from '@/components/ui/button';
 import { ROUTES } from '@/lib/navigation';
 import { useAuth } from '@/contexts/auth-context';
 import { User, Menu, X } from 'lucide-react';
+import { usePathname } from 'next/navigation';
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -17,10 +18,12 @@ import { useRouter } from 'next/navigation';
 import { toast } from 'sonner';
 import LocaleSwitcher from './LocaleSwitcher';
 import ThemeToggle from './themeToggle';
+import { cn } from '@/lib/utils';
 
 export function Navbar() {
   const { user, isLoading, checkSession } = useAuth();
   const router = useRouter();
+  const pathname = usePathname() || '';
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   const handleLogout = async () => {
@@ -57,31 +60,61 @@ export function Navbar() {
     <>
       <Link 
         href={ROUTES.DASHBOARD}
-        className="inline-flex items-center px-1 pt-1 text-sm font-medium text-gray-900 border-b-2 border-transparent hover:border-gray-300"
+        className={cn(
+          "md:inline-flex md:items-center md:px-1 md:pt-1 md:text-sm md:font-medium md:border-b-2 md:border-transparent",
+          "block w-full py-2 pl-3 pr-4 text-base font-medium rounded-md",
+          pathname?.includes(ROUTES.DASHBOARD) 
+            ? "text-primary md:border-primary bg-accent/50 md:bg-transparent" 
+            : "text-foreground/70 hover:bg-accent md:hover:border-gray-300 md:hover:bg-transparent"
+        )}
       >
         Dashboard
       </Link>
       <Link 
         href={ROUTES.GROWTH_MAP}
-        className="inline-flex items-center px-1 pt-1 text-sm font-medium text-gray-500 border-b-2 border-transparent hover:border-gray-300"
+        className={cn(
+          "md:inline-flex md:items-center md:px-1 md:pt-1 md:text-sm md:font-medium md:border-b-2 md:border-transparent",
+          "block w-full py-2 pl-3 pr-4 text-base font-medium rounded-md",
+          pathname?.includes(ROUTES.GROWTH_MAP) 
+            ? "text-primary md:border-primary bg-accent/50 md:bg-transparent" 
+            : "text-foreground/70 hover:bg-accent md:hover:border-gray-300 md:hover:bg-transparent"
+        )}
       >
         Growth Map
       </Link>
       <Link 
         href={ROUTES.LEARNING_CENTER}
-        className="inline-flex items-center px-1 pt-1 text-sm font-medium text-gray-500 border-b-2 border-transparent hover:border-gray-300"
+        className={cn(
+          "md:inline-flex md:items-center md:px-1 md:pt-1 md:text-sm md:font-medium md:border-b-2 md:border-transparent",
+          "block w-full py-2 pl-3 pr-4 text-base font-medium rounded-md",
+          pathname?.includes(ROUTES.LEARNING_CENTER) 
+            ? "text-primary md:border-primary bg-accent/50 md:bg-transparent" 
+            : "text-foreground/70 hover:bg-accent md:hover:border-gray-300 md:hover:bg-transparent"
+        )}
       >
         Learning Center
       </Link>
       <Link 
         href={ROUTES.REFLECTION_JOURNAL}
-        className="inline-flex items-center px-1 pt-1 text-sm font-medium text-gray-500 border-b-2 border-transparent hover:border-gray-300"
+        className={cn(
+          "md:inline-flex md:items-center md:px-1 md:pt-1 md:text-sm md:font-medium md:border-b-2 md:border-transparent",
+          "block w-full py-2 pl-3 pr-4 text-base font-medium rounded-md",
+          pathname?.includes(ROUTES.REFLECTION_JOURNAL) 
+            ? "text-primary md:border-primary bg-accent/50 md:bg-transparent" 
+            : "text-foreground/70 hover:bg-accent md:hover:border-gray-300 md:hover:bg-transparent"
+        )}
       >
         Reflection Journal
       </Link>
       <Link 
         href={ROUTES.COMMUNITY}
-        className="inline-flex items-center px-1 pt-1 text-sm font-medium text-gray-500 border-b-2 border-transparent hover:border-gray-300"
+        className={cn(
+          "md:inline-flex md:items-center md:px-1 md:pt-1 md:text-sm md:font-medium md:border-b-2 md:border-transparent",
+          "block w-full py-2 pl-3 pr-4 text-base font-medium rounded-md",
+          pathname?.includes(ROUTES.COMMUNITY) 
+            ? "text-primary md:border-primary bg-accent/50 md:bg-transparent" 
+            : "text-foreground/70 hover:bg-accent md:hover:border-gray-300 md:hover:bg-transparent"
+        )}
       >
         Community
       </Link>
@@ -127,16 +160,16 @@ export function Navbar() {
 
         {/* Mobile menu */}
         {isMenuOpen && (
-          <div className="md:hidden py-2 space-y-2">
-            <div className="space-y-2 px-2">
+          <div className="md:hidden py-2 space-y-1 bg-background shadow-lg rounded-b-lg">
+            <div className="space-y-1 px-2">
               <NavLinks />
             </div>
-            <div className="border-t border-gray-200 pt-2 px-2">
-              <div className="flex items-center justify-between space-x-2">
+            <div className="border-t border-border pt-4 px-4">
+              <div className="flex items-center justify-between space-x-4">
                 <LocaleSwitcher />
                 <ThemeToggle />
                 {!isLoading && !user && (
-                  <Button asChild size="sm">
+                  <Button asChild size="sm" className="w-full">
                     <Link href="/login">Login</Link>
                   </Button>
                 )}
