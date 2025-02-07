@@ -3,8 +3,8 @@ import { config } from './config';
 
 // Initialize Appwrite client
 const client = new Client()
-    .setEndpoint(process.env.NEXT_PUBLIC_APPWRITE_ENDPOINT || '')
-    .setProject(process.env.NEXT_PUBLIC_APPWRITE_PROJECT_ID || '');
+    .setEndpoint('https://appwrite.adntgv.com/v1')
+    .setProject('67852f14003b2e275a82');
 
 export const account = new Account(client);
 export const databases = new Databases(client);

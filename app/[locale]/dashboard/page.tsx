@@ -284,7 +284,7 @@ export default function Dashboard() {
                   const Icon = getIconComponent(insight.iconName);
                   return (
                     <div
-                      key={insight.title}
+                      key={`${insight.type}-${insight.title}`}
                       className={`p-3 rounded-lg ${
                         insight.type === 'achievement' ? 'bg-green-500/10' :
                         insight.type === 'suggestion' ? 'bg-yellow-500/10' : 'bg-primary/10'
