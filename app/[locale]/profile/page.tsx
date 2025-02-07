@@ -7,8 +7,9 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { toast } from "sonner";
-import { getCurrentSession, account } from '@/lib/appwrite';
-import { Loader2 } from 'lucide-react';
+import { getCurrentSession, account, logout } from '@/lib/appwrite';
+import { Loader2, LogOut } from 'lucide-react';
+import { useRouter } from 'next/navigation';
 
 interface UserProfile {
   name: string;
@@ -19,6 +20,7 @@ export default function ProfilePage() {
   const t = useTranslations('profile');
   const [isLoading, setIsLoading] = useState(true);
   const [isSaving, setIsSaving] = useState(false);
+  const router = useRouter();
   const [profile, setProfile] = useState<UserProfile>({
     name: '',
     email: '',
@@ -56,6 +58,16 @@ export default function ProfilePage() {
       toast.error(t('updateError'));
     } finally {
       setIsSaving(false);
+    }
+  };
+
+  const handleLogout = async () => {
+    try {
+      await logout();
+      toast.success(t('logoutSuccess'));
+      router.push('/');
+    } catch (error: any) {
+      toast.error(error.message);
     }
   };
 
@@ -101,16 +113,28 @@ export default function ProfilePage() {
               </p>
             </div>
 
-            <Button type="submit" disabled={isSaving}>
-              {isSaving ? (
-                <>
-                  <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                  {t('saving')}
-                </>
-              ) : (
-                t('saveChanges')
-              )}
-            </Button>
+            <div className="flex flex-col space-y-4">
+              <Button type="submit" disabled={isSaving}>
+                {isSaving ? (
+                  <>
+                    <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                    {t('saving')}
+                  </>
+                ) : (
+                  t('saveChanges')
+                )}
+              </Button>
+              
+              <Button 
+                type="button" 
+                variant="destructive" 
+                onClick={handleLogout}
+                className="w-full"
+              >
+                <LogOut className="mr-2 h-4 w-4" />
+                {t('logout')}
+              </Button>
+            </div>
           </form>
         </CardContent>
       </Card>

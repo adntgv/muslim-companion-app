@@ -97,7 +97,9 @@
     "saving": "Saving...",
     "updateSuccess": "Profile updated successfully",
     "updateError": "Failed to update profile",
-    "loadError": "Failed to load profile"
+    "loadError": "Failed to load profile",
+    "logout": "Logout",
+    "logoutSuccess": "Successfully logged out"
   },
   "dashboard": {
     "greeting": "As-salaam-alaikum",

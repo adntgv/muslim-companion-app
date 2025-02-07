@@ -7,13 +7,6 @@ import { ROUTES } from '@/lib/navigation';
 import { useAuth } from '@/contexts/auth-context';
 import { User, Menu, X } from 'lucide-react';
 import { usePathname } from 'next/navigation';
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
-import { logout } from '@/lib/appwrite';
 import { useRouter } from 'next/navigation';
 import { toast } from 'sonner';
 import LocaleSwitcher from './LocaleSwitcher';
@@ -21,40 +14,10 @@ import ThemeToggle from './themeToggle';
 import { cn } from '@/lib/utils';
 
 export function Navbar() {
-  const { user, isLoading, checkSession } = useAuth();
+  const { user, isLoading } = useAuth();
   const router = useRouter();
   const pathname = usePathname() || '';
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-
-  const handleLogout = async () => {
-    try {
-      await logout();
-      await checkSession();
-      toast.success('Successfully logged out');
-      router.push('/');
-    } catch (error: any) {
-      toast.error(error.message);
-    }
-  };
-
-  const UserMenu = () => (
-    <DropdownMenu>
-      <DropdownMenuTrigger asChild>
-        <Button variant="ghost" className="flex items-center space-x-2">
-          <User className="h-5 w-5" />
-          <span className="hidden md:inline">{user?.name || 'User'}</span>
-        </Button>
-      </DropdownMenuTrigger>
-      <DropdownMenuContent align="end">
-        <DropdownMenuItem asChild>
-          <Link href="/profile">Profile</Link>
-        </DropdownMenuItem>
-        <DropdownMenuItem onClick={handleLogout}>
-          Logout
-        </DropdownMenuItem>
-      </DropdownMenuContent>
-    </DropdownMenu>
-  );
 
   const NavLinks = () => (
     <>
@@ -118,6 +81,21 @@ export function Navbar() {
       >
         Community
       </Link>
+      {user && (
+        <Link 
+          href="/profile"
+          className={cn(
+            "md:hidden md:items-center md:px-1 md:pt-1 md:text-sm md:font-medium md:border-b-2 md:border-transparent",
+            "block w-full py-2 pl-3 pr-4 text-base font-medium rounded-md flex items-center",
+            pathname?.includes('/profile') 
+              ? "text-primary md:border-primary bg-accent/50 md:bg-transparent" 
+              : "text-foreground/70 hover:bg-accent md:hover:border-gray-300 md:hover:bg-transparent"
+          )}
+        >
+          <User className="h-4 w-4 mr-2" />
+          Profile
+        </Link>
+      )}
     </>
   );
 
@@ -140,13 +118,11 @@ export function Navbar() {
               <LocaleSwitcher />
               <ThemeToggle />
             </div>
-            {!isLoading && (user ? (
-              <UserMenu />
-            ) : (
+            {!isLoading && !user && (
               <Button asChild size="sm" className="hidden md:inline-flex">
                 <Link href="/login">Login</Link>
               </Button>
-            ))}
+            )}
             <Button 
               variant="ghost" 
               size="icon"
@@ -165,14 +141,16 @@ export function Navbar() {
               <NavLinks />
             </div>
             <div className="border-t border-border pt-4 px-4">
-              <div className="flex items-center justify-between space-x-4">
-                <LocaleSwitcher />
-                <ThemeToggle />
+              <div className="flex flex-col space-y-4">
                 {!isLoading && !user && (
                   <Button asChild size="sm" className="w-full">
                     <Link href="/login">Login</Link>
                   </Button>
                 )}
+                <div className="flex items-center justify-between space-x-4">
+                  <LocaleSwitcher />
+                  <ThemeToggle />
+                </div>
               </div>
             </div>
           </div>
