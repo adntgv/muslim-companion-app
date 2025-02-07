@@ -18,7 +18,7 @@ import {
   ChevronRight,
   AlertCircle,
   Calendar,
-  LucideIcon
+  Loader2
 } from 'lucide-react';
 import { ROUTES } from '@/lib/navigation';
 import type { IconName } from '@/components/Icon';
@@ -162,7 +162,10 @@ export default function Dashboard() {
   ];
 
   if (userLoading || isLoading) {
-    return <div>Loading tasks...</div>;
+    return <div className="flex justify-center items-center h-screen">
+      <Loader2 className="h-4 w-4 animate-spin" />
+      <span className="ml-2">Loading tasks...</span>
+    </div>;
   }
 
   if (!user) {
