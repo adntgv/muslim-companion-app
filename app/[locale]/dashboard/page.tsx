@@ -21,8 +21,9 @@ import {
   LucideIcon
 } from 'lucide-react';
 import { ROUTES } from '@/lib/navigation';
-
-type IconName = 'Sun' | 'Moon' | 'BookOpen' | 'Target' | 'Clock' | 'Heart' | 'Star' | 'AlertCircle' | 'TrendingUp';
+import type { IconName } from '@/components/Icon';
+import { useUser } from '@/hooks/useUser';
+import { tasksService, type Task } from '@/services/tasks';
 
 function getIconComponent(name: IconName) {
   switch (name) {
@@ -41,69 +42,81 @@ function getIconComponent(name: IconName) {
 
 const DEFAULT_TASKS = [
   {
-    id: 1,
     title: "Morning Adhkar",
     category: "Daily Worship",
     time: "6:00 AM",
-    status: "upcoming",
+    status: "upcoming" as const,
     iconName: 'Sun' as IconName,
-    priority: "high"
+    priority: "high" as const
   },
   {
-    id: 2,
     title: "Read Quran (2 pages)",
     category: "Quran",
     time: "7:00 AM",
-    status: "upcoming",
+    status: "upcoming" as const,
     iconName: 'BookOpen' as IconName,
-    priority: "high"
+    priority: "high" as const
   },
   {
-    id: 3,
     title: "Watch Aqeedah Lesson",
     category: "Knowledge",
     time: "2:00 PM",
-    status: "upcoming",
+    status: "upcoming" as const,
     iconName: 'Target' as IconName,
-    priority: "medium"
+    priority: "medium" as const
   },
   {
-    id: 4,
     title: "Evening Reflection",
     category: "Growth",
     time: "8:30 PM",
-    status: "upcoming",
+    status: "upcoming" as const,
     iconName: 'Moon' as IconName,
-    priority: "medium"
+    priority: "medium" as const
   }
 ];
 
 export default function Dashboard() {
-  const [dailyTasks, setDailyTasks] = useState(DEFAULT_TASKS);
-  const [today] = useState(new Date().toDateString());
+  const [dailyTasks, setDailyTasks] = useState<Task[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const { user, loading: userLoading } = useUser();
+  const today = new Date().toISOString().split('T')[0];
 
   useEffect(() => {
-    // Load tasks from localStorage
-    const storedTasks = localStorage.getItem('dailyTasks');
-    const lastActiveDate = localStorage.getItem('lastActiveDate');
-    
-    if (lastActiveDate !== today) {
-      // Reset tasks for new day
-      setDailyTasks(DEFAULT_TASKS);
-      localStorage.setItem('lastActiveDate', today);
-      localStorage.setItem('dailyTasks', JSON.stringify(DEFAULT_TASKS));
-    } else if (storedTasks) {
-      // Load existing tasks for same day
-      setDailyTasks(JSON.parse(storedTasks));
-    }
-  }, [today]);
+    async function loadTasks() {
+      if (!user?.$id) return;
 
-  const handleTaskComplete = (taskId: number) => {
-    const updatedTasks = dailyTasks.map(task => 
-      task.id === taskId ? { ...task, status: 'completed' } : task
-    );
-    setDailyTasks(updatedTasks);
-    localStorage.setItem('dailyTasks', JSON.stringify(updatedTasks));
+      try {
+        setIsLoading(true);
+        const tasks = await tasksService.getUserDailyTasks(user.$id, today);
+        
+        if (tasks.length === 0) {
+          // If no tasks exist for today, create default tasks
+          const newTasks = await tasksService.createDefaultTasks(user.$id, today, DEFAULT_TASKS);
+          setDailyTasks(newTasks);
+        } else {
+          setDailyTasks(tasks);
+        }
+      } catch (error) {
+        console.error('Error loading tasks:', error);
+      } finally {
+        setIsLoading(false);
+      }
+    }
+
+    if (!userLoading) {
+      loadTasks();
+    }
+  }, [user?.$id, today, userLoading]);
+
+  const handleTaskComplete = async (taskId: string) => {
+    try {
+      const updatedTask = await tasksService.updateTaskStatus(taskId, 'completed');
+      setDailyTasks(prevTasks => 
+        prevTasks.map(task => task.$id === taskId ? updatedTask : task)
+      );
+    } catch (error) {
+      console.error('Error updating task:', error);
+    }
   };
 
   const growthAreas = [
@@ -148,6 +161,14 @@ export default function Dashboard() {
     }
   ];
 
+  if (userLoading || isLoading) {
+    return <div>Loading tasks...</div>;
+  }
+
+  if (!user) {
+    return <div>Please log in to view your tasks</div>;
+  }
+
   return (
     <div className="min-h-screen bg-background p-6">
       <div className="max-w-7xl mx-auto">
@@ -181,20 +202,20 @@ export default function Dashboard() {
               </div>
               <div className="space-y-4">
                 {dailyTasks.map((task) => {
-                  const Icon = getIconComponent(task.iconName);
+                  const Icon = getIconComponent(task.iconName as IconName);
                   return (
                     <div
-                      key={task.id}
+                      key={task.$id}
                       className={`p-4 rounded-lg ${
                         task.status === 'completed' ? 'bg-green-500/10' :
-                        task.status === 'pending' ? 'bg-yellow-500/10' : 'bg-muted'
+                        task.status === 'upcoming' ? 'bg-yellow-500/10' : 'bg-muted'
                       }`}
                     >
                       <div className="flex items-center justify-between">
                         <div className="flex items-center gap-4">
                           <div className={`p-2 rounded-lg ${
                             task.status === 'completed' ? 'bg-green-500/20' :
-                            task.status === 'pending' ? 'bg-yellow-500/20' : 'bg-muted'
+                            task.status === 'upcoming' ? 'bg-yellow-500/20' : 'bg-muted'
                           }`}>
                             <Icon className="h-5 w-5 text-foreground" />
                           </div>
@@ -216,8 +237,8 @@ export default function Dashboard() {
                         ) : (
                           <Button 
                             size="sm" 
-                            variant={task.status === 'pending' ? 'default' : 'outline'}
-                            onClick={() => handleTaskComplete(task.id)}
+                            variant={task.status === 'upcoming' ? 'default' : 'outline'}
+                            onClick={() => handleTaskComplete(task.$id)}
                           >
                             Complete
                           </Button>

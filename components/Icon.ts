@@ -1,0 +1,1 @@
+export type IconName = 'Sun' | 'Moon' | 'BookOpen' | 'Target' | 'Clock' | 'Heart' | 'Star' | 'AlertCircle' | 'TrendingUp'; 

@@ -1,0 +1,122 @@
+{
+    "projectId": "67852f14003b2e275a82",
+    "projectName": "companion",
+    "settings": {
+        "services": {
+            "account": true,
+            "avatars": true,
+            "databases": true,
+            "locale": true,
+            "health": true,
+            "storage": true,
+            "teams": true,
+            "users": true,
+            "functions": true,
+            "graphql": true,
+            "messaging": true
+        },
+        "auth": {
+            "methods": {
+                "jwt": true,
+                "phone": true,
+                "invites": false,
+                "anonymous": true,
+                "email-otp": false,
+                "magic-url": false,
+                "email-password": true
+            },
+            "security": {
+                "duration": 31536000,
+                "limit": 0,
+                "sessionsLimit": 10,
+                "passwordHistory": 0,
+                "passwordDictionary": false,
+                "personalDataCheck": false,
+                "sessionAlerts": false,
+                "mockNumbers": []
+            }
+        }
+    },
+    "databases": [
+        {
+            "$id": "falah",
+            "name": "falah",
+            "enabled": true
+        }
+    ],
+    "collections": [
+      {
+        "databaseId": "falah",
+        "$id": "tasks",
+        "name": "Tasks",
+        "$permissions": [
+            "create(\"any\")",
+            "read(\"any\")",
+            "update(\"any\")",
+            "delete(\"any\")"
+        ],
+        "attributes": [
+          {
+            "key": "userId",
+            "type": "string",
+            "size": 255,
+            "required": true,
+            "array": false
+          },
+          {
+            "key": "title",
+            "type": "string",
+            "size": 255,
+            "required": true
+          },
+          {
+            "key": "category",
+            "type": "string",
+            "size": 50,
+            "required": true
+          },
+          {
+            "key": "time",
+            "type": "string",
+            "size": 20,
+            "required": true
+          },
+          {
+            "key": "status",
+            "type": "string",
+            "size": 20,
+            "required": true,
+            "elements": ["upcoming", "completed", "missed"]
+          },
+          {
+            "key": "iconName",
+            "type": "string",
+            "size": 50,
+            "required": true
+          },
+          {
+            "key": "priority",
+            "type": "string",
+            "size": 20,
+            "required": true,
+            "elements": ["low", "medium", "high"]
+          },
+          {
+            "key": "date",
+            "type": "string",
+            "size": 50,
+            "required": true
+          }
+        ],
+        "indexes": [
+          {
+            "key": "user_daily_tasks",
+            "type": "key",
+            "attributes": ["userId", "date"]
+          }
+        ]
+      }
+    ]
+}
+
+
