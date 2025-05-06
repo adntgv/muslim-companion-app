@@ -8,15 +8,17 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import { toast } from 'sonner';
-import { createAccount } from '@/lib/appwrite';
+import { createAccount, loginWithGoogle } from '@/lib/firebase-auth';
 import { Loader2 } from 'lucide-react';
 import { useAuth } from '@/contexts/auth-context';
+import { FcGoogle } from 'react-icons/fc';
 
 export default function RegisterPage() {
   const t = useTranslations('Auth');
   const router = useRouter();
   const { checkSession } = useAuth();
   const [isLoading, setIsLoading] = useState(false);
+  const [isGoogleLoading, setIsGoogleLoading] = useState(false);
   const [formData, setFormData] = useState({
     email: '',
     password: '',
@@ -40,14 +42,39 @@ export default function RegisterPage() {
 
     setIsLoading(true);
     try {
-      await createAccount(formData.email, formData.password, formData.name);
-      await checkSession();
+      const { data, error } = await createAccount(formData.email, formData.password, formData.name);
+      
+      if (error) {
+        toast.error(error.message);
+        return;
+      }
+      
       toast.success(t('registrationSuccess'));
       router.push('/dashboard');
     } catch (error: any) {
-      toast.error(error.message);
+      toast.error(error.message || 'An unexpected error occurred');
     } finally {
       setIsLoading(false);
+    }
+  };
+
+  const handleGoogleSignup = async () => {
+    setIsGoogleLoading(true);
+    
+    try {
+      const { data, error } = await loginWithGoogle();
+      
+      if (error) {
+        toast.error(error.message);
+        return;
+      }
+      
+      toast.success(t('registrationSuccess'));
+      router.push('/dashboard');
+    } catch (error: any) {
+      toast.error(error.message || 'An unexpected error occurred');
+    } finally {
+      setIsGoogleLoading(false);
     }
   };
 
@@ -130,6 +157,32 @@ export default function RegisterPage() {
               ) : (
                 t('register')
               )}
+            </Button>
+
+            <div className="relative my-4">
+              <div className="absolute inset-0 flex items-center">
+                <span className="w-full border-t" />
+              </div>
+              <div className="relative flex justify-center text-xs uppercase">
+                <span className="bg-background px-2 text-muted-foreground">
+                  {t('orContinueWith')}
+                </span>
+              </div>
+            </div>
+
+            <Button 
+              type="button" 
+              variant="outline" 
+              className="w-full" 
+              onClick={handleGoogleSignup}
+              disabled={isGoogleLoading}
+            >
+              {isGoogleLoading ? (
+                <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+              ) : (
+                <FcGoogle className="mr-2 h-5 w-5" />
+              )}
+              Google
             </Button>
 
             <div className="text-center text-sm">

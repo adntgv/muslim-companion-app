@@ -1,17 +1,18 @@
 'use client';
 
 import React, { createContext, useContext, useEffect, useState } from 'react';
-import { getCurrentSession, account } from '@/lib/appwrite';
-import { Models } from 'appwrite';
+import { User } from 'firebase/auth';
 import { useRouter } from '@/i18n/routing';
 import { toast } from 'sonner';
+import { onAuthStateChange, logout as firebaseLogout } from '@/lib/firebase-auth';
 
 interface AuthContextType {
-  user: Models.User<Models.Preferences> | null;
+  user: User | null;
   isLoading: boolean;
   checkSession: () => Promise<void>;
   isAuthenticated: boolean;
   error: string | null;
+  logout: () => Promise<void>;
 }
 
 const AuthContext = createContext<AuthContextType>({
@@ -19,41 +20,49 @@ const AuthContext = createContext<AuthContextType>({
   isLoading: true,
   checkSession: async () => {},
   isAuthenticated: false,
-  error: null
+  error: null,
+  logout: async () => {},
 });
 
 export function AuthProvider({ children }: { children: React.ReactNode }) {
-  const [user, setUser] = useState<Models.User<Models.Preferences> | null>(null);
+  const [user, setUser] = useState<User | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const router = useRouter();
 
   const checkSession = async () => {
-    try {
-      setIsLoading(true);
-      setError(null);
-      
-      const { data: session, error: sessionError } = await getCurrentSession();
-      
-      if (sessionError) {
-        setUser(null);
-        setIsAuthenticated(false);
-        setError(sessionError.message);
-        
-        // Only show toast for non-401 errors or when not on auth-related pages
-        const isAuthPage = window.location.pathname.includes('/login') || 
-                          window.location.pathname.includes('/register');
-        if (sessionError.code !== 401 || !isAuthPage) {
-          toast.error(sessionError.message);
-        }
-        
-        handleUnauthenticated();
-        return;
-      }
+    // This is now handled by the auth state listener in useEffect
+    // but keeping the method for API compatibility
+  };
 
-      if (session) {
-        setUser(session);
+  const logout = async () => {
+    try {
+      const { error } = await firebaseLogout();
+      if (error) {
+        toast.error(error.message);
+      }
+    } catch (error: any) {
+      toast.error(error.message || 'Failed to logout');
+    }
+  };
+
+  const handleUnauthenticated = () => {
+    const protectedRoutes = ['/dashboard', '/profile'];
+    const currentPath = window.location.pathname;
+    
+    if (protectedRoutes.some(route => currentPath.includes(route))) {
+      router.push('/login');
+    }
+  };
+
+  useEffect(() => {
+    // Set up Firebase auth state listener
+    const unsubscribe = onAuthStateChange((firebaseUser) => {
+      setIsLoading(true);
+      
+      if (firebaseUser) {
+        setUser(firebaseUser);
         setIsAuthenticated(true);
         setError(null);
       } else {
@@ -61,37 +70,23 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         setIsAuthenticated(false);
         handleUnauthenticated();
       }
-    } catch (error) {
-      console.error('Unexpected session check error:', error);
-      setUser(null);
-      setIsAuthenticated(false);
-      setError('An unexpected error occurred');
-      handleUnauthenticated();
-    } finally {
+      
       setIsLoading(false);
-    }
-  };
-
-  const handleUnauthenticated = () => {
-    const protectedRoutes = ['/dashboard', '/profile'];
-    const currentPath = window.location.pathname;
-    if (protectedRoutes.some(route => currentPath.includes(route))) {
-      router.push('/login');
-    }
-  };
-
-  useEffect(() => {
-    // Initial session check
-    checkSession();
+    });
     
-    // Set up an interval to check the session periodically
-    const interval = setInterval(checkSession, 5 * 60 * 1000); // Check every 5 minutes
-    
-    return () => clearInterval(interval);
+    // Clean up the listener
+    return () => unsubscribe();
   }, []);
 
   return (
-    <AuthContext.Provider value={{ user, isLoading, checkSession, isAuthenticated, error }}>
+    <AuthContext.Provider value={{ 
+      user, 
+      isLoading, 
+      checkSession, 
+      isAuthenticated, 
+      error, 
+      logout 
+    }}>
       {children}
     </AuthContext.Provider>
   );

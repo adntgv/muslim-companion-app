@@ -1,8 +1,4 @@
-import { ID, Query, Models } from 'appwrite';
-import { databases } from '@/lib/appwrite';
-
-const DATABASE_ID = 'falah';
-const TASKS_COLLECTION_ID = 'tasks';
+import { firebaseTasksService, FirebaseTask, CreateTaskData } from './firebase-tasks';
 
 export interface Task {
   $id: string;
@@ -16,47 +12,64 @@ export interface Task {
   date: string;
 }
 
+// Helper to convert Firebase Task to Appwrite-compatible Task format
+const convertFirebaseTaskToTask = (firebaseTask: FirebaseTask): Task => {
+  return {
+    $id: firebaseTask.id,
+    userId: firebaseTask.userId,
+    title: firebaseTask.title,
+    category: firebaseTask.category,
+    time: firebaseTask.time,
+    status: firebaseTask.status,
+    iconName: firebaseTask.iconName,
+    priority: firebaseTask.priority,
+    date: firebaseTask.date,
+  };
+};
+
 export const tasksService = {
   async createTask(task: Omit<Task, '$id'>): Promise<Task> {
-    const response = await databases.createDocument(
-      DATABASE_ID,
-      TASKS_COLLECTION_ID,
-      ID.unique(),
-      task
-    );
-    return response as unknown as Task;
+    const createData: CreateTaskData = {
+      userId: task.userId,
+      title: task.title,
+      category: task.category,
+      time: task.time,
+      status: task.status,
+      iconName: task.iconName,
+      priority: task.priority,
+      date: task.date,
+    };
+    
+    const firebaseTask = await firebaseTasksService.createTask(createData);
+    return convertFirebaseTaskToTask(firebaseTask);
   },
 
   async getUserDailyTasks(userId: string, date: string): Promise<Task[]> {
-    const response = await databases.listDocuments(
-      DATABASE_ID,
-      TASKS_COLLECTION_ID,
-      [
-        Query.equal('userId', userId),
-        Query.equal('date', date)
-      ]
-    );
-    return response.documents as unknown as Task[];
+    const firebaseTasks = await firebaseTasksService.getUserDailyTasks(userId, date);
+    return firebaseTasks.map(convertFirebaseTaskToTask);
   },
 
   async updateTaskStatus(taskId: string, status: Task['status']): Promise<Task> {
-    const response = await databases.updateDocument(
-      DATABASE_ID,
-      TASKS_COLLECTION_ID,
-      taskId,
-      { status }
-    );
-    return response as unknown as Task;
+    await firebaseTasksService.updateTaskStatus(taskId, status);
+    
+    // Firebase updateTaskStatus doesn't return the updated task, so return a partial task
+    return {
+      $id: taskId,
+      status,
+    } as Task;
   },
 
   async createDefaultTasks(userId: string, date: string, defaultTasks: Omit<Task, '$id' | 'userId' | 'date'>[]): Promise<Task[]> {
-    const promises = defaultTasks.map(task => 
-      this.createTask({
-        ...task,
-        userId,
-        date
-      })
-    );
-    return await Promise.all(promises);
+    const firebaseDefaultTasks = defaultTasks.map(task => ({
+      title: task.title,
+      category: task.category,
+      time: task.time,
+      status: task.status,
+      iconName: task.iconName,
+      priority: task.priority,
+    }));
+    
+    const firebaseTasks = await firebaseTasksService.createDefaultTasks(userId, date, firebaseDefaultTasks);
+    return firebaseTasks.map(convertFirebaseTaskToTask);
   }
 }; 

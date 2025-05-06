@@ -7,9 +7,11 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { toast } from "sonner";
-import { getCurrentSession, account, logout } from '@/lib/appwrite';
 import { Loader2, LogOut } from 'lucide-react';
 import { useRouter } from 'next/navigation';
+import { useAuth } from '@/contexts/auth-context';
+import { updateProfile } from 'firebase/auth';
+import { auth } from '@/lib/firebase';
 
 interface UserProfile {
   name: string;
@@ -21,38 +23,34 @@ export default function ProfilePage() {
   const [isLoading, setIsLoading] = useState(true);
   const [isSaving, setIsSaving] = useState(false);
   const router = useRouter();
+  const { user, logout } = useAuth();
   const [profile, setProfile] = useState<UserProfile>({
     name: '',
     email: '',
   });
 
   useEffect(() => {
-    loadProfile();
-  }, []);
-
-  const loadProfile = async () => {
-    try {
-      const session = await getCurrentSession();
-      if (session) {
-        setProfile({
-          name: session.data?.name || '',
-          email: session.data?.email || '',
-        });
-      }
-    } catch (error) {
-      console.error('Error loading profile:', error);
-      toast.error(t('loadError'));
-    } finally {
+    if (user) {
+      setProfile({
+        name: user.displayName || '',
+        email: user.email || '',
+      });
       setIsLoading(false);
     }
-  };
+  }, [user]);
 
   const handleUpdateProfile = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSaving(true);
     try {
-      await account.updateName(profile.name);
-      toast.success(t('updateSuccess'));
+      if (auth.currentUser) {
+        await updateProfile(auth.currentUser, {
+          displayName: profile.name
+        });
+        toast.success(t('updateSuccess'));
+      } else {
+        throw new Error('No authenticated user');
+      }
     } catch (error) {
       console.error('Error updating profile:', error);
       toast.error(t('updateError'));
@@ -67,7 +65,7 @@ export default function ProfilePage() {
       toast.success(t('logoutSuccess'));
       router.push('/');
     } catch (error: any) {
-      toast.error(error.message);
+      toast.error(error.message || 'Failed to logout');
     }
   };
 
