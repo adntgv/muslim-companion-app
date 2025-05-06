@@ -6,9 +6,12 @@ import {
   getDocs, 
   doc, 
   updateDoc,
+  deleteDoc,
   DocumentReference,
   DocumentData,
-  Timestamp
+  Timestamp,
+  writeBatch,
+  orderBy
 } from 'firebase/firestore';
 import { db } from '@/lib/firebase';
 
@@ -63,7 +66,8 @@ export const firebaseTasksService = {
       const tasksQuery = query(
         collection(db, TASKS_COLLECTION),
         where('userId', '==', userId),
-        where('date', '==', date)
+        where('date', '==', date),
+        orderBy('time', 'asc')
       );
       
       const querySnapshot = await getDocs(tasksQuery);
@@ -78,12 +82,53 @@ export const firebaseTasksService = {
     }
   },
 
+  async getUserTasks(userId: string): Promise<FirebaseTask[]> {
+    try {
+      const tasksQuery = query(
+        collection(db, TASKS_COLLECTION),
+        where('userId', '==', userId),
+        orderBy('date', 'desc'),
+        orderBy('time', 'asc')
+      );
+      
+      const querySnapshot = await getDocs(tasksQuery);
+      
+      return querySnapshot.docs.map(doc => ({
+        id: doc.id,
+        ...doc.data()
+      } as FirebaseTask));
+    } catch (error) {
+      console.error('Error getting all user tasks:', error);
+      throw error;
+    }
+  },
+
   async updateTaskStatus(taskId: string, status: FirebaseTask['status']): Promise<void> {
     try {
       const taskRef = doc(db, TASKS_COLLECTION, taskId);
       await updateDoc(taskRef, { status });
     } catch (error) {
       console.error('Error updating task status:', error);
+      throw error;
+    }
+  },
+
+  async updateTask(taskId: string, taskData: Partial<Omit<CreateTaskData, 'userId'>>): Promise<void> {
+    try {
+      const taskRef = doc(db, TASKS_COLLECTION, taskId);
+      await updateDoc(taskRef, taskData);
+    } catch (error) {
+      console.error('Error updating task:', error);
+      throw error;
+    }
+  },
+
+  async deleteTask(taskId: string): Promise<void> {
+    try {
+      const taskRef = doc(db, TASKS_COLLECTION, taskId);
+      await deleteDoc(taskRef);
+    } catch (error) {
+      console.error('Error deleting task:', error);
       throw error;
     }
   },
@@ -101,6 +146,43 @@ export const firebaseTasksService = {
       return await Promise.all(promises);
     } catch (error) {
       console.error('Error creating default tasks:', error);
+      throw error;
+    }
+  },
+
+  async batchUpdateTaskStatus(taskIds: string[], status: FirebaseTask['status']): Promise<void> {
+    try {
+      const batch = writeBatch(db);
+      
+      taskIds.forEach(taskId => {
+        const taskRef = doc(db, TASKS_COLLECTION, taskId);
+        batch.update(taskRef, { status });
+      });
+      
+      await batch.commit();
+    } catch (error) {
+      console.error('Error batch updating tasks:', error);
+      throw error;
+    }
+  },
+
+  async deleteUserTasks(userId: string): Promise<void> {
+    try {
+      const tasksQuery = query(
+        collection(db, TASKS_COLLECTION),
+        where('userId', '==', userId)
+      );
+      
+      const querySnapshot = await getDocs(tasksQuery);
+      
+      const batch = writeBatch(db);
+      querySnapshot.docs.forEach(doc => {
+        batch.delete(doc.ref);
+      });
+      
+      await batch.commit();
+    } catch (error) {
+      console.error('Error deleting user tasks:', error);
       throw error;
     }
   }

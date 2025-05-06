@@ -7,7 +7,7 @@ import { toast } from 'sonner';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { loginWithEmail, loginWithGoogle } from '@/lib/firebase-auth';
+import { authService } from '@/lib/auth';
 import { Loader2 } from 'lucide-react';
 import { useAuth } from '@/contexts/auth-context';
 import { FcGoogle } from 'react-icons/fc';
@@ -26,7 +26,7 @@ export default function LoginPage() {
     setIsLoading(true);
     
     try {
-      const { data, error } = await loginWithEmail(email, password);
+      const { data, error } = await authService.loginWithEmail(email, password);
       
       if (error) {
         toast.error(error.message);
@@ -46,7 +46,7 @@ export default function LoginPage() {
     setIsGoogleLoading(true);
     
     try {
-      const { data, error } = await loginWithGoogle();
+      const { data, error } = await authService.loginWithGoogle();
       
       if (error) {
         toast.error(error.message);

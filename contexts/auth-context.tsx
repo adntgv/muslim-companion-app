@@ -4,7 +4,7 @@ import React, { createContext, useContext, useEffect, useState } from 'react';
 import { User } from 'firebase/auth';
 import { useRouter } from '@/i18n/routing';
 import { toast } from 'sonner';
-import { onAuthStateChange, logout as firebaseLogout } from '@/lib/firebase-auth';
+import { authService } from '@/lib/auth';
 
 interface AuthContextType {
   user: User | null;
@@ -38,7 +38,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
   const logout = async () => {
     try {
-      const { error } = await firebaseLogout();
+      const { error } = await authService.logout();
       if (error) {
         toast.error(error.message);
       }
@@ -58,13 +58,25 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
   useEffect(() => {
     // Set up Firebase auth state listener
-    const unsubscribe = onAuthStateChange((firebaseUser) => {
+    const unsubscribe = authService.subscribeToAuthChanges(async (session) => {
       setIsLoading(true);
       
-      if (firebaseUser) {
-        setUser(firebaseUser);
-        setIsAuthenticated(true);
-        setError(null);
+      if (session) {
+        // When using authService, we need to call getCurrentUser to get the full User object
+        const result = await authService.getCurrentSession();
+        
+        if (result.data) {
+          // We need to get the actual Firebase User object
+          // For now, we'll use the session data
+          setUser({ 
+            uid: result.data.userId,
+            email: result.data.email,
+            displayName: result.data.name,
+            // Add necessary properties to satisfy the User interface
+          } as unknown as User);
+          setIsAuthenticated(true);
+          setError(null);
+        }
       } else {
         setUser(null);
         setIsAuthenticated(false);

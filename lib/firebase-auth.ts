@@ -3,7 +3,7 @@ import {
   signInWithEmailAndPassword,
   signInWithPopup,
   GoogleAuthProvider,
-  signOut,
+  signOut as firebaseSignOut,
   onAuthStateChanged,
   User,
   UserCredential,
@@ -11,39 +11,61 @@ import {
 } from 'firebase/auth';
 import { auth } from './firebase';
 
+interface AuthError {
+  message: string;
+  code: string;
+  type: string;
+}
+
 interface AuthResponse {
   data: UserCredential | null;
   error: AuthError | null;
 }
 
-interface AuthError {
-  code: string;
-  message: string;
-  type: string;
+interface UserResponse {
+  data: User | null;
+  error: AuthError | null;
 }
 
-// Handle Firebase auth errors
+// Error handling utility
 const handleAuthError = (error: any): AuthError => {
-  console.error('Firebase auth error:', error);
-  
-  const errorCode = error.code || 'unknown';
+  console.error('Firebase auth error details:', {
+    code: error.code,
+    message: error.message,
+    stack: error.stack
+  });
   
   // Map Firebase auth errors to user-friendly messages
-  const errorMap: Record<string, string> = {
-    'auth/user-not-found': 'No account found with this email',
-    'auth/wrong-password': 'Invalid email or password',
-    'auth/invalid-credential': 'Invalid email or password',
-    'auth/email-already-in-use': 'An account with this email already exists',
-    'auth/weak-password': 'Password should be at least 6 characters',
-    'auth/invalid-email': 'Please provide a valid email address',
-    'auth/too-many-requests': 'Too many attempts. Please try again later',
-    'auth/network-request-failed': 'Network error. Please check your connection'
-  };
+  if (error.code === 'auth/user-not-found' || error.code === 'auth/wrong-password') {
+    return {
+      message: 'Invalid email or password.',
+      code: error.code,
+      type: 'invalid_credentials'
+    };
+  } else if (error.code === 'auth/email-already-in-use') {
+    return {
+      message: 'An account with this email already exists.',
+      code: error.code,
+      type: 'user_already_exists'
+    };
+  } else if (error.code === 'auth/too-many-requests') {
+    return {
+      message: 'Too many attempts. Please try again later.',
+      code: error.code,
+      type: 'too_many_requests'
+    };
+  } else if (error.code === 'auth/user-disabled') {
+    return {
+      message: 'This account has been disabled.',
+      code: error.code,
+      type: 'user_disabled'
+    };
+  }
   
   return {
-    code: errorCode,
-    message: errorMap[errorCode] || error.message || 'An unexpected error occurred',
-    type: errorCode
+    message: error.message || 'An unexpected error occurred',
+    code: error.code || 'unknown_error',
+    type: 'unknown_error'
   };
 };
 
@@ -89,7 +111,7 @@ export const loginWithGoogle = async (): Promise<AuthResponse> => {
 // Sign out
 export const logout = async (): Promise<{ error: AuthError | null }> => {
   try {
-    await signOut(auth);
+    await firebaseSignOut(auth);
     return { error: null };
   } catch (error) {
     return { error: handleAuthError(error) };
@@ -97,11 +119,27 @@ export const logout = async (): Promise<{ error: AuthError | null }> => {
 };
 
 // Get current user
-export const getCurrentUser = (): User | null => {
-  return auth.currentUser;
+export const getCurrentUser = (): UserResponse => {
+  const user = auth.currentUser;
+  if (user) {
+    return { data: user, error: null };
+  }
+  return { 
+    data: null, 
+    error: {
+      message: 'No user is currently signed in',
+      code: 'auth/no-current-user',
+      type: 'no_current_user'
+    } 
+  };
 };
 
-// Listen for auth state changes
-export const onAuthStateChange = (callback: (user: User | null) => void) => {
+// Listen to auth state changes
+export const subscribeToAuthChanges = (callback: (user: User | null) => void): (() => void) => {
   return onAuthStateChanged(auth, callback);
+};
+
+// Check if user is authenticated
+export const isAuthenticated = (): boolean => {
+  return auth.currentUser !== null;
 }; 

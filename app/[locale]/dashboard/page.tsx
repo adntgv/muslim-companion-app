@@ -83,15 +83,15 @@ export default function Dashboard() {
 
   useEffect(() => {
     async function loadTasks() {
-      if (!user?.$id) return;
+      if (!user?.uid) return;
 
       try {
         setIsLoading(true);
-        const tasks = await tasksService.getUserDailyTasks(user.$id, today);
+        const tasks = await tasksService.getUserDailyTasks(user.uid, today);
         
         if (tasks.length === 0) {
           // If no tasks exist for today, create default tasks
-          const newTasks = await tasksService.createDefaultTasks(user.$id, today, DEFAULT_TASKS);
+          const newTasks = await tasksService.createDefaultTasks(user.uid, today, DEFAULT_TASKS);
           setDailyTasks(newTasks);
         } else {
           setDailyTasks(tasks);
@@ -106,7 +106,7 @@ export default function Dashboard() {
     if (!userLoading) {
       loadTasks();
     }
-  }, [user?.$id, today, userLoading]);
+  }, [user?.uid, today, userLoading]);
 
   const handleTaskComplete = async (taskId: string) => {
     try {

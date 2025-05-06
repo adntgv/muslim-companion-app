@@ -49,6 +49,11 @@ export const tasksService = {
     return firebaseTasks.map(convertFirebaseTaskToTask);
   },
 
+  async getUserTasks(userId: string): Promise<Task[]> {
+    const firebaseTasks = await firebaseTasksService.getUserTasks(userId);
+    return firebaseTasks.map(convertFirebaseTaskToTask);
+  },
+
   async updateTaskStatus(taskId: string, status: Task['status']): Promise<Task> {
     await firebaseTasksService.updateTaskStatus(taskId, status);
     
@@ -57,6 +62,18 @@ export const tasksService = {
       $id: taskId,
       status,
     } as Task;
+  },
+
+  async updateTask(taskId: string, taskData: Partial<Omit<Task, '$id' | 'userId'>>): Promise<Task> {
+    await firebaseTasksService.updateTask(taskId, taskData);
+    return {
+      $id: taskId,
+      ...taskData
+    } as Task;
+  },
+
+  async deleteTask(taskId: string): Promise<void> {
+    await firebaseTasksService.deleteTask(taskId);
   },
 
   async createDefaultTasks(userId: string, date: string, defaultTasks: Omit<Task, '$id' | 'userId' | 'date'>[]): Promise<Task[]> {
@@ -71,5 +88,13 @@ export const tasksService = {
     
     const firebaseTasks = await firebaseTasksService.createDefaultTasks(userId, date, firebaseDefaultTasks);
     return firebaseTasks.map(convertFirebaseTaskToTask);
+  },
+
+  async batchUpdateTaskStatus(taskIds: string[], status: Task['status']): Promise<void> {
+    await firebaseTasksService.batchUpdateTaskStatus(taskIds, status);
+  },
+
+  async deleteUserTasks(userId: string): Promise<void> {
+    await firebaseTasksService.deleteUserTasks(userId);
   }
 }; 

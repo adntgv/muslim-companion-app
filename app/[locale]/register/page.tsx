@@ -8,7 +8,7 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import { toast } from 'sonner';
-import { createAccount, loginWithGoogle } from '@/lib/firebase-auth';
+import { authService } from '@/lib/auth';
 import { Loader2 } from 'lucide-react';
 import { useAuth } from '@/contexts/auth-context';
 import { FcGoogle } from 'react-icons/fc';
@@ -42,7 +42,7 @@ export default function RegisterPage() {
 
     setIsLoading(true);
     try {
-      const { data, error } = await createAccount(formData.email, formData.password, formData.name);
+      const { data, error } = await authService.createAccount(formData.email, formData.password, formData.name);
       
       if (error) {
         toast.error(error.message);
@@ -62,7 +62,7 @@ export default function RegisterPage() {
     setIsGoogleLoading(true);
     
     try {
-      const { data, error } = await loginWithGoogle();
+      const { data, error } = await authService.loginWithGoogle();
       
       if (error) {
         toast.error(error.message);

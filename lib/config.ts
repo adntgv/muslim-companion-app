@@ -18,9 +18,15 @@ export const config = {
         sessionExpiry: 7 * 24 * 60 * 60 * 1000, // 7 days in milliseconds
         refreshInterval: 60 * 60 * 1000, // 1 hour in milliseconds
       },
-      appwrite: {
-        endpoint: process.env.NEXT_PUBLIC_APPWRITE_ENDPOINT || 'https://appwrite.adntgv.com/v1',
-        projectId: process.env.NEXT_PUBLIC_APPWRITE_PROJECT_ID || '67852f14003b2e275a82',
+      firebase: {
+        emulators: {
+          useEmulators: process.env.NEXT_PUBLIC_USE_FIREBASE_EMULATORS === 'true',
+          authUrl: 'http://localhost:9099',
+          firestoreHost: 'localhost',
+          firestorePort: 8080,
+          storageHost: 'localhost',
+          storagePort: 9199
+        }
       }
     // Add other configuration items here
   };
