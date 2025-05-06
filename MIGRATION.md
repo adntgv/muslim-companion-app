@@ -142,6 +142,28 @@ service cloud.firestore {
 }
 ```
 
+## Firestore Indexes
+
+When using multiple query conditions with Firestore, you might need to create composite indexes. For optimal performance with tasks queries, create the following indexes in the Firebase console:
+
+1. Navigate to Firebase Console > Firestore Database > Indexes tab
+2. Click "Create Index"
+3. Create the following indexes:
+
+**For tasks collection:**
+- Fields to index:
+  - userId (Ascending)
+  - date (Ascending)
+  - time (Ascending)
+
+**For advanced sorting:**
+- Fields to index:
+  - userId (Ascending)
+  - date (Descending)
+  - time (Ascending)
+
+The current implementation includes fallback methods that sort on the client side, but creating these indexes will improve performance and allow for server-side sorting.
+
 ## Testing
 
 Make sure to thoroughly test all functionality after migration:
@@ -168,5 +190,10 @@ Common issues and solutions:
 - **Firestore permission denied**: Review your security rules to ensure they allow the necessary operations.
 - **Missing data after migration**: Verify that all fields were correctly mapped between Appwrite and Firebase.
 - **Authentication errors after migration**: Make sure all files that used the direct Firebase/Appwrite imports are updated to use the abstraction layer.
+- **"Loading tasks..." stuck indefinitely**: 
+  1. Check browser console for errors 
+  2. Verify that user authentication is working correctly
+  3. Ensure Firestore rules allow reading tasks with the authenticated user
+  4. Create the recommended Firestore indexes mentioned above
 
 For more detailed information about Firebase, refer to the [Firebase documentation](https://firebase.google.com/docs). 

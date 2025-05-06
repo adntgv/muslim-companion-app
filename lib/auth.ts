@@ -118,20 +118,32 @@ export const authService = {
   
   // Get current session
   async getCurrentSession() {
-    const result = firebaseAuth.getCurrentUser();
-    
-    if (result.error) {
-      return { data: null, error: result.error };
-    }
-    
-    if (result.data) {
+    try {
+      const result = firebaseAuth.getCurrentUser();
+      
+      if (result.error) {
+        return { data: null, error: result.error };
+      }
+      
+      if (result.data) {
+        return { 
+          data: convertUserToSession(result.data), 
+          error: null 
+        };
+      }
+      
+      return { data: null, error: null };
+    } catch (error: any) {
+      console.error('Error getting current session:', error);
       return { 
-        data: convertUserToSession(result.data), 
-        error: null 
+        data: null, 
+        error: {
+          message: error.message || 'Failed to get current session',
+          code: error.code || 'auth/session-error',
+          type: 'session_error'
+        }
       };
     }
-    
-    return { data: null, error: null };
   },
   
   // Subscribe to auth changes

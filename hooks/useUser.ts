@@ -1,36 +1,20 @@
 import { useState, useEffect } from 'react';
-import { authService } from '@/lib/auth';
-import { User } from 'firebase/auth';
+import { authService, type AuthSession } from '@/lib/auth'; // Import AuthSession
 
 export function useUser() {
-  const [user, setUser] = useState<User | null>(null);
+  const [user, setUser] = useState<AuthSession | null>(null); // Use AuthSession
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const checkUser = async () => {
-      try {
-        const result = await authService.getCurrentSession();
-        if (result.data) {
-          // Since authService returns a simplified session object instead of a User object,
-          // we need to adapt it to match the User interface
-          setUser({
-            uid: result.data.userId,
-            email: result.data.email,
-            displayName: result.data.name,
-            // Add other necessary properties to satisfy the User interface
-          } as unknown as User);
-        } else {
-          setUser(null);
-        }
-      } catch (error) {
-        setUser(null);
-      } finally {
-        setLoading(false);
-      }
-    };
+    // subscribeToAuthChanges returns an unsubscribe function
+    const unsubscribe = authService.subscribeToAuthChanges((session) => {
+      setUser(session);
+      setLoading(false); // Set loading to false once auth state is determined
+    });
 
-    checkUser();
+    // Cleanup subscription on unmount
+    return () => unsubscribe();
   }, []);
 
   return { user, loading };
-} 
+}

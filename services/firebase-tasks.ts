@@ -66,16 +66,17 @@ export const firebaseTasksService = {
       const tasksQuery = query(
         collection(db, TASKS_COLLECTION),
         where('userId', '==', userId),
-        where('date', '==', date),
-        orderBy('time', 'asc')
+        where('date', '==', date)
       );
       
       const querySnapshot = await getDocs(tasksQuery);
       
-      return querySnapshot.docs.map(doc => ({
+      const tasks = querySnapshot.docs.map(doc => ({
         id: doc.id,
         ...doc.data()
       } as FirebaseTask));
+      
+      return tasks.sort((a, b) => a.time.localeCompare(b.time));
     } catch (error) {
       console.error('Error getting user tasks:', error);
       throw error;
@@ -86,17 +87,22 @@ export const firebaseTasksService = {
     try {
       const tasksQuery = query(
         collection(db, TASKS_COLLECTION),
-        where('userId', '==', userId),
-        orderBy('date', 'desc'),
-        orderBy('time', 'asc')
+        where('userId', '==', userId)
       );
       
       const querySnapshot = await getDocs(tasksQuery);
       
-      return querySnapshot.docs.map(doc => ({
+      const tasks = querySnapshot.docs.map(doc => ({
         id: doc.id,
         ...doc.data()
       } as FirebaseTask));
+      
+      return tasks.sort((a, b) => {
+        const dateComparison = b.date.localeCompare(a.date);
+        if (dateComparison !== 0) return dateComparison;
+        
+        return a.time.localeCompare(b.time);
+      });
     } catch (error) {
       console.error('Error getting all user tasks:', error);
       throw error;
