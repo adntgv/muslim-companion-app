@@ -57,8 +57,10 @@ To create a unique, growth-focused companion app that assists Muslims in persona
 ## Technology Stack
 
 - **Frontend**
-  - React.js
-  - UI Library: Material-UI or Ant Design
+  - Next.js with TypeScript
+  - Tailwind CSS for styling
+  - next-intl for internationalization
+  - next-pwa for Progressive Web App support
 
 - **Backend**
   - Firebase Authentication (user authentication)
@@ -74,14 +76,22 @@ To create a unique, growth-focused companion app that assists Muslims in persona
 
 ## Project Structure
 
-- **/src**
-  - Contains all React components, pages, and styles.
+- **/app**
+  - Next.js 13+ App Router structure with route groups
+- **/components**
+  - Reusable UI components
+- **/contexts**
+  - React context providers for state management
+- **/hooks**
+  - Custom React hooks
+- **/lib**
+  - Core utilities and service abstractions
+- **/services**
+  - API services that interact with Firebase
 - **/public**
-  - Static assets and the main `index.html` file.
-- **firebase.json**
-  - Firebase configuration for hosting and functions.
-- **README.md**
-  - Project documentation (this file).
+  - Static assets and PWA manifest
+- **/docs**
+  - Project documentation including migration guides
 
 ## Getting Started
 
@@ -238,12 +248,15 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 **Note:** This README file provides context for developers and outlines the project's vision, features, technology stack, and development guidelines. It serves as a reference for understanding the app's purpose and how to set it up and contribute.
 
+## Development Tasks and Roadmap
+
+For a detailed breakdown of development tasks, milestones, and current progress, please refer to the `docs/plan.md` file. This document contains the comprehensive implementation roadmap and checklist for the project.
 
 ## **High-Level Overview**
 
 At a high level, the application consists of:
 
-1. **Frontend**: A React.js web application that handles the user interface and client-side logic.
+1. **Frontend**: A Next.js web application with TypeScript that handles the user interface and client-side logic.
 
 2. **Backend**: Firebase services, including Authentication, Firestore (NoSQL database), and Hosting.
 
@@ -854,165 +867,69 @@ To guide the development process and ensure timely delivery of the Minimum Viabl
   - Integrate with calendar apps for reminders.
   - Incorporate notifications via email or push notifications.
 
-## Task Breakdown Checklist
+## Content Organization
 
-### **Phase 1: Foundations**
+### Islamic Growth
+   - Daily Rituals
+     - Five Daily Prayers
+     - Morning/Evening Adhkar
+     - Quran Reading
+     - Personal Dua
+   - Periodic Actions
+     - Weekly
+       - Friday Prayer
+       - Family Time
+       - Voluntary Fasting
+     - Monthly
+       - New Moon Dua
+       - Charity
+     - Yearly
+       - Ramadan
+       - Zakat
+       - Eid Prayers
+   - Knowledge Acquisition
+     - Quran Understanding
+     - Hadith Studies
+     - Fiqh Learning
+     - Seerah Studies
+   - Character Development
+     - Patience
+     - Honesty
+     - Kindness
+     - Gratitude
+   - Behavioral Changes
+     - Speech Etiquette
+     - Eating Habits
+     - Sleep Habits
+     - Social Interactions
+   - Spiritual Growth
+     - Heart Softening
+     - Taqwa Development
+     - Love for Allah
+     - Following Sunnah
 
-- [X] **Project Setup**
-  - [X] Initialize Git repository
-  - [X] Set up project structure with Create React App
-  - [X] Install dependencies (React, Firebase, UI library)
-  - [X] Configure ESLint and Prettier
-- [ ] **Firebase Configuration**
-  - [ ] Create Firebase project
-  - [ ] Set up Authentication and Firestore
-  - [ ] Configure environment variables
-- [ ] **User Authentication**
-  - [ ] Implement sign-up and login forms
-  - [ ] Set up authentication context
-  - [ ] Protect private routes
-- [ ] **Profile Setup**
-  - [ ] Develop profile page
-  - [ ] Implement profile data storage in Firestore
-- [ ] **Initial Assessment**
-  - [ ] Design assessment questionnaire
-  - [ ] Implement assessment logic
-  - [ ] Store results and level assignment
+## Core Screens for Falah
 
-### **Phase 2: Roadmap and Learning Modules**
+### Assessment & Planning Screens
+- Initial Assessment Screen
+- Plan Generation Screen
+- Plan Customization Screen
+- Goals Setting Screen
 
-- [ ] **Roadmap Interface**
-  - [ ] Design UI for levels and progression
-  - [ ] Implement navigation between levels/modules
-  - [ ] Highlight current level and progress
-- [ ] **Learning Module Template**
-  - [ ] Create reusable module component
-  - [ ] Support various content types
-- [ ] **Content Creation**
-  - [ ] Write content for Level 1 modules
-  - [ ] Write content for Level 2 modules
-  - [ ] Write content for Level 3 modules
-  - [ ] Include quizzes and interactive elements
-- [ ] **Module Completion Tracking**
-  - [ ] Implement completion functionality
-  - [ ] Update progress in Firestore
-  - [ ] Reflect progress in UI
+### Daily Journey Screens
+- Main Dashboard
+- Daily Planner
+- Progress Tracking
+- Reflection Journal
 
-### **Phase 3: Progress Tracking and Gamification**
+### Growth Map Screens
+- Overall Progress Map
+- Knowledge Progress
+- Character Development
+- Achievement Display
 
-- [ ] **Dashboard Development**
-  - [ ] Design dashboard UI
-  - [ ] Display progress, level, and suggestions
-- [ ] **Experience Points System**
-  - [ ] Define XP allocation logic
-  - [ ] Update XP upon module completion
-  - [ ] Display XP progress
-- [ ] **Badges and Achievements**
-  - [ ] Design badges for milestones
-  - [ ] Implement badge awarding logic
-  - [ ] Store and display earned badges
-
-### **Phase 4: Suggestions and Notifications**
-
-- [ ] **Recommendation Engine**
-  - [ ] Develop logic for personalized suggestions
-  - [ ] Implement display of recommendations
-- [ ] **Resource Linking**
-  - [ ] Identify and link additional resources
-  - [ ] Incorporate "Further Reading" sections
-- [ ] **Notifications**
-  - [ ] Implement in-app notification system
-  - [ ] Configure notifications for key events
-
-### **Phase 5: Testing and Refinement**
-
-- [ ] **Functional Testing**
-  - [ ] Test all features and flows
-  - [ ] Verify data security and integrity
-  - [ ] Ensure cross-browser/device compatibility
-- [ ] **User Feedback**
-  - [ ] Recruit beta testers
-  - [ ] Collect and analyze feedback
-- [ ] **Refinements**
-  - [ ] Prioritize issues and improvements
-  - [ ] Implement UI/UX enhancements
-  - [ ] Optimize app performance
- 
-
- Islamic Growth
-    Daily Rituals
-      Five Daily Prayers
-      Morning/Evening Adhkar
-      Quran Reading
-      Personal Dua
-    Periodic Actions
-      Weekly
-        Friday Prayer
-        Family Time
-        Voluntary Fasting
-      Monthly
-        New Moon Dua
-        Charity
-      Yearly
-        Ramadan
-      Zakat
-        Eid Prayers
-    Knowledge Acquisition
-      Quran Understanding
-      Hadith Studies
-      Fiqh Learning
-      Seerah Studies
-    Character Development
-      Patience
-      Honesty
-      Kindness
-      Gratitude
-    Behavioral Changes
-      Speech Etiquette
-      Eating Habits
-      Sleep Habits
-      Social Interactions
-    Spiritual Growth
-      Heart Softening
-      Taqwa Development
-      Love for Allah
-      Following Sunnah
-
-
-
-Core Screens for Falah
-
-Assessment & Planning Screens
-
-
-Initial Assessment Screen
-Plan Generation Screen
-Plan Customization Screen
-Goals Setting Screen
-
-
-Daily Journey Screens
-
-
-Main Dashboard
-Daily Planner
-Progress Tracking
-Reflection Journal
-
-
-Growth Map Screens
-
-
-Overall Progress Map
-Knowledge Progress
-Character Development
-Achievement Display
-
-
-Learning Screens
-
-
-Knowledge Library
-Course Progression
-Study Materials
-Practice Exercises
+### Learning Screens
+- Knowledge Library
+- Course Progression
+- Study Materials
+- Practice Exercises
