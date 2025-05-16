@@ -5,7 +5,7 @@ import { Link } from '@/i18n/routing';
 import { Button } from '@/components/ui/button';
 import { ROUTES } from '@/lib/navigation';
 import { useAuth } from '@/contexts/auth-context';
-import { User, Menu, X, ListChecks, LayoutDashboard, Settings } from 'lucide-react';
+import { User, Menu, X, ListChecks, LayoutDashboard, Settings, CheckSquare } from 'lucide-react';
 import { usePathname } from 'next/navigation';
 import { useRouter } from 'next/navigation';
 import { toast } from 'sonner';
@@ -45,6 +45,19 @@ export function Navbar() {
       >
         <ListChecks className="h-4 w-4 mr-2 inline md:hidden" />
         Daily Actions
+      </Link>
+      <Link 
+        href={ROUTES.MANAGE_ACTIONS}
+        className={cn(
+          "md:inline-flex md:items-center md:px-1 md:pt-1 md:text-sm md:font-medium md:border-b-2 md:border-transparent",
+          "block w-full py-2 pl-3 pr-4 text-base font-medium rounded-md",
+          pathname?.includes(ROUTES.MANAGE_ACTIONS) 
+            ? "text-primary md:border-primary bg-accent/50 md:bg-transparent" 
+            : "text-foreground/70 hover:bg-accent md:hover:border-gray-300 md:hover:bg-transparent"
+        )}
+      >
+        <CheckSquare className="h-4 w-4 mr-2 inline md:hidden" />
+        Manage Actions
       </Link>
       {user && (
         <Link 

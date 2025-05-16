@@ -10,6 +10,15 @@ service cloud.firestore {
       allow create: if request.auth != null && request.auth.uid == request.resource.data.userId;
     }
     
+    // UserDailyActionConfig collection
+    match /userDailyActionConfigs/{actionId} {
+      // Users can read, update, and delete only their own action configs
+      allow read, update, delete: if request.auth != null && request.auth.uid == resource.data.userId;
+      
+      // Users can create action configs if they set themselves as the owner
+      allow create: if request.auth != null && request.auth.uid == request.resource.data.userId;
+    }
+    
     // Default deny all other collections
     match /{document=**} {
       allow read, write: if false;

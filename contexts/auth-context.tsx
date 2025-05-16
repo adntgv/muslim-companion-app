@@ -5,6 +5,7 @@ import { User } from 'firebase/auth';
 import { useRouter } from '@/i18n/routing';
 import { toast } from 'sonner';
 import { authService } from '@/lib/auth';
+import { auth } from '@/lib/firebase';
 
 interface AuthContextType {
   user: User | null;
@@ -48,7 +49,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   };
 
   const handleUnauthenticated = () => {
-    const protectedRoutes = ['/dashboard', '/profile'];
+    const protectedRoutes = ['/dashboard', '/profile', '/manage-actions', '/daily-planner'];
     const currentPath = window.location.pathname;
     
     if (protectedRoutes.some(route => currentPath.includes(route))) {
@@ -58,25 +59,14 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
   useEffect(() => {
     // Set up Firebase auth state listener
-    const unsubscribe = authService.subscribeToAuthChanges(async (session) => {
+    const unsubscribe = auth.onAuthStateChanged(async (currentUser) => {
       setIsLoading(true);
       
-      if (session) {
-        // When using authService, we need to call getCurrentUser to get the full User object
-        const result = await authService.getCurrentSession();
-        
-        if (result.data) {
-          // We need to get the actual Firebase User object
-          // For now, we'll use the session data
-          setUser({ 
-            uid: result.data.userId,
-            email: result.data.email,
-            displayName: result.data.name,
-            // Add necessary properties to satisfy the User interface
-          } as unknown as User);
-          setIsAuthenticated(true);
-          setError(null);
-        }
+      if (currentUser) {
+        // We're using the direct Firebase auth object to get the full User object
+        setUser(currentUser);
+        setIsAuthenticated(true);
+        setError(null);
       } else {
         setUser(null);
         setIsAuthenticated(false);
