@@ -5,12 +5,11 @@ import { Link } from '@/i18n/routing';
 import { Button } from '@/components/ui/button';
 import { ROUTES } from '@/lib/navigation';
 import { useAuth } from '@/contexts/auth-context';
-import { User, Menu, X } from 'lucide-react';
+import { User, Menu, X, ListChecks, LayoutDashboard, Settings } from 'lucide-react';
 import { usePathname } from 'next/navigation';
 import { useRouter } from 'next/navigation';
 import { toast } from 'sonner';
-import LocaleSwitcher from './LocaleSwitcher';
-import ThemeToggle from './themeToggle';
+// import LocaleSwitcher from './LocaleSwitcher';
 import { cn } from '@/lib/utils';
 
 export function Navbar() {
@@ -31,63 +30,29 @@ export function Navbar() {
             : "text-foreground/70 hover:bg-accent md:hover:border-gray-300 md:hover:bg-transparent"
         )}
       >
+        <LayoutDashboard className="h-4 w-4 mr-2 inline md:hidden" />
         Dashboard
       </Link>
       <Link 
-        href={ROUTES.GROWTH_MAP}
+        href={ROUTES.DAILY_PLANNER}
         className={cn(
           "md:inline-flex md:items-center md:px-1 md:pt-1 md:text-sm md:font-medium md:border-b-2 md:border-transparent",
           "block w-full py-2 pl-3 pr-4 text-base font-medium rounded-md",
-          pathname?.includes(ROUTES.GROWTH_MAP) 
+          pathname?.includes(ROUTES.DAILY_PLANNER) 
             ? "text-primary md:border-primary bg-accent/50 md:bg-transparent" 
             : "text-foreground/70 hover:bg-accent md:hover:border-gray-300 md:hover:bg-transparent"
         )}
       >
-        Growth Map
-      </Link>
-      <Link 
-        href={ROUTES.LEARNING_CENTER}
-        className={cn(
-          "md:inline-flex md:items-center md:px-1 md:pt-1 md:text-sm md:font-medium md:border-b-2 md:border-transparent",
-          "block w-full py-2 pl-3 pr-4 text-base font-medium rounded-md",
-          pathname?.includes(ROUTES.LEARNING_CENTER) 
-            ? "text-primary md:border-primary bg-accent/50 md:bg-transparent" 
-            : "text-foreground/70 hover:bg-accent md:hover:border-gray-300 md:hover:bg-transparent"
-        )}
-      >
-        Learning Center
-      </Link>
-      <Link 
-        href={ROUTES.REFLECTION_JOURNAL}
-        className={cn(
-          "md:inline-flex md:items-center md:px-1 md:pt-1 md:text-sm md:font-medium md:border-b-2 md:border-transparent",
-          "block w-full py-2 pl-3 pr-4 text-base font-medium rounded-md",
-          pathname?.includes(ROUTES.REFLECTION_JOURNAL) 
-            ? "text-primary md:border-primary bg-accent/50 md:bg-transparent" 
-            : "text-foreground/70 hover:bg-accent md:hover:border-gray-300 md:hover:bg-transparent"
-        )}
-      >
-        Reflection Journal
-      </Link>
-      <Link 
-        href={ROUTES.COMMUNITY}
-        className={cn(
-          "md:inline-flex md:items-center md:px-1 md:pt-1 md:text-sm md:font-medium md:border-b-2 md:border-transparent",
-          "block w-full py-2 pl-3 pr-4 text-base font-medium rounded-md",
-          pathname?.includes(ROUTES.COMMUNITY) 
-            ? "text-primary md:border-primary bg-accent/50 md:bg-transparent" 
-            : "text-foreground/70 hover:bg-accent md:hover:border-gray-300 md:hover:bg-transparent"
-        )}
-      >
-        Community
+        <ListChecks className="h-4 w-4 mr-2 inline md:hidden" />
+        Daily Actions
       </Link>
       {user && (
         <Link 
-          href="/profile"
+          href={ROUTES.PROFILE}
           className={cn(
             "md:hidden md:items-center md:px-1 md:pt-1 md:text-sm md:font-medium md:border-b-2 md:border-transparent",
             "block w-full py-2 pl-3 pr-4 text-base font-medium rounded-md flex items-center",
-            pathname?.includes('/profile') 
+            pathname?.includes(ROUTES.PROFILE) 
               ? "text-primary md:border-primary bg-accent/50 md:bg-transparent" 
               : "text-foreground/70 hover:bg-accent md:hover:border-gray-300 md:hover:bg-transparent"
           )}
@@ -115,8 +80,20 @@ export function Navbar() {
           </div>
           <div className="flex items-center space-x-2 md:space-x-4">
             <div className="hidden md:flex md:items-center md:space-x-4">
-              <LocaleSwitcher />
-              <ThemeToggle />
+              {user && (
+                <Link 
+                  href={ROUTES.PROFILE}
+                  className={cn(
+                    "inline-flex items-center px-1 pt-1 text-sm font-medium border-b-2 border-transparent",
+                    pathname?.includes(ROUTES.PROFILE) 
+                      ? "text-primary border-primary" 
+                      : "text-foreground/70 hover:border-gray-300"
+                  )}
+                >
+                  <User className="h-4 w-4 mr-2" />
+                  Profile
+                </Link>
+              )}
             </div>
             {!isLoading && !user && (
               <Button asChild size="sm" className="hidden md:inline-flex">
@@ -147,10 +124,14 @@ export function Navbar() {
                     <Link href="/login">Login</Link>
                   </Button>
                 )}
-                <div className="flex items-center justify-between space-x-4">
-                  <LocaleSwitcher />
-                  <ThemeToggle />
-                </div>
+                {user && (
+                  <Button asChild size="sm" variant="outline" className="w-full flex items-center justify-center">
+                    <Link href={ROUTES.PROFILE}>
+                      <Settings className="h-4 w-4 mr-2" />
+                      App Settings
+                    </Link>
+                  </Button>
+                )}
               </div>
             </div>
           </div>

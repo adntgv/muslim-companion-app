@@ -2,16 +2,18 @@
 
 import { useEffect, useState } from 'react';
 import { useTranslations } from 'next-intl';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle, CardFooter } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { toast } from "sonner";
-import { Loader2, LogOut } from 'lucide-react';
+import { Loader2, LogOut, Moon, Sun, Globe } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import { useAuth } from '@/contexts/auth-context';
 import { updateProfile } from 'firebase/auth';
 import { auth } from '@/lib/firebase';
+import ThemeToggle from '@/components/themeToggle';
+import LocaleSwitcher from '@/components/LocaleSwitcher';
 
 interface UserProfile {
   name: string;
@@ -78,7 +80,7 @@ export default function ProfilePage() {
   }
 
   return (
-    <div className="container max-w-2xl py-8">
+    <div className="container mx-auto max-w-2xl px-4 sm:px-6 py-8">
       <Card>
         <CardHeader>
           <CardTitle>{t('title')}</CardTitle>
@@ -134,6 +136,47 @@ export default function ProfilePage() {
               </Button>
             </div>
           </form>
+        </CardContent>
+      </Card>
+
+      {/* App Preferences Card */}
+      <Card className="mt-6">
+        <CardHeader>
+          <CardTitle>{t('preferences') || 'App Preferences'}</CardTitle>
+          <CardDescription>
+            {t('preferencesDescription') || 'Customize your app experience'}
+          </CardDescription>
+        </CardHeader>
+        <CardContent>
+          <div className="space-y-6">
+            {/* Theme Preference */}
+            <div className="space-y-2">
+              <div className="flex items-center justify-between">
+                <div>
+                  <Label>{t('theme') || 'Theme'}</Label>
+                  <p className="text-sm text-muted-foreground">
+                    {t('themeDescription') || 'Toggle between light and dark mode'}
+                  </p>
+                </div>
+                <ThemeToggle />
+              </div>
+            </div>
+            
+            <hr className="my-4 border-t border-border" />
+            
+            {/* Language Preference */}
+            <div className="space-y-2">
+              <div className="flex items-center justify-between">
+                <div>
+                  <Label>{t('language') || 'Language'}</Label>
+                  <p className="text-sm text-muted-foreground">
+                    {t('languageDescription') || 'Change the application language'}
+                  </p>
+                </div>
+                <LocaleSwitcher />
+              </div>
+            </div>
+          </div>
         </CardContent>
       </Card>
     </div>

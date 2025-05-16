@@ -1,10 +1,7 @@
 export const ROUTES = {
-  ASSESSMENT: '/assessment',
   DASHBOARD: '/dashboard',
-  GROWTH_MAP: '/growth-map',
-  LEARNING_CENTER: '/learning-center',
-  REFLECTION_JOURNAL: '/reflection-journal',
-  COMMUNITY: '/community',
+  DAILY_PLANNER: '/daily-planner',
+  PROFILE: '/profile',
 } as const;
 
 export type AppRoute = keyof typeof ROUTES;
